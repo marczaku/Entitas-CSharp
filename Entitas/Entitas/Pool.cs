@@ -65,6 +65,8 @@ namespace Entitas {
         readonly Stack<IComponent>[] _componentPools;
         readonly Dictionary<string, IEntityIndex> _entityIndices;
 
+        bool _eventsEnabled;
+
         // Cache delegates to avoid gc allocations
         Entity.EntityChanged _cachedUpdateGroupsComponentAddedOrRemoved;
         Entity.ComponentReplaced _cachedUpdateGroupsComponentReplaced;
@@ -80,6 +82,7 @@ namespace Entitas {
         public Pool(int totalComponents, int startCreationIndex, PoolMetaData metaData) {
             _totalComponents = totalComponents;
             _creationIndex = startCreationIndex;
+            _eventsEnabled = true;
 
             if (metaData != null) {
                 _metaData = metaData;
@@ -123,7 +126,7 @@ namespace Entitas {
             entity.OnComponentReplaced += _cachedUpdateGroupsComponentReplaced;
             entity.OnEntityReleased += _cachedOnEntityReleased;
 
-            if (OnEntityCreated != null) {
+            if (_eventsEnabled && OnEntityCreated != null) {
                 OnEntityCreated(this, entity);
             }
 
@@ -139,13 +142,13 @@ namespace Entitas {
             }
             _entitiesCache = null;
 
-            if (OnEntityWillBeDestroyed != null) {
+            if (_eventsEnabled && OnEntityWillBeDestroyed != null) {
                 OnEntityWillBeDestroyed(this, entity);
             }
 
             entity.destroy();
 
-            if (OnEntityDestroyed != null) {
+            if (_eventsEnabled && OnEntityDestroyed != null) {
                 OnEntityDestroyed(this, entity);
             }
 
@@ -211,7 +214,7 @@ namespace Entitas {
                     _groupsForIndex[index].Add(group);
                 }
 
-                if (OnGroupCreated != null) {
+                if (_eventsEnabled && OnGroupCreated != null) {
                     OnGroupCreated(this, group);
                 }
             }
@@ -228,7 +231,7 @@ namespace Entitas {
                     entities[i].Release(group);
                 }
 
-                if (OnGroupCleared != null) {
+                if (_eventsEnabled && OnGroupCleared != null) {
                     OnGroupCleared(this, group);
                 }
             }
@@ -265,6 +268,10 @@ namespace Entitas {
             }
 
             _entityIndices.Clear();
+        }
+
+        public void DisableEvents() {
+            _eventsEnabled = false;
         }
 
         /// Resets the creationIndex back to 0.

@@ -348,6 +348,41 @@ class describe_Pool : nspec {
                 e.Release(this);
                 didRelease.should_be(1);
             };
+
+            context["when disabled"] = () => {
+
+                before = () => {
+                    pool.DisableEvents();
+                };
+
+                it["dosen't dispatch OnEntityCreated when creating a new entity"] = () => {
+                    pool.OnEntityCreated += (p, entity) => this.Fail();
+                    pool.CreateEntity();
+                };
+
+                it["doesn't dispatch OnEntityWillBeDestroyed when destroying an entity"] = () => {
+                    var e = pool.CreateEntity();
+                    pool.OnEntityWillBeDestroyed += (p, entity) => this.Fail();
+                    pool.DestroyEntity(e);
+                };
+
+                it["doesn't dispatch OnEntityDestroyed when destroying an entity"] = () => {
+                    var e = pool.CreateEntity();
+                    pool.OnEntityDestroyed += (p, entity) => this.Fail();
+                    pool.DestroyEntity(e);
+                };
+
+                it["doesn't dispatch OnGroupCreated when creating a new group"] = () => {
+                    pool.OnGroupCreated += (p, g) => this.Fail();
+                    pool.GetGroup(Matcher.AllOf(0));
+                };
+
+                it["dispatches OnGroupCleared when clearing groups"] = () => {
+                    pool.OnGroupCleared += (p, g) => this.Fail();
+                    pool.GetGroup(Matcher.AllOf(0));
+                    pool.ClearGroups();
+                };
+            };
         };
 
         context["entity pool"] = () => {
