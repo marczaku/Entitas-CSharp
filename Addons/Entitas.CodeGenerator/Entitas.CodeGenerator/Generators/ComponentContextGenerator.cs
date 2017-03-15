@@ -9,10 +9,22 @@ namespace Entitas.CodeGenerator {
         public bool isEnabledByDefault { get { return true; } }
 
         const string STANDARD_COMPONENT_TEMPLATE =
-@"public partial class ${ContextName}Context {
+@"public partial interface I${ContextName}Context {
+
+    ${ContextName}Entity ${componentName}Entity { get; }
+    ${ComponentType} ${componentName} { get; }
+    bool has${ComponentName} { get; }
+    ${ContextName}Entity Set${ComponentName}(${memberArgs});
+    void Replace${ComponentName}(${memberArgs});
+    void Remove${ComponentName}();
+}
+
+public partial class ${ContextName}Context {
 
     public ${ContextName}Entity ${componentName}Entity { get { return GetGroup(${ContextName}Matcher.${ComponentName}).GetSingleEntity(); } }
+
     public ${ComponentType} ${componentName} { get { return ${componentName}Entity.${componentName}; } }
+
     public bool has${ComponentName} { get { return ${componentName}Entity != null; } }
 
     public ${ContextName}Entity Set${ComponentName}(${memberArgs}) {
