@@ -9,9 +9,19 @@ namespace Entitas.CodeGenerator {
         public bool isEnabledByDefault { get { return true; } }
 
         const string STANDARD_COMPONENT_TEMPLATE =
-@"public partial class ${ContextName}Entity {
+@"public partial interface I${ContextName}Entity {
+
+    ${ComponentType} ${componentName} { get; }
+    bool has${ComponentName} { get; }
+    void Add${ComponentName}(${memberArgs});
+    void Replace${ComponentName}(${memberArgs});
+    void Remove${ComponentName}();
+}
+
+public partial class ${ContextName}Entity : I${ContextName}Entity {
 
     public ${ComponentType} ${componentName} { get { return (${ComponentType})GetComponent(${Index}); } }
+
     public bool has${ComponentName} { get { return HasComponent(${Index}); } }
 
     public void Add${ComponentName}(${memberArgs}) {
@@ -41,7 +51,12 @@ ${memberAssignment}
 @"        component.${memberName} = new${MemberName};";
 
         const string FLAG_COMPONENT_TEMPLATE =
-@"public partial class ${ContextName}Entity {
+@"public partial interface I${ContextName}Entity {
+
+    bool ${prefixedName} { get; set; }
+}
+
+public partial class ${ContextName}Entity : I${ContextName}Entity {
 
     static readonly ${ComponentType} ${componentName}Component = new ${ComponentType}();
 

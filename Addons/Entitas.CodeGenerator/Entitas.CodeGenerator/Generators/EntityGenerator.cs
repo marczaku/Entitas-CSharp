@@ -9,7 +9,10 @@ namespace Entitas.CodeGenerator {
         public bool isEnabledByDefault { get { return true; } }
 
         const string ENTITY_TEMPLATE =
-@"public sealed partial class ${ContextName}Entity : Entitas.Entity {
+@"public partial interface I${ContextName}Entity : Entitas.IEntity {
+}
+
+public sealed partial class ${ContextName}Entity : Entitas.Entity, I${ContextName}Entity {
 }
 ";
 
