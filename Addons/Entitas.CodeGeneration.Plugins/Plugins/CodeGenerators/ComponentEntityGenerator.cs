@@ -77,7 +77,7 @@ ${memberAssignment}
         }
 
         CodeGenFile generateExtension(string contextName, ComponentData data) {
-            var componentName = data.GetFullTypeName().ToComponentName();
+            var componentName = data.GetFullTypeName().ShortTypeName().RemoveComponentSuffix();
             var index = contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP + "." + componentName;
             var memberData = data.GetMemberData();
             var template = memberData.Length == 0

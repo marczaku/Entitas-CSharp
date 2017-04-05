@@ -64,6 +64,7 @@
     <Compile Include="Plugins\PostProcessors\MergeFilesPostProcessor.cs" />
     <Compile Include="Plugins\PostProcessors\NewLinePostProcessor.cs" />
     <Compile Include="Plugins\PostProcessors\WriteToDiskPostProcessor.cs" />
+    <Compile Include="Plugins\PostProcessors\WriteToCsProjPostProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\" />

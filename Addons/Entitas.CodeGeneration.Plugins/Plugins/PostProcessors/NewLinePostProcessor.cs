@@ -11,6 +11,7 @@ namespace Entitas.CodeGenerator {
 
         public CodeGenFile[] PostProcess(CodeGenFile[] files) {
             foreach(var file in files) {
+                file.fileContent = file.fileContent.Replace("\r\n", "\n");
                 file.fileContent = file.fileContent.Replace("\n", Environment.NewLine);
             }
 

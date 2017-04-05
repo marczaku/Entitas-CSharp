@@ -86,7 +86,7 @@ namespace Entitas.CodeGenerator {
 
         CodeGenFile generateExtension(string contextName, ComponentData data) {
             var memberData = data.GetMemberData();
-            var componentName = data.GetFullTypeName().ToComponentName();
+            var componentName = data.GetFullTypeName().ShortTypeName().RemoveComponentSuffix();
             var template = memberData.Length == 0
                                       ? FLAG_COMPONENT_TEMPLATE
                                       : STANDARD_COMPONENT_TEMPLATE;

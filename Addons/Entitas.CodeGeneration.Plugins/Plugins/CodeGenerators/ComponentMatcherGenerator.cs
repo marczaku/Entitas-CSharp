@@ -3,14 +3,14 @@ using System.Linq;
 
 namespace Entitas.CodeGenerator {
 
-    public class MatcherGenerator : ICodeGenerator {
+    public class ComponentMatcherGenerator : ICodeGenerator {
 
         public string name { get { return "Component (Matcher API)"; } }
         public int priority { get { return 0; } }
         public bool isEnabledByDefault { get { return true; } }
         public bool runInDryMode { get { return true; } }
 
-        const string STANDARD_COMPONENT_TEMPLATE =
+        const string MATCHER_TEMPLATE =
 @"public sealed partial class ${ContextName}Matcher {
 
     static Entitas.IMatcher<${ContextName}Entity> _matcher${ComponentName};
@@ -44,11 +44,12 @@ namespace Entitas.CodeGenerator {
         }
 
         CodeGenFile generateMatcher(string contextName, ComponentData data) {
-            var componentName = data.GetFullTypeName().ToComponentName();
+            var fullComponentName = data.GetFullTypeName().ToComponentName();
+            var componentName = data.GetFullTypeName().ShortTypeName().RemoveComponentSuffix();
             var index = contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP + "." + componentName;
             var componentNames = contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP + ".componentNames";
 
-            var fileContent = STANDARD_COMPONENT_TEMPLATE
+            var fileContent = MATCHER_TEMPLATE
                 .Replace("${ContextName}", contextName)
                 .Replace("${ComponentName}", componentName)
                 .Replace("${Index}", index)
@@ -57,7 +58,7 @@ namespace Entitas.CodeGenerator {
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar +
                 "Components" + Path.DirectorySeparatorChar +
-                contextName + componentName.AddComponentSuffix() + ".cs",
+                contextName + fullComponentName.AddComponentSuffix() + ".cs",
                 fileContent,
                 GetType().FullName
             );

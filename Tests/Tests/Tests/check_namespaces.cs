@@ -33,9 +33,9 @@ class check_namespaces : nspec {
                                .Replace(addonsDir, string.Empty);
                 
             string expectedNamespace;
-            if(file.Key.Contains(typeof(Entitas.Feature).Name)) {
-                expectedNamespace = "Entitas";
-            } else if(file.Key.Contains("EntityLink.cs")) {
+            //if(file.Key.Contains(typeof(Entitas.Feature).Name)) {
+            //    expectedNamespace = "Entitas";
+            /*} else */if(file.Key.Contains("EntityLink.cs")) {
                 expectedNamespace = "Entitas.Unity";
             } else {
                 expectedNamespace = Regex.Match(fileName, expectedNamespacePattern)

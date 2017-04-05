@@ -105,7 +105,7 @@ ${componentTypes}
             var componentConstants = string.Join("\n", data
                 .Select((d, index) => {
                     return COMPONENT_CONSTANTS_TEMPLATE
-                    .Replace("${ComponentName}", d.GetFullTypeName().ToComponentName())
+                    .Replace("${ComponentName}", d.GetFullTypeName().ShortTypeName().RemoveComponentSuffix())
                         .Replace("${Index}", index.ToString());
                 }).ToArray());
 
@@ -114,7 +114,7 @@ ${componentTypes}
 
             var componentNames = string.Join(",\n", data
                 .Select(d => COMPONENT_NAMES_TEMPLATE
-                        .Replace("${ComponentName}", d.GetFullTypeName().ToComponentName())
+                        .Replace("${ComponentName}", d.GetFullTypeName().ShortTypeName().RemoveComponentSuffix())
                 ).ToArray());
 
             var componentTypes = string.Join(",\n", data
