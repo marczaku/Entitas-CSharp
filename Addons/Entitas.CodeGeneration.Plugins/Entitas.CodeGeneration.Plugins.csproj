@@ -65,6 +65,8 @@
     <Compile Include="Plugins\PostProcessors\NewLinePostProcessor.cs" />
     <Compile Include="Plugins\PostProcessors\WriteToDiskPostProcessor.cs" />
     <Compile Include="Plugins\PostProcessors\WriteToCsProjPostProcessor.cs" />
+    <Compile Include="Plugins\CodeGenerators\UnityContextsGenerator.cs" />
+    <Compile Include="Plugins\CodeGenerators\UnityEntityIndexGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\" />

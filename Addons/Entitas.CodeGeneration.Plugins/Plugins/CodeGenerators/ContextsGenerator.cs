@@ -79,6 +79,7 @@ ${contextAssignments}
             var contextList = string.Join(", ", contextNames
                 .Select(contextName => CONTEXT_LIST_TEMPLATE
                         .Replace("${contextName}", contextName.LowercaseFirst())
+                        .Replace("${ContextName}", contextName)
                        ).ToArray());
 
             var contextAssignments = string.Join("\n", contextNames

@@ -63,7 +63,7 @@ ${getIndices}
         CodeGenFile[] generateEntityIndices(EntityIndexData[] data) {
 
             var indexConstants = string.Join("\n", data
-                                        .Select(d => INDEX_CONSTANTS_TEMPLATE.Replace("${IndexName}", d.GetEntityIndexName()))
+                                        .Select(d => INDEX_CONSTANTS_TEMPLATE.Replace("${IndexName}", d.GetComponentType().ShortTypeName().RemoveComponentSuffix()))
                                         .ToArray());
 
             var addIndices = string.Join("\n\n", data
@@ -110,12 +110,12 @@ ${getIndices}
             return ADD_INDEX_TEMPLATE
                 .Replace("${contextName}", contextName.LowercaseFirst())
                 .Replace("${ContextName}", contextName)
-                .Replace("${IndexName}", data.GetEntityIndexName())
+                .Replace("${IndexName}", data.GetComponentType().ShortTypeName().RemoveComponentSuffix())
                 .Replace("${IndexType}", data.GetEntityIndexType())
                 .Replace("${KeyType}", data.GetKeyType())
                 .Replace("${ComponentType}", data.GetComponentType())
                 .Replace("${MemberName}", data.GetMemberName())
-                .Replace("${componentName}", data.GetComponentType().ToComponentName().LowercaseFirst());
+                .Replace("${componentName}", data.GetComponentType().ShortTypeName().RemoveComponentSuffix());
         }
 
         string generateGetMethods(EntityIndexData data) {
@@ -138,7 +138,7 @@ ${getIndices}
 
             return template
                 .Replace("${ContextName}", contextName)
-                .Replace("${IndexName}", data.GetEntityIndexName())
+                .Replace("${IndexName}", data.GetComponentType().ShortTypeName().RemoveComponentSuffix())
                 .Replace("${IndexType}", data.GetEntityIndexType())
                 .Replace("${KeyType}", data.GetKeyType())
                 .Replace("${MemberName}", data.GetMemberName());
@@ -152,7 +152,7 @@ ${getIndices}
                     .Replace("${ContextName}", data.GetContextNames()[0])
                     .Replace("${methodArgs}", string.Join(", ", m.GetParameters().Select(p => p.ParameterType.ToCompilableString() + " " + p.Name).ToArray()))
                     .Replace("${IndexType}", data.GetEntityIndexType())
-                    .Replace("${IndexName}", data.GetEntityIndexName())
+                    .Replace("${IndexName}", data.GetComponentType().ShortTypeName().RemoveComponentSuffix())
                     .Replace("${args}", string.Join(", ", m.GetParameters().Select(p => p.Name).ToArray()))).ToArray());
         }
    }
