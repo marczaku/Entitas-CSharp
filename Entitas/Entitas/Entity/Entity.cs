@@ -405,7 +405,7 @@ namespace Entitas {
                     _toStringBuilder.Append(
                         implementsToString
                             ? component.ToString()
-                            : type.ToCompilableString().RemoveComponentSuffix()
+                            : type.ToCompilableString().RemoveComponentSuffix().ShortTypeName()
                     );
 
                     if(i < lastSeparator) {

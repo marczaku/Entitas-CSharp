@@ -49,9 +49,7 @@
     <Compile Include="Readme\Components\AnimatingComponent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <Folder Include="Readme\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Compile Include="Readme\Generated\**\*.cs" />
   </ItemGroup>
@@ -63,7 +61,7 @@
       <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
       <Name>Entitas</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Addons\Entitas.Blueprints.CodeGeneration\Entitas.Blueprints.CodeGeneration.csproj">
+    <ProjectReference Include="..\Addons\Entitas.Blueprints.CodeGeneration.Plugins\Entitas.Blueprints.CodeGeneration.Plugins.csproj">
       <Project>{205014A8-1E4A-40D2-A368-9D2497EA9AE1}</Project>
       <Name>Entitas.Blueprints.CodeGeneration.Plugins</Name>
     </ProjectReference>

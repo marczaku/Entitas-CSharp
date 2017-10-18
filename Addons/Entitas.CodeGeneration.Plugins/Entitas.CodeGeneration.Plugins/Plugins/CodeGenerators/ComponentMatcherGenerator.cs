@@ -23,13 +23,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public static Entitas.IMatcher<${ContextName}Entity> ${ComponentName} {
         get {
-            if(_matcher${ComponentName} == null) {
-                var matcher = (Entitas.Matcher<${ContextName}Entity>)Entitas.Matcher<${ContextName}Entity>.AllOf(${Index});
-                matcher.componentNames = ${ComponentNames};
-                _matcher${ComponentName} = matcher;
-            }
-
-            return _matcher${ComponentName};
+            return ${contextName}Matchers[${ContextName}ComponentsLookup.${ComponentName}];
         }
     }
 }
@@ -60,7 +54,8 @@ namespace Entitas.CodeGeneration.Plugins {
 
             var fileContent = STANDARD_COMPONENT_TEMPLATE
                 .Replace("${ContextName}", contextName)
-                .Replace("${ComponentName}", componentName)
+				.Replace("${contextName}", contextName.LowercaseFirst())
+				.Replace("${ComponentName}", componentName)
                 .Replace("${Index}", index)
                 .Replace("${ComponentNames}", componentNames);
 

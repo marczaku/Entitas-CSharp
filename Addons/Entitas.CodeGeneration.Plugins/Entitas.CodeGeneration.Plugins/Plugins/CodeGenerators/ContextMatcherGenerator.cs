@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using Entitas.Utils;
+using System.IO;
 using System.Linq;
 
 namespace Entitas.CodeGeneration.Plugins {
@@ -28,6 +29,26 @@ namespace Entitas.CodeGeneration.Plugins {
     public static Entitas.IAnyOfMatcher<${ContextName}Entity> AnyOf(params Entitas.IMatcher<${ContextName}Entity>[] matchers) {
           return Entitas.Matcher<${ContextName}Entity>.AnyOf(matchers);
     }
+
+    static Entitas.IMatcher<${ContextName}Entity> CreateMatcher(int componentIndex) {
+        var matcher = (Entitas.Matcher<${ContextName}Entity>)Entitas.Matcher<${ContextName}Entity>.AllOf(componentIndex);
+        matcher.componentNames = ${ContextName}ComponentsLookup.componentNames;
+        return matcher;
+    }
+
+    static Entitas.IMatcher<${ContextName}Entity>[] _${contextName}Matchers;
+    public static Entitas.IMatcher<${ContextName}Entity>[] ${contextName}Matchers {
+        get {
+            if (_${contextName}Matchers == null) {
+                _${contextName}Matchers = new Entitas.IMatcher<${ContextName}Entity>[${ContextName}ComponentsLookup.TotalComponents];
+                for (int i = 0; i < ${ContextName}ComponentsLookup.TotalComponents; ++i) {
+                    _${contextName}Matchers[i] = CreateMatcher(i);
+                }
+            }
+            return _${contextName}Matchers;
+        }
+    }
+
 }
 ";
 
@@ -43,8 +64,9 @@ namespace Entitas.CodeGeneration.Plugins {
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar + contextName + "Matcher.cs",
                 CONTEXT_TEMPLATE
-                    .Replace("${ContextName}", contextName),
-                GetType().FullName
+                    .Replace("${ContextName}", contextName)
+					.Replace("${contextName}", contextName.LowercaseFirst()),
+				GetType().FullName
             );
         }
     }

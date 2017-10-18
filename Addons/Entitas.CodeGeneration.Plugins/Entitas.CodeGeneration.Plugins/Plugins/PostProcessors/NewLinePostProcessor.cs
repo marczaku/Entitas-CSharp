@@ -11,7 +11,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public CodeGenFile[] PostProcess(CodeGenFile[] files) {
             foreach(var file in files) {
-                file.fileContent = file.fileContent.Replace("\n", Environment.NewLine);
+                file._fileContent = file.fileContent.Replace("\n", "\r\n");
             }
 
             return files;

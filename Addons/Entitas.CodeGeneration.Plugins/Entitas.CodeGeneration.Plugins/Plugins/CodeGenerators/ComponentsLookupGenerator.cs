@@ -32,6 +32,10 @@ ${componentNames}
     public static readonly System.Type[] componentTypes = {
 ${componentTypes}
     };
+
+    public static readonly System.Collections.Generic.Dictionary<System.Type, int> componentTypeIndices = new System.Collections.Generic.Dictionary<System.Type, int>(){
+${componentTypeIndices}
+    };
 }
 ";
 
@@ -47,7 +51,10 @@ ${componentTypes}
         const string COMPONENT_TYPES_TEMPLATE =
 @"        typeof(${ComponentType})";
 
-        public void Configure(Properties properties) {
+		const string COMPONENT_TYPE_INDICES_TEMPLATE =
+@"        { typeof(${ComponentType}), ${Index} }";
+
+		public void Configure(Properties properties) {
             _ignoreNamespacesConfig.Configure(properties);
         }
 
@@ -131,12 +138,20 @@ ${componentTypes}
                     .Replace("${ComponentType}", d.GetFullTypeName())
                 ).ToArray());
 
-            var fileContent = COMPONENTS_LOOKUP_TEMPLATE
+			var componentTypeIndices = string.Join(",\n", data
+				.Select((d, index) => {
+					return COMPONENT_TYPE_INDICES_TEMPLATE
+					.Replace("${ComponentType}", d.GetFullTypeName())
+						.Replace("${Index}", index.ToString());
+				}).ToArray());
+
+			var fileContent = COMPONENTS_LOOKUP_TEMPLATE
                 .Replace("${Lookup}", contextName + COMPONENTS_LOOKUP)
                 .Replace("${componentConstants}", componentConstants)
                 .Replace("${totalComponentsConstant}", totalComponentsConstant)
                 .Replace("${componentNames}", componentNames)
-                .Replace("${componentTypes}", componentTypes);
+                .Replace("${componentTypes}", componentTypes)
+				.Replace("${componentTypeIndices}", componentTypeIndices);
 
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar + contextName + COMPONENTS_LOOKUP + ".cs",
