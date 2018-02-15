@@ -49,6 +49,15 @@ namespace Entitas.CodeGeneration.Plugins {
         }
     }
 
+	public static Entitas.IMatcher<${ContextName}Entity> Get(int componentIndex) {
+		return _${contextName}Matchers[componentIndex];
+	}
+
+	public static Entitas.IMatcher<${ContextName}Entity> Get<TComponent>() where TComponent : Entitas.IComponent {
+		var componentIndex = ${ContextName}ComponentsLookup.componentTypeIndices[typeof(TComponent)];
+		return _${contextName}Matchers[componentIndex];
+	}
+
 }
 ";
 
