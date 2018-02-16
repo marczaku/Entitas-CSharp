@@ -30,17 +30,17 @@ namespace Entitas.CodeGeneration.Plugins {
           return Entitas.Matcher<${ContextName}Entity>.AnyOf(matchers);
     }
 
-    static Entitas.IMatcher<${ContextName}Entity> CreateMatcher(int componentIndex) {
+    static Entitas.IAllOfMatcher<${ContextName}Entity> CreateMatcher(int componentIndex) {
         var matcher = (Entitas.Matcher<${ContextName}Entity>)Entitas.Matcher<${ContextName}Entity>.AllOf(componentIndex);
         matcher.componentNames = ${ContextName}ComponentsLookup.componentNames;
         return matcher;
     }
 
-    static Entitas.IMatcher<${ContextName}Entity>[] _${contextName}Matchers;
-    public static Entitas.IMatcher<${ContextName}Entity>[] ${contextName}Matchers {
+    static Entitas.IAllOfMatcher<${ContextName}Entity>[] _${contextName}Matchers;
+    public static Entitas.IAllOfMatcher<${ContextName}Entity>[] ${contextName}Matchers {
         get {
             if (_${contextName}Matchers == null) {
-                _${contextName}Matchers = new Entitas.IMatcher<${ContextName}Entity>[${ContextName}ComponentsLookup.TotalComponents];
+                _${contextName}Matchers = new Entitas.IAllOfMatcher<${ContextName}Entity>[${ContextName}ComponentsLookup.TotalComponents];
                 for (int i = 0; i < ${ContextName}ComponentsLookup.TotalComponents; ++i) {
                     _${contextName}Matchers[i] = CreateMatcher(i);
                 }
@@ -49,11 +49,11 @@ namespace Entitas.CodeGeneration.Plugins {
         }
     }
 
-	public static Entitas.IMatcher<${ContextName}Entity> Get(int componentIndex) {
+	public static Entitas.IAllOfMatcher<${ContextName}Entity> Get(int componentIndex) {
 		return _${contextName}Matchers[componentIndex];
 	}
 
-	public static Entitas.IMatcher<${ContextName}Entity> Get<TComponent>() where TComponent : Entitas.IComponent {
+	public static Entitas.IAllOfMatcher<${ContextName}Entity> Get<TComponent>() where TComponent : Entitas.IComponent {
 		var componentIndex = ${ContextName}ComponentsLookup.componentTypeIndices[typeof(TComponent)];
 		return _${contextName}Matchers[componentIndex];
 	}

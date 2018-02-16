@@ -21,7 +21,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
     static Entitas.IMatcher<${ContextName}Entity> _matcher${ComponentName};
 
-    public static Entitas.IMatcher<${ContextName}Entity> ${ComponentName} {
+    public static Entitas.IAllOfMatcher<${ContextName}Entity> ${ComponentName} {
         get {
             return ${contextName}Matchers[${ContextName}ComponentsLookup.${ComponentName}];
         }
