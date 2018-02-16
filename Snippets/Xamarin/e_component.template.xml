@@ -11,7 +11,7 @@
     </Header>
     <Variables>
       <Variable name="context">
-        <Default>Core</Default>
+        <Default>Game</Default>
       </Variable>
       <Variable name="name">
         <Default>Some</Default>
@@ -22,7 +22,8 @@
 [$context$]
 public sealed class $name$Component : IComponent {
 
-    public string someValue;
-}]]></Code>
+    public string value;
+}
+]]></Code>
   </CodeTemplate>
 </CodeTemplates>

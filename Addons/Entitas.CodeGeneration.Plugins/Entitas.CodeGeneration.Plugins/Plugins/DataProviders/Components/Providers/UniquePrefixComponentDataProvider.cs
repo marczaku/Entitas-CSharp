@@ -7,12 +7,12 @@ namespace Entitas.CodeGeneration.Plugins {
     public class UniquePrefixComponentDataProvider : IComponentDataProvider {
 
         public void Provide(Type type, ComponentData data) {
-            data.SetUniqueComponentPrefix(getUniqueComponentPrefix(type));
+            data.SetUniquePrefix(getUniquePrefix(type));
         }
 
-        string getUniqueComponentPrefix(Type type) {
+        string getUniquePrefix(Type type) {
             var attr = Attribute.GetCustomAttributes(type)
-                                .OfType<CustomPrefixAttribute>()
+                                .OfType<UniquePrefixAttribute>()
                                 .SingleOrDefault();
 
             return attr == null ? "is" : attr.prefix;
@@ -23,11 +23,11 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public const string COMPONENT_UNIQUE_PREFIX = "component_uniquePrefix";
 
-        public static string GetUniqueComponentPrefix(this ComponentData data) {
+        public static string GetUniquePrefix(this ComponentData data) {
             return (string)data[COMPONENT_UNIQUE_PREFIX];
         }
 
-        public static void SetUniqueComponentPrefix(this ComponentData data, string prefix) {
+        public static void SetUniquePrefix(this ComponentData data, string prefix) {
             data[COMPONENT_UNIQUE_PREFIX] = prefix;
         }
     }

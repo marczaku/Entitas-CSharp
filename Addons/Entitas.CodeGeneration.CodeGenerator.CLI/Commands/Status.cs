@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entitas.Utils;
@@ -9,9 +9,11 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
     public class Status : AbstractCommand {
 
         public override string trigger { get { return "status"; } }
+        public override string description { get { return "Lists available and unavailable plugins"; } }
+        public override string example { get { return "entitas status"; } }
 
         public override void Run(string[] args) {
-            if(assertProperties()) {
+            if (assertProperties()) {
                 var properties = loadProperties();
                 var config = new CodeGeneratorConfig();
                 config.Configure(properties);
@@ -28,37 +30,26 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
                         CodeGeneratorUtil.GetUsed<ICodeGenerator>(types, config.codeGenerators),
                         CodeGeneratorUtil.GetUsed<ICodeGenFilePostProcessor>(types, config.postProcessors)
                     );
+
                 } catch(Exception ex) {
-                    printKeyStatus(null, config.defaultProperties, properties);
+                    printKeyStatus(config.defaultProperties.Keys.ToArray(), properties);
                     throw ex;
                 }
 
-                printKeyStatus(configurables, config.defaultProperties, properties);
-                printConfigurableKeyStatus(configurables, properties);
+                var requiredKeys = config.defaultProperties.Merge(configurables).Keys.ToArray();
+
+                printKeyStatus(requiredKeys, properties);
                 printPluginStatus(types, config);
             }
         }
 
-        static void printKeyStatus(Dictionary<string, string> configurables, Dictionary<string, string> defaultProperties, Properties properties) {
-            var requiredKeys = defaultProperties.Keys.ToArray();
-            var requiredKeysWithConfigurables = defaultProperties.Keys.ToArray();
-
-            if(configurables != null) {
-                requiredKeysWithConfigurables = requiredKeysWithConfigurables.Concat(configurables.Keys).ToArray();
-            }
-
-            foreach(var key in Helper.GetUnusedKeys(requiredKeysWithConfigurables, properties)) {
+        static void printKeyStatus(string[] requiredKeys, Properties properties) {
+            foreach (var key in Helper.GetUnusedKeys(requiredKeys, properties)) {
                 fabl.Info("Unused key: " + key);
             }
 
-            foreach(var key in Helper.GetMissingKeys(requiredKeys, properties)) {
+            foreach (var key in Helper.GetMissingKeys(requiredKeys, properties)) {
                 fabl.Warn("Missing key: " + key);
-            }
-        }
-
-        static void printConfigurableKeyStatus(Dictionary<string, string> configurables, Properties properties) {
-            foreach(var kv in CodeGeneratorUtil.GetMissingConfigurables(configurables, properties)) {
-                fabl.Warn("Missing key: " + kv.Key);
             }
         }
 
@@ -81,13 +72,13 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         }
 
         static void printUnavailable(string[] names) {
-            foreach(var name in names) {
+            foreach (var name in names) {
                 fabl.Warn("Unavailable: " + name);
             }
         }
 
         static void printAvailable(string[] names) {
-            foreach(var name in names) {
+            foreach (var name in names) {
                 fabl.Info("Available: " + name);
             }
         }

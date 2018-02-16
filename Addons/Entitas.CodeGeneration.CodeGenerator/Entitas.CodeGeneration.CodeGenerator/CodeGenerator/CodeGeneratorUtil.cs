@@ -27,7 +27,7 @@ namespace Entitas.CodeGeneration.CodeGenerator {
         }
 
         static void configure(ICodeGeneratorInterface[] plugins, Properties properties) {
-            foreach(var plugin in plugins.OfType<IConfigurable>()) {
+            foreach (var plugin in plugins.OfType<IConfigurable>()) {
                 plugin.Configure(properties);
             }
         }
@@ -36,7 +36,7 @@ namespace Entitas.CodeGeneration.CodeGenerator {
             var config = new CodeGeneratorConfig();
             config.Configure(properties);
             var resolver = new AssemblyResolver(AppDomain.CurrentDomain, config.searchPaths);
-            foreach(var path in config.plugins) {
+            foreach (var path in config.plugins) {
                 resolver.Load(path);
             }
 
@@ -97,12 +97,6 @@ namespace Entitas.CodeGeneration.CodeGenerator {
                        .Concat(postProcessors.OfType<IConfigurable>())
                        .Select(instance => instance.defaultProperties)
                        .ToArray());
-        }
-
-        public static Dictionary<string, string> GetMissingConfigurables(Dictionary<string, string> configurables, Properties properties) {
-            return configurables
-                .Where(kv => !properties.HasKey(kv.Key))
-                .ToDictionary(kv => kv.Key, kv => kv.Value);
         }
     }
 }

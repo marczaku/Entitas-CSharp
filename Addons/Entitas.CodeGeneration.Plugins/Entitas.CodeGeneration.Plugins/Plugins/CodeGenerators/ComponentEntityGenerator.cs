@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Entitas.Utils;
@@ -56,8 +56,8 @@ ${memberAssignment}
     public bool ${prefixedName} {
         get { return HasComponent(${Index}); }
         set {
-            if(value != ${prefixedName}) {
-                if(value) {
+            if (value != ${prefixedName}) {
+                if (value) {
                     AddComponent(${Index}, ${componentName}Component);
                 } else {
                     RemoveComponent(${Index});
@@ -99,7 +99,7 @@ ${memberAssignment}
                 .Replace("${ComponentType}", data.GetFullTypeName())
                 .Replace("${ComponentName}", componentName)
                 .Replace("${componentName}", componentName.LowercaseFirst())
-                .Replace("${prefixedName}", data.GetUniqueComponentPrefix().LowercaseFirst() + componentName)
+                .Replace("${prefixedName}", data.GetUniquePrefix().LowercaseFirst() + componentName)
                 .Replace("${Index}", index)
                 .Replace("${memberArgs}", getMemberArgs(memberData))
                 .Replace("${memberAssignment}", getMemberAssignment(memberData));

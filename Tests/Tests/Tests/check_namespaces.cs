@@ -14,8 +14,8 @@ class check_namespaces : nspec {
         var sourceFiles = TestExtensions.GetSourceFiles(projectRoot);
 
         it["processes roughly the correct number of files"] = () => {
-            sourceFiles.Count.should_be_greater_than(150);
-            sourceFiles.Count.should_be_less_than(250);
+            sourceFiles.Count.should_be_greater_than(200);
+            sourceFiles.Count.should_be_less_than(300);
         };
 
         System.Console.WriteLine("sourceFiles: " + sourceFiles.Count);
@@ -27,7 +27,7 @@ class check_namespaces : nspec {
 
         var each = new Each<string, string, string>();
 
-        foreach(var file in sourceFiles) {
+        foreach (var file in sourceFiles) {
             var fileName = file.Key
                                .Replace(dir(projectRoot), string.Empty)
                                .Replace(addonsDir, string.Empty);

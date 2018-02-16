@@ -6,7 +6,7 @@ using Entitas.Utils;
 namespace Entitas {
 
     /// Use context.CreateEntity() to create a new entity and
-    /// context.DestroyEntity() to destroy it.
+    /// entity.Destroy() to destroy it.
     /// You can add, replace and remove IComponent to an entity.
     public class Entity : IEntity {
 
@@ -28,7 +28,12 @@ namespace Entitas {
         /// Occurs when an entity gets released and is not retained anymore.
         /// All event handlers will be removed when
         /// the entity gets destroyed by the context.
-        public event EntityReleased OnEntityReleased;
+        public event EntityEvent OnEntityReleased;
+
+        /// Occurs when calling entity.Destroy().
+        /// All event handlers will be removed when
+        /// the entity gets destroyed by the context.
+        public event EntityEvent OnDestroyEntity;
 
         /// The total amount of components an entity can possibly have.
         public int totalComponents { get { return _totalComponents; } }
@@ -88,7 +93,7 @@ namespace Entitas {
 
         ContextInfo createDefaultContextInfo() {
             var componentNames = new string[totalComponents];
-            for(int i = 0; i < componentNames.Length; i++) {
+            for (int i = 0; i < componentNames.Length; i++) {
                 componentNames[i] = i.ToString();
             }
 
@@ -106,14 +111,14 @@ namespace Entitas {
         /// The prefered way is to use the
         /// generated methods from the code generator.
         public void AddComponent(int index, IComponent component) {
-            if(!_isEnabled) {
+            if (!_isEnabled) {
                 throw new EntityIsNotEnabledException(
                     "Cannot add component '" +
                     _contextInfo.componentNames[index] + "' to " + this + "!"
                 );
             }
 
-            if(HasComponent(index)) {
+            if (HasComponent(index)) {
                 throw new EntityAlreadyHasComponentException(
                     index, "Cannot add component '" +
                     _contextInfo.componentNames[index] + "' to " + this + "!",
@@ -126,7 +131,7 @@ namespace Entitas {
             _componentsCache = null;
             _componentIndicesCache = null;
             _toStringCache = null;
-            if(OnComponentAdded != null) {
+            if (OnComponentAdded != null) {
                 OnComponentAdded(this, index, component);
             }
         }
@@ -136,14 +141,14 @@ namespace Entitas {
         /// The prefered way is to use the
         /// generated methods from the code generator.
         public void RemoveComponent(int index) {
-            if(!_isEnabled) {
+            if (!_isEnabled) {
                 throw new EntityIsNotEnabledException(
                     "Cannot remove component '" +
                     _contextInfo.componentNames[index] + "' from " + this + "!"
                 );
             }
 
-            if(!HasComponent(index)) {
+            if (!HasComponent(index)) {
                 throw new EntityDoesNotHaveComponentException(
                     index, "Cannot remove component '" +
                     _contextInfo.componentNames[index] + "' from " + this + "!",
@@ -160,16 +165,16 @@ namespace Entitas {
         /// The prefered way is to use the
         /// generated methods from the code generator.
         public void ReplaceComponent(int index, IComponent component) {
-            if(!_isEnabled) {
+            if (!_isEnabled) {
                 throw new EntityIsNotEnabledException(
                     "Cannot replace component '" +
                     _contextInfo.componentNames[index] + "' on " + this + "!"
                 );
             }
 
-            if(HasComponent(index)) {
+            if (HasComponent(index)) {
                 replaceComponent(index, component);
-            } else if(component != null) {
+            } else if (component != null) {
                 AddComponent(index, component);
             }
         }
@@ -177,18 +182,18 @@ namespace Entitas {
         void replaceComponent(int index, IComponent replacement) {
             _toStringCache = null;
             var previousComponent = _components[index];
-            if(replacement != previousComponent) {
+            if (replacement != previousComponent) {
                 _components[index] = replacement;
                 _componentsCache = null;
-                if(replacement != null) {
-                    if(OnComponentReplaced != null) {
+                if (replacement != null) {
+                    if (OnComponentReplaced != null) {
                         OnComponentReplaced(
                             this, index, previousComponent, replacement
                         );
                     }
                 } else {
                     _componentIndicesCache = null;
-                    if(OnComponentRemoved != null) {
+                    if (OnComponentRemoved != null) {
                         OnComponentRemoved(this, index, previousComponent);
                     }
                 }
@@ -196,7 +201,7 @@ namespace Entitas {
                 GetComponentPool(index).Push(previousComponent);
 
             } else {
-                if(OnComponentReplaced != null) {
+                if (OnComponentReplaced != null) {
                     OnComponentReplaced(
                         this, index, previousComponent, replacement
                     );
@@ -209,7 +214,7 @@ namespace Entitas {
         /// The prefered way is to use the
         /// generated methods from the code generator.
         public IComponent GetComponent(int index) {
-            if(!HasComponent(index)) {
+            if (!HasComponent(index)) {
                 throw new EntityDoesNotHaveComponentException(
                     index, "Cannot get component '" +
                     _contextInfo.componentNames[index] + "' from " + this + "!",
@@ -223,12 +228,12 @@ namespace Entitas {
 
         /// Returns all added components.
         public IComponent[] GetComponents() {
-            if(_componentsCache == null) {
+            if (_componentsCache == null) {
                 var components = EntitasCache.GetIComponentList();
 
-                    for(int i = 0; i < _components.Length; i++) {
+                    for (int i = 0; i < _components.Length; i++) {
                         var component = _components[i];
-                        if(component != null) {
+                        if (component != null) {
                             components.Add(component);
                         }
                     }
@@ -243,11 +248,11 @@ namespace Entitas {
 
         /// Returns all indices of added components.
         public int[] GetComponentIndices() {
-            if(_componentIndicesCache == null) {
+            if (_componentIndicesCache == null) {
                 var indices = EntitasCache.GetIntList();
 
-                    for(int i = 0; i < _components.Length; i++) {
-                        if(_components[i] != null) {
+                    for (int i = 0; i < _components.Length; i++) {
+                        if (_components[i] != null) {
                             indices.Add(i);
                         }
                     }
@@ -269,8 +274,8 @@ namespace Entitas {
         /// Determines whether this entity has components
         /// at all the specified indices.
         public bool HasComponents(int[] indices) {
-            for(int i = 0; i < indices.Length; i++) {
-                if(_components[indices[i]] == null) {
+            for (int i = 0; i < indices.Length; i++) {
+                if (_components[indices[i]] == null) {
                     return false;
                 }
             }
@@ -281,8 +286,8 @@ namespace Entitas {
         /// Determines whether this entity has a component
         /// at any of the specified indices.
         public bool HasAnyComponent(int[] indices) {
-            for(int i = 0; i < indices.Length; i++) {
-                if(_components[indices[i]] != null) {
+            for (int i = 0; i < indices.Length; i++) {
+                if (_components[indices[i]] != null) {
                     return true;
                 }
             }
@@ -293,8 +298,8 @@ namespace Entitas {
         /// Removes all components.
         public void RemoveAllComponents() {
             _toStringCache = null;
-            for(int i = 0; i < _components.Length; i++) {
-                if(_components[i] != null) {
+            for (int i = 0; i < _components.Length; i++) {
+                if (_components[i] != null) {
                     replaceComponent(i, null);
                 }
             }
@@ -308,7 +313,7 @@ namespace Entitas {
         /// reusable component from the componentPool.
         public Stack<IComponent> GetComponentPool(int index) {
             var componentPool = _componentPools[index];
-            if(componentPool == null) {
+            if (componentPool == null) {
                 componentPool = new Stack<IComponent>();
                 _componentPools[index] = componentPool;
             }
@@ -355,21 +360,33 @@ namespace Entitas {
             _aerc.Release(owner);
             _toStringCache = null;
 
-            if(_aerc.retainCount == 0) {
-                if(OnEntityReleased != null) {
+            if (_aerc.retainCount == 0) {
+                if (OnEntityReleased != null) {
                     OnEntityReleased(this);
                 }
             }
         }
 
-        // This method is used internally. Don't call it yourself.
-        // Use context.DestroyEntity(entity);
+        // Dispatches OnDestroyEntity which will start the destroy process.
         public void Destroy() {
+            if (!_isEnabled) {
+                throw new EntityIsNotEnabledException("Cannot destroy " + this + "!");
+            }
+
+            if (OnDestroyEntity != null) {
+                OnDestroyEntity(this);
+            }
+        }
+
+        // This method is used internally. Don't call it yourself.
+        // Use entity.Destroy();
+        public void InternalDestroy() {
             _isEnabled = false;
             RemoveAllComponents();
             OnComponentAdded = null;
             OnComponentReplaced = null;
             OnComponentRemoved = null;
+            OnDestroyEntity = null;
         }
 
         // Do not call this method manually. This method is called by the context.
@@ -381,8 +398,8 @@ namespace Entitas {
         /// with the following format:
         /// Entity_{creationIndex}(*{retainCount})({list of components})
         public override string ToString() {
-            if(_toStringCache == null) {
-                if(_toStringBuilder == null) {
+            if (_toStringCache == null) {
+                if (_toStringBuilder == null) {
                     _toStringBuilder = new StringBuilder();
                 }
                 _toStringBuilder.Length = 0;
@@ -397,7 +414,7 @@ namespace Entitas {
                 const string separator = ", ";
                 var components = GetComponents();
                 var lastSeparator = components.Length - 1;
-                for(int i = 0; i < components.Length; i++) {
+                for (int i = 0; i < components.Length; i++) {
                     var component = components[i];
                     var type = component.GetType();
                     var implementsToString = type.GetMethod("ToString")
@@ -408,7 +425,7 @@ namespace Entitas {
                             : type.ToCompilableString().RemoveComponentSuffix().ShortTypeName()
                     );
 
-                    if(i < lastSeparator) {
+                    if (i < lastSeparator) {
                         _toStringBuilder.Append(separator);
                     }
                 }

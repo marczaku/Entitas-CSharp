@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using Entitas.Utils;
@@ -95,8 +95,8 @@ ${componentTypeIndices}
             var contextNameToComponentData = data
                 .Aggregate(new Dictionary<string, List<ComponentData>>(), (dict, d) => {
                     var contextNames = d.GetContextNames();
-                    foreach(var contextName in contextNames) {
-                        if(!dict.ContainsKey(contextName)) {
+                    foreach (var contextName in contextNames) {
+                        if (!dict.ContainsKey(contextName)) {
                             dict.Add(contextName, new List<ComponentData>());
                         }
 
@@ -106,7 +106,7 @@ ${componentTypeIndices}
                     return dict;
                 });
 
-            foreach(var key in contextNameToComponentData.Keys.ToArray()) {
+            foreach (var key in contextNameToComponentData.Keys.ToArray()) {
                 contextNameToComponentData[key] = contextNameToComponentData[key]
                     .OrderBy(d => d.GetFullTypeName())
                     .ToList();

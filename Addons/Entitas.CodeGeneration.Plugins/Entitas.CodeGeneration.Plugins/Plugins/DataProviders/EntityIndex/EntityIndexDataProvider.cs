@@ -18,15 +18,15 @@ namespace Entitas.CodeGeneration.Plugins {
         public Dictionary<string, string> defaultProperties {
             get {
                 return _assembliesConfig.defaultProperties
-                       .Merge(_contextNamesConfig.defaultProperties,
-                              _ignoreNamespacesConfig.defaultProperties);
+                       .Merge(_ignoreNamespacesConfig.defaultProperties,
+                              _contextsComponentDataProvider.defaultProperties);
             }
         }
 
         readonly CodeGeneratorConfig _codeGeneratorConfig = new CodeGeneratorConfig();
         readonly AssembliesConfig _assembliesConfig = new AssembliesConfig();
-        readonly ContextNamesConfig _contextNamesConfig = new ContextNamesConfig();
         readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
+        readonly ContextsComponentDataProvider _contextsComponentDataProvider = new ContextsComponentDataProvider();
 
         Type[] _types;
 
@@ -40,12 +40,12 @@ namespace Entitas.CodeGeneration.Plugins {
         public void Configure(Properties properties) {
             _codeGeneratorConfig.Configure(properties);
             _assembliesConfig.Configure(properties);
-            _contextNamesConfig.Configure(properties);
             _ignoreNamespacesConfig.Configure(properties);
+            _contextsComponentDataProvider.Configure(properties);
         }
 
         public CodeGeneratorData[] GetData() {
-            if(_types == null) {
+            if (_types == null) {
                 _types = PluginUtil
                     .GetAssembliesResolver(_assembliesConfig.assemblies, _codeGeneratorConfig.searchPaths)
                     .GetTypes();
@@ -82,7 +82,7 @@ namespace Entitas.CodeGeneration.Plugins {
             data.SetKeyType(info.type.ToCompilableString());
             data.SetComponentType(type.ToCompilableString());
             data.SetMemberName(info.name);
-            data.SetContextNames(ContextsComponentDataProvider.GetContextNamesOrDefault(type, _contextNamesConfig.contextNames[0]));
+            data.SetContextNames(_contextsComponentDataProvider.GetContextNamesOrDefault(type));
 
             return data;
         }
@@ -96,7 +96,7 @@ namespace Entitas.CodeGeneration.Plugins {
             data.IsCustom(true);
             data.SetEntityIndexName(type.ToCompilableString().RemoveDots());
 
-            data.SetContextNames(new[] { attribute.contextType.ToCompilableString().ShortTypeName().RemoveContextSuffix() });
+            data.SetContextNames(new [] { attribute.contextType.ToCompilableString().ShortTypeName().RemoveContextSuffix() });
 
             var getMethods = type
                 .GetMethods(BindingFlags.Public | BindingFlags.Instance)
@@ -115,7 +115,7 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         string getEntityIndexType(AbstractEntityIndexAttribute attribute) {
-            switch(attribute.entityIndexType) {
+            switch (attribute.entityIndexType) {
                 case EntityIndexType.EntityIndex:
                     return "Entitas.EntityIndex";
                 case EntityIndexType.PrimaryEntityIndex:

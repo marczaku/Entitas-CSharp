@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Entitas.Utils;
@@ -24,7 +24,7 @@ namespace Entitas.CodeGeneration.Plugins {
     public bool has${ComponentName} { get { return ${componentName}Entity != null; } }
 
     public ${ContextName}Entity Set${ComponentName}(${memberArgs}) {
-        if(has${ComponentName}) {
+        if (has${ComponentName}) {
             throw new Entitas.EntitasException(""Could not set ${ComponentName}!\n"" + this + "" already has an entity with ${ComponentType}!"",
                 ""You should check if the context already has a ${componentName}Entity before setting it or use context.Replace${ComponentName}()."");
         }
@@ -35,7 +35,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public void Replace${ComponentName}(${memberArgs}) {
         var entity = ${componentName}Entity;
-        if(entity == null) {
+        if (entity == null) {
             entity = Set${ComponentName}(${methodArgs});
         } else {
             entity.Replace${ComponentName}(${methodArgs});
@@ -43,7 +43,7 @@ namespace Entitas.CodeGeneration.Plugins {
     }
 
     public void Remove${ComponentName}() {
-        DestroyEntity(${componentName}Entity);
+        ${componentName}Entity.Destroy();
     }
 }
 ";
@@ -63,11 +63,11 @@ namespace Entitas.CodeGeneration.Plugins {
         get { return ${componentName}Entity != null; }
         set {
             var entity = ${componentName}Entity;
-            if(value != (entity != null)) {
-                if(value) {
+            if (value != (entity != null)) {
+                if (value) {
                     CreateEntity().${prefixedComponentName} = true;
                 } else {
-                    DestroyEntity(entity);
+                    entity.Destroy();
                 }
             }
         }
@@ -106,7 +106,7 @@ namespace Entitas.CodeGeneration.Plugins {
                 .Replace("${ComponentType}", data.GetFullTypeName())
                 .Replace("${ComponentName}", componentName)
                 .Replace("${componentName}", componentName.LowercaseFirst())
-                .Replace("${prefixedComponentName}", data.GetUniqueComponentPrefix().LowercaseFirst() + componentName)
+                .Replace("${prefixedComponentName}", data.GetUniquePrefix().LowercaseFirst() + componentName)
                 .Replace("${memberArgs}", getMemberArgs(memberData))
                 .Replace("${methodArgs}", getMethodArgs(memberData));
 

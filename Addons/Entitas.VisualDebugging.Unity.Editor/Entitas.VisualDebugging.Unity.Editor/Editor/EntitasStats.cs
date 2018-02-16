@@ -10,29 +10,35 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
     public static class EntitasStats {
 
-        [MenuItem("Entitas/Show Stats", false, 200)]
+        [MenuItem("Tools/Entitas/Show Stats", false, 200)]
         public static void ShowStats() {
             var stats = string.Join("\n", GetStats()
                                     .Select(kv => kv.Key + ": " + kv.Value)
                                     .ToArray());
 
-            EditorUtility.DisplayDialog("Entitas Stats", stats, "Close");
             Debug.Log(stats);
+            EditorUtility.DisplayDialog("Entitas Stats", stats, "Close");
         }
 
         public static Dictionary<string, int> GetStats() {
             var types = AppDomain.CurrentDomain.GetAllTypes();
+
             var components = types
                 .Where(type => type.ImplementsInterface<IComponent>())
                 .ToArray();
+
+            var systems = types
+                .Where(isSystem)
+                .ToArray();
+
             var contexts = getContexts(components);
 
             var stats = new Dictionary<string, int> {
                 { "Total Components", components.Length },
-                { "Systems", types.Count(implementsSystem) }
+                { "Systems", systems.Length }
             };
 
-            foreach(var context in contexts) {
+            foreach (var context in contexts) {
                 stats.Add("Components in " + context.Key, context.Value);
             }
 
@@ -40,13 +46,12 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         }
 
         static Dictionary<string, int> getContexts(Type[] components) {
-            var config = new ContextNamesConfig();
-            config.Configure(Preferences.LoadProperties());
-            var defaultContextName = config.contextNames[0];
+            var provider = new ContextsComponentDataProvider();
+            provider.Configure(Preferences.LoadProperties());
             return components.Aggregate(new Dictionary<string, int>(), (contexts, type) => {
-                var contextNames = ContextsComponentDataProvider.GetContextNamesOrDefault(type, defaultContextName);
-                foreach(var contextName in contextNames) {
-                    if(!contexts.ContainsKey(contextName)) {
+                var contextNames = provider.GetContextNamesOrDefault(type);
+                foreach (var contextName in contextNames) {
+                    if (!contexts.ContainsKey(contextName)) {
                         contexts.Add(contextName, 0);
                     }
 
@@ -56,9 +61,10 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             });
         }
 
-        static bool implementsSystem(Type type) {
+        static bool isSystem(Type type) {
             return type.ImplementsInterface<ISystem>()
                 && type != typeof(ReactiveSystem<>)
+                && type != typeof(MultiReactiveSystem<,>)
                 && type != typeof(Systems)
                 && type != typeof(DebugSystems);
         }

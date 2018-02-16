@@ -1,22 +1,25 @@
-﻿namespace Entitas {
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace Entitas {
 
     public delegate void GroupChanged<TEntity>(
         IGroup<TEntity> group, TEntity entity, int index, IComponent component
-    ) where TEntity : class, IEntity, new();
+    ) where TEntity : class, IEntity;
 
     public delegate void GroupUpdated<TEntity>(
         IGroup<TEntity> group, TEntity entity, int index,
         IComponent previousComponent, IComponent newComponent
-    ) where TEntity : class, IEntity, new();
+    ) where TEntity : class, IEntity;
 
-    public interface IGroup {
+    public interface IGroup : IEnumerable {
 
         int count { get; }
 
         void RemoveAllEventHandlers();
     }
 
-    public interface IGroup<TEntity> : IGroup where TEntity : class, IEntity, new() {
+    public interface IGroup<TEntity> : IGroup, IEnumerable<TEntity> where TEntity : class, IEntity {
 
         event GroupChanged<TEntity> OnEntityAdded;
         event GroupChanged<TEntity> OnEntityRemoved;

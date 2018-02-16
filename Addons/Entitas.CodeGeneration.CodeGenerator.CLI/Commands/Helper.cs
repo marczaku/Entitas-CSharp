@@ -28,18 +28,45 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             return keyChar == accept;
         }
 
+        public static void ForceAddKey(string message, string key, string value, Properties properties) {
+            fabl.Info(message + ": '" + key + "'");
+            Console.ReadKey(true);
+            properties[key] = value;
+            Preferences.SaveProperties(properties);
+            fabl.Info("Added: " + key);
+        }
+
         public static void AddKey(string question, string key, string value, Properties properties) {
             fabl.Info(question + ": '" + key + "' ? (y / n)");
-            if(GetUserDecision()) {
+            if (GetUserDecision()) {
                 properties[key] = value;
                 Preferences.SaveProperties(properties);
                 fabl.Info("Added: " + key);
             }
         }
 
+        public static void AddValue(string question, string value, string[] values, Action<string[]> updateAction, Properties properties) {
+            fabl.Info(question + ": '" + value + "' ? (y / n)");
+            if (GetUserDecision()) {
+                var valueList = values.ToList();
+                valueList.Add(value);
+                updateAction(valueList.ToArray());
+                Preferences.SaveProperties(properties);
+                fabl.Info("Added: " + value);
+            }
+        }
+
+        public static void AddValueSilently(string value, string[] values, Action<string[]> updateAction, Properties properties) {
+            var valueList = values.ToList();
+            valueList.Add(value);
+            updateAction(valueList.ToArray());
+            Preferences.SaveProperties(properties);
+            fabl.Info("Added: " + value);
+        }
+
         public static void RemoveKey(string question, string key, Properties properties) {
             fabl.Warn(question + ": '" + key + "' ? (y / n)");
-            if(GetUserDecision()) {
+            if (GetUserDecision()) {
                 properties.RemoveProperty(key);
                 Preferences.SaveProperties(properties);
                 fabl.Warn("Removed: " + key);
@@ -48,23 +75,26 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
         public static void RemoveValue(string question, string value, string[] values, Action<string[]> updateAction, Properties properties) {
             fabl.Warn(question + ": '" + value + "' ? (y / n)");
-            if(GetUserDecision()) {
+            if (GetUserDecision()) {
                 var valueList = values.ToList();
-                valueList.Remove(value);
-                updateAction(valueList.ToArray());
-                Preferences.SaveProperties(properties);
-                fabl.Warn("Removed: " + value);
+                if (valueList.Remove(value)) {
+                    updateAction(valueList.ToArray());
+                    Preferences.SaveProperties(properties);
+                    fabl.Warn("Removed: " + value);
+                } else {
+                    fabl.Warn("Value does not exist: " + value);
+                }
             }
         }
 
-        public static void AddValue(string question, string value, string[] values, Action<string[]> updateAction, Properties properties) {
-            fabl.Info(question + ": '" + value + "' ? (y / n)");
-            if(GetUserDecision()) {
-                var valueList = values.ToList();
-                valueList.Add(value);
-                updateAction(CodeGeneratorUtil.GetOrderedNames(valueList.ToArray()));
+        public static void RemoveValueSilently(string value, string[] values, Action<string[]> updateAction, Properties properties) {
+            var valueList = values.ToList();
+            if (valueList.Remove(value)) {
+                updateAction(valueList.ToArray());
                 Preferences.SaveProperties(properties);
-                fabl.Info("Added: " + value);
+                fabl.Warn("Removed: " + value);
+            } else {
+                fabl.Warn("Value does not exist: " + value);
             }
         }
     }

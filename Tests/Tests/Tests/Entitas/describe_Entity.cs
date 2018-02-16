@@ -9,7 +9,7 @@ class describe_Entity : nspec {
     readonly int[] _indicesAB = { CID.ComponentA, CID.ComponentB };
 
     void assertHasComponentA(TestEntity e, IComponent componentA = null) {
-        if(componentA == null) {
+        if (componentA == null) {
             componentA = Component.A;
         }
 
@@ -53,7 +53,7 @@ class describe_Entity : nspec {
                 e.contextInfo.name.should_be("No Context");
                 e.contextInfo.componentNames.Length.should_be(CID.TotalComponents);
                 e.contextInfo.componentTypes.should_be_null();
-                for(int i = 0; i < e.contextInfo.componentNames.Length; i++) {
+                for (int i = 0; i < e.contextInfo.componentNames.Length; i++) {
                     e.contextInfo.componentNames[i].should_be(i.ToString());
                 }
             };
@@ -77,7 +77,7 @@ class describe_Entity : nspec {
                 e = new TestEntity();
                 e.Initialize(1, 2, componentPools, contextInfo);
 
-                e.Destroy();
+                e.InternalDestroy();
 
                 e.Reactivate(42);
 
@@ -397,6 +397,13 @@ class describe_Entity : nspec {
                 e.RemoveAllComponents();
                 didDispatch.should_be(2);
             };
+
+            it["dispatches OnDestroy when calling Destroy"] = () => {
+                var didDestroy = 0;
+                e.OnDestroyEntity += entity => didDestroy += 1;
+                e.Destroy();
+                didDestroy.should_be(1);
+            };
         };
 
         context["reference counting"] = () => {
@@ -407,7 +414,7 @@ class describe_Entity : nspec {
                 e.retainCount.should_be(1);
 
                 var safeAerc = e.aerc as SafeAERC;
-                if(safeAerc != null) {
+                if (safeAerc != null) {
                     safeAerc.owners.should_contain(this);
                 }
             };
@@ -418,7 +425,7 @@ class describe_Entity : nspec {
                 e.retainCount.should_be(0);
 
                 var safeAerc = e.aerc as SafeAERC;
-                if(safeAerc != null) {
+                if (safeAerc != null) {
                     safeAerc.owners.should_not_contain(this);
                 }
             };

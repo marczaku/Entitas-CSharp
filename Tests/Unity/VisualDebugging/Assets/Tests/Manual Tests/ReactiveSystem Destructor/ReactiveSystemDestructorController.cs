@@ -10,14 +10,14 @@ public class ReactiveSystemDestructorController : MonoBehaviour {
         new TestReactiveSystem(Contexts.sharedInstance);
         _initialEntity = context.CreateEntity();
         _initialEntity.isTest = true;
-        context.DestroyEntity(_initialEntity);
+        _initialEntity.Destroy();
     }
 
     void Update() {
         var context = Contexts.sharedInstance.game;
         for (int i = 0; i < 5000; i++) {
             var e = context.CreateEntity();
-            if(e == _initialEntity) {
+            if (e == _initialEntity) {
                 Debug.Log("Success: Reusing entity!");
                 EditorApplication.isPlaying = false;
             }

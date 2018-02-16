@@ -2,7 +2,7 @@
 
 namespace Entitas {
 
-    public abstract class AbstractEntityIndex<TEntity, TKey> : IEntityIndex where TEntity : class, IEntity, new() {
+    public abstract class AbstractEntityIndex<TEntity, TKey> : IEntityIndex where TEntity : class, IEntity {
 
         public string name { get { return _name; } }
 
@@ -42,37 +42,35 @@ namespace Entitas {
         }
 
         protected void indexEntities(IGroup<TEntity> group) {
-            var entities = group.GetEntities();
-            for(int i = 0; i < entities.Length; i++) {
-                var entity = entities[i];
-                if(_isSingleKey) {
+            foreach (var entity in group) {
+                if (_isSingleKey) {
                     addEntity(_getKey(entity, null), entity);
                 } else {
                     var keys = _getKeys(entity, null);
-                    for(int j = 0; j < keys.Length; j++) {
-                        addEntity(keys[j], entity);
+                    for (int i = 0; i < keys.Length; i++) {
+                        addEntity(keys[i], entity);
                     }
                 }
             }
         }
 
         protected void onEntityAdded(IGroup<TEntity> group, TEntity entity, int index, IComponent component) {
-            if(_isSingleKey) {
+            if (_isSingleKey) {
                 addEntity(_getKey(entity, component), entity);
             } else {
                 var keys = _getKeys(entity, component);
-                for(int i = 0; i < keys.Length; i++) {
+                for (int i = 0; i < keys.Length; i++) {
                     addEntity(keys[i], entity);
                 }
             }
         }
 
         protected void onEntityRemoved(IGroup<TEntity> group, TEntity entity, int index, IComponent component) {
-            if(_isSingleKey) {
+            if (_isSingleKey) {
                 removeEntity(_getKey(entity, component), entity);
             } else {
                 var keys = _getKeys(entity, component);
-                for(int i = 0; i < keys.Length; i++) {
+                for (int i = 0; i < keys.Length; i++) {
                     removeEntity(keys[i], entity);
                 }
             }

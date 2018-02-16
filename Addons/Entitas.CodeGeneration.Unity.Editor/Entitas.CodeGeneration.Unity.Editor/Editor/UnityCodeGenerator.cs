@@ -9,7 +9,7 @@ namespace Entitas.CodeGeneration.Unity.Editor {
 
     public static class UnityCodeGenerator {
 
-        [MenuItem("Entitas/Generate #%g", false, 100)]
+        [MenuItem("Tools/Entitas/Generate #%g", false, 100)]
         public static void Generate() {
             checkCanGenerate();
 
@@ -21,7 +21,7 @@ namespace Entitas.CodeGeneration.Unity.Editor {
 
             codeGenerator.OnProgress += (title, info, progress) => {
                 var cancel = EditorUtility.DisplayCancelableProgressBar(title, info, progressOffset + progress / 2);
-                if(cancel) {
+                if (cancel) {
                     codeGenerator.Cancel();
                 }
             };
@@ -58,15 +58,18 @@ namespace Entitas.CodeGeneration.Unity.Editor {
         }
 
         static void checkCanGenerate() {
-            if(EditorApplication.isCompiling) {
+            if (EditorApplication.isCompiling) {
                 throw new Exception("Cannot generate because Unity is still compiling. Please wait...");
             }
 
             var assembly = typeof(UnityEditor.Editor).Assembly;
-            var logEntries = assembly.GetType("UnityEditorInternal.LogEntries");
+
+            var logEntries = assembly.GetType("UnityEditorInternal.LogEntries")
+                          ?? assembly.GetType("UnityEditor.LogEntries");
+
             logEntries.GetMethod("Clear").Invoke(new object(), null);
             var canCompile = (int)logEntries.GetMethod("GetCount").Invoke(new object(), null) == 0;
-            if(!canCompile) {
+            if (!canCompile) {
                 Debug.Log("There are compile errors! Generated code will be based on last compiled executable.");
             }
         }

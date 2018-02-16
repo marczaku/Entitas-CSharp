@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using Entitas.Utils;
 using Fabl;
 
@@ -7,12 +7,14 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
     public class NewConfig : AbstractCommand {
 
         public override string trigger { get { return "new"; } }
+        public override string description { get { return "Creates new Entitas.properties config with default values"; } }
+        public override string example { get { return "entitas new [-f]"; } }
 
         public override void Run(string[] args) {
             var currentDir = Directory.GetCurrentDirectory();
             var path = currentDir + Path.DirectorySeparatorChar + Preferences.PATH;
 
-            if(args.isForce() || !File.Exists(path)) {
+            if (args.isForce() || !File.Exists(path)) {
                 var defaultConfig = new CodeGeneratorConfig();
                 var properties = new Properties(defaultConfig.defaultProperties);
                 defaultConfig.Configure(properties);

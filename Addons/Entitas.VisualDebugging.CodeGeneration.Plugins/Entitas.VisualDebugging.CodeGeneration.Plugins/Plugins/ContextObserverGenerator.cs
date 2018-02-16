@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Entitas.CodeGeneration;
 using Entitas.CodeGeneration.Plugins;
 using Entitas.Utils;
@@ -15,7 +15,7 @@ namespace Entitas.VisualDebugging.CodeGeneration.Plugins {
         const string CONTEXTS_TEMPLATE =
 @"public partial class Contexts {
 
-#if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
+#if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
 
     [Entitas.CodeGeneration.Attributes.PostConstructor]
     public void InitializeContexObservers() {
@@ -45,7 +45,7 @@ ${contextObservers}
                 .OrderBy(contextName => contextName)
                 .ToArray();
 
-            return new[] { new CodeGenFile(
+            return new [] { new CodeGenFile(
                 "Contexts.cs",
                 generateContextsClass(contextNames),
                 GetType().FullName)

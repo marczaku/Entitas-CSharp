@@ -21,14 +21,15 @@ namespace Entitas.CodeGeneration.Plugins {
                     .Select(i => i.defaultProperties)
                     .ToArray();
 
-                return _assembliesConfig
-                    .defaultProperties
-                    .Merge(dataProviderProperties);
+                return _assembliesConfig.defaultProperties
+                       .Merge(_contextsComponentDataProvider.defaultProperties)
+                       .Merge(dataProviderProperties);
             }
         }
 
         readonly CodeGeneratorConfig _codeGeneratorConfig = new CodeGeneratorConfig();
         readonly AssembliesConfig _assembliesConfig = new AssembliesConfig();
+        readonly ContextsComponentDataProvider _contextsComponentDataProvider = new ContextsComponentDataProvider();
 
         static IComponentDataProvider[] getComponentDataProviders() {
             return new IComponentDataProvider[] {
@@ -60,13 +61,14 @@ namespace Entitas.CodeGeneration.Plugins {
         public void Configure(Properties properties) {
             _codeGeneratorConfig.Configure(properties);
             _assembliesConfig.Configure(properties);
-            foreach(var dataProvider in _dataProviders.OfType<IConfigurable>()) {
+            foreach (var dataProvider in _dataProviders.OfType<IConfigurable>()) {
                 dataProvider.Configure(properties);
             }
+            _contextsComponentDataProvider.Configure(properties);
         }
 
         public CodeGeneratorData[] GetData() {
-            if(_types == null) {
+            if (_types == null) {
                 _types = PluginUtil
                     .GetAssembliesResolver(_assembliesConfig.assemblies, _codeGeneratorConfig.searchPaths)
                     .GetTypes();
@@ -92,7 +94,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
         ComponentData createDataForComponent(Type type) {
             var data = new ComponentData();
-            foreach(var provider in _dataProviders) {
+            foreach (var provider in _dataProviders) {
                 provider.Provide(type, data);
             }
 
@@ -104,7 +106,7 @@ namespace Entitas.CodeGeneration.Plugins {
                 .Select(componentName => {
                     var data = createDataForComponent(type);
                     data.SetFullTypeName(componentName.AddComponentSuffix());
-                    data.SetMemberData(new[] {
+                    data.SetMemberData(new [] {
                         new MemberData(type.ToCompilableString(), "value")
                     });
 
@@ -113,7 +115,7 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         bool hasContexts(Type type) {
-            return ContextsComponentDataProvider.GetContextNames(type).Length != 0;
+            return _contextsComponentDataProvider.GetContextNames(type).Length != 0;
         }
 
         string[] getComponentNames(Type type) {
@@ -122,8 +124,8 @@ namespace Entitas.CodeGeneration.Plugins {
                 .OfType<CustomComponentNameAttribute>()
                 .SingleOrDefault();
 
-            if(attr == null) {
-                return new[] { type.ToCompilableString().ShortTypeName().AddComponentSuffix() };
+            if (attr == null) {
+                return new [] { type.ToCompilableString().ShortTypeName().AddComponentSuffix() };
             }
 
             return attr.componentNames;

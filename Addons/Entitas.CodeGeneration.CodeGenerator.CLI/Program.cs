@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -16,69 +16,73 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         };
 
         public static void Main(string[] args) {
-            if(args == null || args.Length == 0) {
-                printUsage();
+            var commands = AppDomain.CurrentDomain
+                                    .GetInstancesOf<ICommand>()
+                                    .OrderBy(c => c.trigger)
+                                    .ToArray();
+
+            if (args == null || args.Length == 0) {
+                printUsage(commands);
                 return;
             }
 
             setupLogging(args);
 
             try {
-                var commands = AppDomain.CurrentDomain.GetInstancesOf<ICommand>();
-                var command = commands.SingleOrDefault(c => c.trigger == args[0]);
-                if(command != null) {
-                    command.Run(args);
-                } else {
-                    printUsage();
-                }
-            } catch(Exception ex) {
+                getCommand(commands, args[0]).Run(args);
+            } catch (Exception ex) {
                 printException(ex, args);
             }
         }
 
+        static ICommand getCommand(ICommand[] commands, string trigger) {
+            var command = commands.SingleOrDefault(c => c.trigger == trigger);
+            if (command == null) {
+                throw new Exception("command not found: " + trigger);
+            }
+
+            return command;
+        }
+
         static void printException(Exception ex, string[] args) {
             var loadException = ex as ReflectionTypeLoadException;
-            if(loadException != null) {
-                foreach(var e in loadException.LoaderExceptions) {
+            if (loadException != null) {
+                foreach (var e in loadException.LoaderExceptions) {
                     fabl.Error(e.ToString());
                 }
             } else {
-                if(args.isVerbose()) {
+                if (args.isVerbose()) {
                     fabl.Error(ex.ToString());
                 } else {
                     fabl.Error(ex.Message);
                 }
             }
-
         }
 
-        static void printUsage() {
+        static void printUsage(ICommand[] commands) {
+            var pad = commands.Max(c => c.example.Length);
+            var commandList = commands
+                .Select(c => c.example.PadRight(pad) + " - " + c.description)
+                .Aggregate(new List<string>(), (acc, c) => { acc.Add(c); return acc; });
+
+            commandList.Add("[-v]".PadRight(pad) + " - " + "verbose output");
+            commandList.Add("[-s]".PadRight(pad) + " - " + "silent output (errors only)");
+
             Console.WriteLine("Entitas Code Generator version " + EntitasResources.GetVersion());
-            Console.WriteLine(
-@"usage: entitas new [-f] - Creates new Entitas.properties config with default values
-       entitas edit     - Opens Entitas.properties config
-       entitas doctor   - Checks the config for potential problems
-       entitas status   - Lists available and unavailable plugins
-       entitas fix      - Adds missing or removes unused keys interactively
-       entitas scan     - Scans and prints available types found in specified assemblies
-       entitas dry      - Simulates generating files without writing to disk
-       entitas gen      - Generates files based on Entitas.properties
-       [-v]             - verbose output
-       [-s]             - silent output (errors only)"
-            );
+            Console.WriteLine("usage:\n{0}", string.Join("\n", commandList));
         }
 
         static void setupLogging(string[] args) {
-            if(args.isVerbose()) {
+            if (args.isVerbose()) {
                 fabl.globalLogLevel = LogLevel.On;
-            } else if(args.isSilent()) {
+            } else if (args.isSilent()) {
                 fabl.globalLogLevel = LogLevel.Error;
             } else {
                 fabl.globalLogLevel = LogLevel.Info;
             }
 
             fabl.AddAppender((logger, logLevel, message) => {
-                if(_consoleColors.ContainsKey(logLevel)) {
+                if (_consoleColors.ContainsKey(logLevel)) {
                     Console.ForegroundColor = _consoleColors[logLevel];
                     Console.WriteLine(message);
                     Console.ResetColor();

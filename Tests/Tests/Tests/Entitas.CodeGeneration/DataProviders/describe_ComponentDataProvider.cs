@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Entitas.CodeGeneration.Plugins;
 using Entitas.Utils;
 using My.Namespace;
@@ -12,7 +12,7 @@ class describe_ComponentDataProvider : nspec {
 
     ComponentData[] getMultipleData<T>(Properties properties = null) {
         var provider = new ComponentDataProvider(new Type[] { typeof(T) });
-        if(properties == null) {
+        if (properties == null) {
             properties = new Properties("Entitas.CodeGeneration.Plugins.Contexts = Game, GameState");
         }
         provider.Configure(properties);
@@ -89,10 +89,10 @@ class describe_ComponentDataProvider : nspec {
             };
 
             it["gets unique prefix"] = () => {
-                data.GetUniqueComponentPrefix().GetType().should_be(typeof(string));
-                data.GetUniqueComponentPrefix().should_be("is");
+                data.GetUniquePrefix().GetType().should_be(typeof(string));
+                data.GetUniquePrefix().should_be("is");
 
-                getData<CustomPrefixFlagComponent>().GetUniqueComponentPrefix().should_be("My");
+                getData<CustomPrefixFlagComponent>().GetUniquePrefix().should_be("My");
             };
         };
 
@@ -147,7 +147,7 @@ class describe_ComponentDataProvider : nspec {
             };
 
             it["gets unique prefix"] = () => {
-                data.GetUniqueComponentPrefix().should_be("is");
+                data.GetUniquePrefix().should_be("is");
             };
         };
 

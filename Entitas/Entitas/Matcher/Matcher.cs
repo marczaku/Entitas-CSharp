@@ -1,10 +1,10 @@
 ﻿namespace Entitas {
 
-    public partial class Matcher<TEntity> : IAllOfMatcher<TEntity> where TEntity : class, IEntity, new() {
+    public partial class Matcher<TEntity> : IAllOfMatcher<TEntity> where TEntity : class, IEntity {
 
         public int[] indices {
             get {
-                if(_indices == null) {
+                if (_indices == null) {
                     _indices = mergeIndices(_allOfIndices, _anyOfIndices, _noneOfIndices);
                 }
                 return _indices;

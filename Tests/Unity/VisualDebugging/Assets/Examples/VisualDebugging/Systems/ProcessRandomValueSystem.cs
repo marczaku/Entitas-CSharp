@@ -1,16 +1,12 @@
-﻿using System.Collections.Generic;
-using Entitas;
+using System.Collections.Generic;
 using Entitas;
 
 public class ProcessRandomValueSystem : ReactiveSystem<GameEntity> {
 
-    readonly GameContext _context;
-
     public ProcessRandomValueSystem(Contexts contexts) : base(contexts.game) {
-        _context = contexts.game;
     }
 
-    protected override Collector<GameEntity> GetTrigger(IContext<GameEntity> context) {
+    protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context) {
         return context.CreateCollector(GameMatcher.MyFloat);
     }
 
@@ -19,8 +15,8 @@ public class ProcessRandomValueSystem : ReactiveSystem<GameEntity> {
     }
 
     protected override void Execute(List<GameEntity> entities) {
-        foreach(var e in entities) {
-            _context.DestroyEntity(e);
+        foreach (var e in entities) {
+            e.Destroy();
         }
     }
 }

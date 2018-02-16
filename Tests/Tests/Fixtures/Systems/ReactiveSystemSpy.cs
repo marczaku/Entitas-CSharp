@@ -28,14 +28,14 @@ public class ReactiveSystemSpy : ReactiveSystem<TestEntity>, IReactiveSystemSpy,
 
     readonly Func<TestEntity, bool> _filter;
 
-    public ReactiveSystemSpy(Collector<TestEntity> collector) : base(collector) {
+    public ReactiveSystemSpy(ICollector<TestEntity> collector) : base(collector) {
     }
 
-    public ReactiveSystemSpy(Collector<TestEntity> collector, Func<IEntity, bool> filter) : this(collector) {
+    public ReactiveSystemSpy(ICollector<TestEntity> collector, Func<IEntity, bool> filter) : this(collector) {
         _filter = filter;
     }
 
-    protected override Collector<TestEntity> GetTrigger(IContext<TestEntity> context) {
+    protected override ICollector<TestEntity> GetTrigger(IContext<TestEntity> context) {
         return null;
     }
 
@@ -50,13 +50,13 @@ public class ReactiveSystemSpy : ReactiveSystem<TestEntity>, IReactiveSystemSpy,
     protected override void Execute(List<TestEntity> entities) {
         _didExecute += 1;
 
-        if(entities != null) {
+        if (entities != null) {
             _entities = entities.ToArray();
         } else {
             _entities = null;
         }
 
-        if(executeAction != null) {
+        if (executeAction != null) {
             executeAction(entities);
         }
     }

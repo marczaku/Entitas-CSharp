@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using Entitas.Utils;
 using Fabl;
 
@@ -7,6 +7,8 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
     public abstract class AbstractCommand : ICommand {
 
         public abstract string trigger { get; }
+        public abstract string description { get; }
+        public abstract string example { get; }
 
         public abstract void Run(string[] args);
 
@@ -15,7 +17,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         }
 
         protected bool assertProperties() {
-            if(File.Exists(Preferences.PATH)) {
+            if (File.Exists(Preferences.PATH)) {
                 return true;
             }
 
