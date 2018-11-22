@@ -55,6 +55,8 @@ namespace Entitas {
         /// if there are any. Otherwise it will not call Execute(entities).
         public void Execute() {
             if (_collector.count != 0) {
+                if (_buffer.Count != 0)
+					_buffer.Clear();
                 foreach (var e in _collector.collectedEntities) {
                     if (Filter(e)) {
                         e.Retain(this);

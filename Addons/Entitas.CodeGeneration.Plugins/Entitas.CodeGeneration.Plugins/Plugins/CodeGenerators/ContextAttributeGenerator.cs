@@ -28,7 +28,7 @@ namespace Entitas.CodeGeneration.Plugins {
         CodeGenFile generateAttributeClass(ContextData data) {
             var contextName = data.GetContextName();
             return new CodeGenFile(
-                contextName + Path.DirectorySeparatorChar + contextName + "Attribute.cs",
+                "Attributes" + Path.DirectorySeparatorChar + contextName + "Attribute.cs",
                 ATTRIBUTE_TEMPLATE.Replace("${ContextName}", contextName),
                 GetType().FullName
             );

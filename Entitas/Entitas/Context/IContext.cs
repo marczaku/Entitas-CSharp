@@ -44,6 +44,8 @@ namespace Entitas {
 
         bool HasEntity(TEntity entity);
         TEntity[] GetEntities();
+		TEntity[] GetEntities(IMatcher<TEntity> matcher);
+		TEntity CloneEntity(IEntity entity,bool replaceExisting = false,params int[] indices);
 
         IGroup<TEntity> GetGroup(IMatcher<TEntity> matcher);
     }

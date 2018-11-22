@@ -75,6 +75,22 @@ namespace Entitas {
         EntityEvent _cachedEntityReleased;
         EntityEvent _cachedDestroyEntity;
 
+		/// Returns all entities matching the specified matcher.
+        public TEntity[] GetEntities(IMatcher<TEntity> matcher){
+            return GetGroup(matcher).GetEntities();
+        }
+
+        /// Creates a new entity and adds copies of all
+        /// specified components to it.
+        /// If replaceExisting is true it will replace exisintg components.
+        public TEntity CloneEntity(IEntity entity,
+                                          bool replaceExisting = false,
+                                          params int[] indices){
+            var target = CreateEntity();
+            entity.CopyTo(target, replaceExisting, indices);
+            return target;
+        }
+
         /// The prefered way to create a context is to use the generated methods
         /// from the code generator, e.g. var context = new GameContext();
         public Context(int totalComponents) : this(totalComponents, 0, null, null) {
