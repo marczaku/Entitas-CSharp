@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Entitas {
@@ -19,6 +20,58 @@ namespace Entitas {
         void RemoveAllEventHandlers();
     }
 
+	struct LimitedEnumerator<TEntity> : IEnumerator<TEntity> {
+
+			int limit;
+			int currentIndex;
+			TEntity[] array;
+
+			public LimitedEnumerator(int limit, TEntity[] array){
+				currentIndex = 0;
+				this.limit = limit;
+				this.array = array;
+			}
+
+			TEntity IEnumerator<TEntity>.Current {
+				get {
+					return array[currentIndex];
+				}
+			}
+
+			object IEnumerator.Current {
+				get {
+					return array[currentIndex];
+				}
+			}
+
+			void IDisposable.Dispose() {
+				array = null;
+				currentIndex = 0;
+			}
+
+			bool IEnumerator.MoveNext() {
+				currentIndex++;
+				return currentIndex < limit;
+			}
+
+			void IEnumerator.Reset() {
+				currentIndex = 0;
+			}
+		}
+
+		public struct GetEntitiesResult<TEntity> : IEnumerable<TEntity> {
+			public TEntity[] entities;
+			public int count;
+
+			IEnumerator<TEntity> IEnumerable<TEntity>.GetEnumerator() {
+				return new LimitedEnumerator<TEntity>(count, entities);
+			}
+
+			IEnumerator IEnumerable.GetEnumerator() {
+				return new LimitedEnumerator<TEntity>(count, entities);
+			}
+		}
+
     public interface IGroup<TEntity> : IGroup, IEnumerable<TEntity> where TEntity : class, IEntity {
 
         event GroupChanged<TEntity> OnEntityAdded;
@@ -38,5 +91,7 @@ namespace Entitas {
 
         TEntity[] GetEntities();
         TEntity GetSingleEntity();
+
+		GetEntitiesResult<TEntity> GetEntitiesCached();
     }
 }

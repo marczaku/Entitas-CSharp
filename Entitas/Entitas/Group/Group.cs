@@ -141,65 +141,11 @@ namespace Entitas {
 			return _entities.Contains(entity);
 		}
 
-
-
-		struct LimitedEnumerator : IEnumerator<TEntity> {
-
-			int limit;
-			int currentIndex;
-			TEntity[] array;
-
-			public LimitedEnumerator(int limit, TEntity[] array){
-				currentIndex = 0;
-				this.limit = limit;
-				this.array = array;
-			}
-
-			TEntity IEnumerator<TEntity>.Current {
-				get {
-					return array[currentIndex];
-				}
-			}
-
-			object IEnumerator.Current {
-				get {
-					return array[currentIndex];
-				}
-			}
-
-			void IDisposable.Dispose() {
-				array = null;
-				currentIndex = 0;
-			}
-
-			bool IEnumerator.MoveNext() {
-				currentIndex++;
-				return currentIndex < limit;
-			}
-
-			void IEnumerator.Reset() {
-				currentIndex = 0;
-			}
-		}
-
-		public struct GetEntitiesResult : IEnumerable<TEntity> {
-			public TEntity[] entities;
-			public int count;
-
-			IEnumerator<TEntity> IEnumerable<TEntity>.GetEnumerator() {
-				return new LimitedEnumerator(count, entities);
-			}
-
-			IEnumerator IEnumerable.GetEnumerator() {
-				return new LimitedEnumerator(count, entities);
-			}
-		}
-
-		public GetEntitiesResult GetEntitiesCached() {
+		public GetEntitiesResult<TEntity> GetEntitiesCached() {
 			var count = this.count;
 			var array = ResizingArray<TEntity>.GetInstance(count);
 			_entities.CopyTo(array);
-			return new GetEntitiesResult {
+			return new GetEntitiesResult<TEntity> {
 				entities = array,
 				count = count
 			};
