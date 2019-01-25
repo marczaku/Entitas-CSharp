@@ -172,6 +172,13 @@ namespace Entitas {
 		/// Returns the only entity in this group. It will return null
 		/// if the group is empty. It will throw an exception if the group
 		/// has more than one entity.
+		public TEntity GetFirstEntity() {
+			return _entities.GetEnumerator().Current;
+		}
+
+		/// Returns the only entity in this group. It will return null
+		/// if the group is empty. It will throw an exception if the group
+		/// has more than one entity.
 		public TEntity GetSingleEntity() {
 			if (_singleEntityCache == null) {
 				var c = _entities.Count;

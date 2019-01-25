@@ -310,7 +310,7 @@ namespace Entitas {
 				}
 			}
 
-			if (_components[this.destroyLastIndex] != null && this.destroyLastIndex >= 0) {
+			if (this.destroyLastIndex >= 0 && _components[this.destroyLastIndex] != null ) {
 				replaceComponent(this.destroyLastIndex, null);
 			}
 		}

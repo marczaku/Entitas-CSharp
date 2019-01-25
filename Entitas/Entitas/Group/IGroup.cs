@@ -91,6 +91,7 @@ namespace Entitas {
 
         TEntity[] GetEntities();
         TEntity GetSingleEntity();
+		TEntity GetFirstEntity();
 
 		GetEntitiesResult<TEntity> GetEntitiesCached();
     }
