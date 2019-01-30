@@ -27,7 +27,7 @@ namespace Entitas {
 			TEntity[] array;
 
 			public LimitedEnumerator(int limit, TEntity[] array){
-				currentIndex = 0;
+				currentIndex = -1;
 				this.limit = limit;
 				this.array = array;
 			}
@@ -55,7 +55,7 @@ namespace Entitas {
 			}
 
 			void IEnumerator.Reset() {
-				currentIndex = 0;
+				currentIndex = -1;
 			}
 		}
 
