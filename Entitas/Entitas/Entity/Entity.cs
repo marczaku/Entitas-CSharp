@@ -100,8 +100,12 @@ namespace Entitas {
 			return new ContextInfo("No Context", componentNames, null);
 		}
 
-		public void Reactivate(int creationIndex) {
-			_creationIndex = creationIndex;
+        protected virtual void SetCreationIndex(int creationIndex) {
+            _creationIndex = creationIndex;
+        }
+
+        public void Reactivate(int creationIndex) {
+			SetCreationIndex(creationIndex);
 			_isEnabled = true;
 		}
 
