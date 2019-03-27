@@ -34,6 +34,12 @@ namespace Entitas {
         void Reset();
     }
 
+	public interface IIdContext<TEntity, TEntityId> : IContext<TEntity> where TEntity : class, IEntity {
+		TEntity GetEntityWithId(TEntityId id);
+		bool HasEntityWithId(TEntityId id);
+		bool TryGetEntityWithId(TEntityId id, out TEntity entity);
+	}
+
     public interface IContext<TEntity> : IContext where TEntity : class, IEntity {
 
         TEntity CreateEntity();

@@ -13,6 +13,10 @@ namespace Entitas {
 
     public delegate void EntityEvent(IEntity entity);
 
+	public interface IIdEntity<TEntityId> : IEntity {
+		TEntityId id{get;}
+	}
+
     public interface IEntity : IAERC {
 
         event EntityComponentChanged OnComponentAdded;

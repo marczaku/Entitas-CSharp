@@ -11,12 +11,10 @@ namespace Entitas.CodeGeneration.Plugins {
         public bool runInDryMode { get { return true; } }
 
         const string ENTITY_TEMPLATE =
-@"public sealed partial class ${ContextName}Entity : Entitas.Entity {
-public ${ContextName}EntityId Id { get; private set; }
-
+@"public sealed partial class ${ContextName}Entity : Entitas.IdEntity<${ContextName}EntityId> {
     protected override void SetCreationIndex(int creationIndex) {
         base.SetCreationIndex(creationIndex);
-        this.Id = new ${ContextName}EntityId(creationIndex);
+        this.id = new ${ContextName}EntityId(creationIndex);
     }
 }
 
