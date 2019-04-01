@@ -13,14 +13,14 @@ namespace Entitas {
         IComponent previousComponent, IComponent newComponent
     ) where TEntity : class, IEntity;
 
-    public interface IGroup : IEnumerable {
+    public interface IGroup {
 
         int count { get; }
 
         void RemoveAllEventHandlers();
     }
 
-	struct LimitedEnumerator<TEntity> : IEnumerator<TEntity> {
+	public struct LimitedEnumerator<TEntity> : IEnumerator<TEntity> {
 
 			int limit;
 			int currentIndex;
@@ -59,20 +59,16 @@ namespace Entitas {
 			}
 		}
 
-		public struct GetEntitiesResult<TEntity> : IEnumerable<TEntity> {
+		public struct GetEntitiesResult<TEntity> {
 			public TEntity[] entities;
 			public int count;
 
-			IEnumerator<TEntity> IEnumerable<TEntity>.GetEnumerator() {
-				return new LimitedEnumerator<TEntity>(count, entities);
-			}
-
-			IEnumerator IEnumerable.GetEnumerator() {
+            LimitedEnumerator<TEntity> GetEnumerator() {
 				return new LimitedEnumerator<TEntity>(count, entities);
 			}
 		}
 
-    public interface IGroup<TEntity> : IGroup, IEnumerable<TEntity> where TEntity : class, IEntity {
+    public interface IGroup<TEntity> : IGroup where TEntity : class, IEntity {
 
         event GroupChanged<TEntity> OnEntityAdded;
         event GroupChanged<TEntity> OnEntityRemoved;

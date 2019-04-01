@@ -161,19 +161,17 @@ namespace Entitas {
 			return _entitiesCache;
 		}
 
-		public IEnumerator<TEntity> GetEnumerator() {
+		public HashSet<TEntity>.Enumerator GetEnumerator() {
 			return _entities.GetEnumerator();
-		}
-
-		IEnumerator IEnumerable.GetEnumerator() {
-			return GetEnumerator();
 		}
 
 		/// Returns the only entity in this group. It will return null
 		/// if the group is empty. It will throw an exception if the group
 		/// has more than one entity.
 		public TEntity GetFirstEntity() {
-			return _entities.GetEnumerator().Current;
+            var enumerator = _entities.GetEnumerator ();
+            enumerator.MoveNext ();
+            return enumerator.Current;
 		}
 
 		/// Returns the only entity in this group. It will return null
