@@ -8,7 +8,6 @@
     <RootNamespace>Entitas.CodeGeneration.Plugins</RootNamespace>
     <AssemblyName>Entitas.CodeGeneration.Plugins</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <ReleaseVersion>1.0.0</ReleaseVersion>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -66,7 +65,6 @@
     <Compile Include="Entitas.CodeGeneration.Plugins\Component\DataProviders\ComponentDataProviders\ShouldGenerateComponentComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Component\DataProviders\ComponentDataProviders\ShouldGenerateComponentIndexComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Component\DataProviders\ComponentDataProviders\ShouldGenerateMethodsComponentDataProvider.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\DataProviders\Components\Providers\ShouldGenerateTargetListenerComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Component\DataProviders\ComponentDataProviders\FlagPrefixComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Configs\AssembliesConfig.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Configs\ContextNamesConfig.cs" />

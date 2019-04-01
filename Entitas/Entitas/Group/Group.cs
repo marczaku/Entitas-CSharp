@@ -161,7 +161,12 @@ namespace Entitas {
 			return _entitiesCache;
 		}
 
-		public HashSet<TEntity>.Enumerator GetEnumerator() {
+        public IEnumerable<TEntity> AsEnumerable()
+        {
+            return _entities;
+        }
+
+        public HashSet<TEntity>.Enumerator GetEnumerator() {
 			return _entities.GetEnumerator();
 		}
         public List<TEntity> GetEntities(List<TEntity> buffer) {

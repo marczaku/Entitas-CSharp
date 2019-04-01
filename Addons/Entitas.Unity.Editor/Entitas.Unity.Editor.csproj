@@ -8,7 +8,6 @@
     <RootNamespace>Entitas.Unity.Editor</RootNamespace>
     <AssemblyName>Entitas.Unity.Editor</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <ReleaseVersion>1.0.0</ReleaseVersion>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

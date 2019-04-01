@@ -8,10 +8,10 @@ namespace Entitas {
 	public class IdContext<TEntity, TEntityId> : Context<TEntity>, IIdContext<TEntity, TEntityId> where TEntity : class, IEntity {
 		readonly Dictionary<TEntityId, TEntity> entityReferences = new Dictionary<TEntityId, TEntity>();
 
-		public IdContext(int totalComponents) : base(totalComponents) {
+		public IdContext(int totalComponents, Func<TEntity> entityFactory) : base(totalComponents, entityFactory) {
 		}
 
-		public IdContext(int totalComponents, int startCreationIndex, ContextInfo contextInfo, Func<IEntity, IAERC> aercFactory) : base(totalComponents, startCreationIndex, contextInfo, aercFactory) {
+		public IdContext(int totalComponents, int startCreationIndex, ContextInfo contextInfo, Func<IEntity, IAERC> aercFactory, Func<TEntity> entityFactory) : base(totalComponents, startCreationIndex, contextInfo, aercFactory, entityFactory) {
 		}
 
 		public TEntity GetEntityWithId(TEntityId id) {

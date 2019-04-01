@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8EC3A728-37B1-480F-BE1E-2C1EFD1E1626}</ProjectGuid>
+    <ProjectGuid>{84D279D3-76D8-4271-B895-83D46B08753B}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Entitas.VisualDebugging.CodeGeneration.Plugins</RootNamespace>
-    <AssemblyName>Entitas.VisualDebugging.CodeGeneration</AssemblyName>
+    <RootNamespace>StormChaser.CodeGeneration.Plugins</RootNamespace>
+    <AssemblyName>StormChaser.CodeGeneration.Plugins</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
@@ -18,37 +18,52 @@
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
+    <ExternalConsole>true</ExternalConsole>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-    <AssemblyName>Entitas.VisualDebugging.CodeGeneration.Plugins</AssemblyName>
+    <ExternalConsole>true</ExternalConsole>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DesperateDevs.Analytics, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Analytics.dll</HintPath>
+    </Reference>
     <Reference Include="DesperateDevs.CodeGeneration, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.CodeGeneration.dll</HintPath>
+    </Reference>
+    <Reference Include="DesperateDevs.CodeGeneration.CodeGenerator, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.CodeGeneration.CodeGenerator.dll</HintPath>
+    </Reference>
+    <Reference Include="DesperateDevs.Serialization, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="DesperateDevs.Utils, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Utils.dll</HintPath>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Compile Include="Entitas.VisualDebugging.CodeGeneration.Plugins\ContextObserverGenerator.cs" />
-    <Compile Include="Entitas.VisualDebugging.CodeGeneration.Plugins\FeatureClassGenerator.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entitas.VisualDebugging.CodeGeneration.Plugins\" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\Entitas.CodeGeneration.Attributes\Entitas.CodeGeneration.Attributes.csproj">
+      <Project>{76A16CFD-7488-41D3-989B-CA2F1840E638}</Project>
+      <Name>Entitas.CodeGeneration.Attributes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Entitas\Entitas.csproj">
+      <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
+      <Name>Entitas</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Entitas.CodeGeneration.Plugins\Entitas.CodeGeneration.Plugins.csproj">
-      <Project>{84D279D3-76D8-4271-B895-83D46B08753C}</Project>
+      <Project>{84d279d3-76d8-4271-b895-83d46b08753c}</Project>
       <Name>Entitas.CodeGeneration.Plugins</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="StormChaser.CodeGeneration.Plugins\ShouldGenerateTargetListenerComponentDataProvider.cs" />
+    <Compile Include="StormChaser.CodeGeneration.Plugins\UnityContextsGenerator.cs" />
+    <Compile Include="StormChaser.CodeGeneration.Plugins\UnityEntityIndexGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

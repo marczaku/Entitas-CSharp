@@ -8,7 +8,6 @@
     <RootNamespace>Entitas.Migration.CLI</RootNamespace>
     <AssemblyName>Entitas.Migration.CLI</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <ReleaseVersion>1.0.0</ReleaseVersion>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

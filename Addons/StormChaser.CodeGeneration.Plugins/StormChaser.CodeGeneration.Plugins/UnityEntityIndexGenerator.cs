@@ -18,7 +18,7 @@ namespace Entitas.CodeGeneration.Plugins {
         readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
         const string CLASS_TEMPLATE =
-            @"public partial class Contexts {
+            @"namespace StormChaser.SurvivalCity.Unity{public partial class UnityContexts {
 
 ${indexConstants}
 
@@ -26,7 +26,7 @@ ${indexConstants}
     public void InitializeEntityIndices() {
 ${addIndices}
     }
-}";
+}}";
 
 		const string CONTEXT_CLASS_TEMPLATE =
 @"public partial class ${ContextName}Context {
@@ -46,12 +46,12 @@ ${getIndices}
 
         const string GET_INDEX_TEMPLATE =
             @"    public static System.Collections.Generic.HashSet<${ContextName}Entity> GetEntitiesWith${IndexName}(this ${ContextName}Context context, ${KeyType} ${MemberName}) {
-        return ((${IndexType}<${ContextName}Entity, ${KeyType}>)GetEntityIndex(Contexts.${IndexName})).GetEntities(${MemberName});
+        return ((${IndexType}<${ContextName}Entity, ${KeyType}>)GetEntityIndex(UnityContexts.${IndexName})).GetEntities(${MemberName});
     }";
 
         const string GET_PRIMARY_INDEX_TEMPLATE =
             @"    public ${ContextName}Entity TryGetEntityWith${IndexName}(${KeyType} ${MemberName}) {
-        return ((${IndexType}<${ContextName}Entity, ${KeyType}>)GetEntityIndex(Contexts.${IndexName})).GetEntity(${MemberName});
+        return ((${IndexType}<${ContextName}Entity, ${KeyType}>)GetEntityIndex(UnityContexts.${IndexName})).GetEntity(${MemberName});
     }
     public ${ContextName}Entity GetEntityWith${IndexName}(${KeyType} ${MemberName}) {
         var entity = ((${IndexType}<${ContextName}Entity, ${KeyType}>)GetEntityIndex(Contexts.${IndexName})).GetEntity(${MemberName});
@@ -117,7 +117,7 @@ ${getIndices}
                 .Replace("${addIndices}", addIndices);
 
 			files.Add(new CodeGenFile(
-                "Contexts.cs",
+                "UnityContexts.cs",
                 fileContent,
                 GetType().FullName
             ));

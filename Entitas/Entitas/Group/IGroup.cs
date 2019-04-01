@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace Entitas {
 
@@ -19,7 +20,7 @@ namespace Entitas {
         void RemoveAllEventHandlers();
     }
 
-	public struct LimitedEnumerator<TEntity> : IEnumerator<TEntity> {
+	public struct LimitedEnumerator<TEntity> : IEnumerator<TEntity>, IEnumerator {
 
 			int limit;
 			int currentIndex;
@@ -87,8 +88,6 @@ namespace Entitas {
         List<TEntity> GetEntities(List<TEntity> buffer);
         TEntity GetSingleEntity();
 		TEntity GetFirstEntity();
-
-        HashSet<TEntity>.Enumerator GetEnumerator ();
 
         IEnumerable<TEntity> AsEnumerable();
         HashSet<TEntity>.Enumerator GetEnumerator();
