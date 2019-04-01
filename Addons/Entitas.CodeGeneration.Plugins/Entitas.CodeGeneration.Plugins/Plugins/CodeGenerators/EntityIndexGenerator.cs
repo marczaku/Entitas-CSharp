@@ -55,8 +55,9 @@ ${getIndices}
     public ${ContextName}Entity GetEntityWith${ComponentName}(${KeyType} ${MemberName}) {
         var entity = ((${IndexType}<${ContextName}Entity, ${KeyType}>)GetEntityIndex(Contexts.${IndexName})).GetEntity(${MemberName});
         if(entity == null){
-			throw new MissingPrimaryEntityException<${KeyType}>(${MemberName});
+			throw new Entitas.MissingPrimaryEntityException<${KeyType}>(${MemberName}, Contexts.${IndexName});
 		}
+		return entity;
     }";
 
         const string CUSTOM_METHOD_TEMPLATE =

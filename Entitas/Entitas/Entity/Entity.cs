@@ -5,6 +5,12 @@ using Entitas.Utils;
 
 namespace Entitas {
 
+	public abstract class IdEntity<TEntityId> : Entity, IIdEntity<TEntityId> {
+		public TEntityId id {
+			get; protected set;
+		}
+	}
+
 	/// Use context.CreateEntity() to create a new entity and
 	/// entity.Destroy() to destroy it.
 	/// You can add, replace and remove IComponent to an entity.
@@ -81,7 +87,6 @@ namespace Entitas {
 		StringBuilder _toStringBuilder;
 
 		public void Initialize(int creationIndex, int totalComponents, Stack<IComponent>[] componentPools, ContextInfo contextInfo = null, IAERC aerc = null) {
-			Reactivate(creationIndex);
 
 			_totalComponents = totalComponents;
 			_components = new IComponent[totalComponents];

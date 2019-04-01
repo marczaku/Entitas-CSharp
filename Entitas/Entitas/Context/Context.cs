@@ -3,6 +3,42 @@ using System.Collections.Generic;
 using Entitas.Utils;
 
 namespace Entitas {
+	
+	public class IdContext<TEntity, TEntityId> : Context<TEntity>, IIdContext<TEntity, TEntityId> where TEntity : class, IEntity {
+		readonly Dictionary<TEntityId, TEntity> entityReferences = new Dictionary<TEntityId, TEntity>();
+
+		public IdContext(int totalComponents) : base(totalComponents) {
+		}
+
+		public IdContext(int totalComponents, int startCreationIndex, ContextInfo contextInfo, Func<IEntity, IAERC> aercFactory) : base(totalComponents, startCreationIndex, contextInfo, aercFactory) {
+		}
+
+		public TEntity GetEntityWithId(TEntityId id) {
+			TEntity result;
+			this.entityReferences.TryGetValue(id, out result);
+			return result;
+		}
+
+		public bool HasEntityWithId(TEntityId id) {
+			return this.entityReferences.ContainsKey(id);
+		}
+
+		public bool TryGetEntityWithId(TEntityId id, out TEntity entity) {
+			return this.entityReferences.TryGetValue(id, out entity);
+		}
+
+		protected override void ActivateEntity(TEntity entity) {
+			base.ActivateEntity(entity);
+			var e = entity as IIdEntity<TEntityId>;
+			this.entityReferences[e.id] = entity;
+		}
+
+		protected override void DeactivateEntity(TEntity entity) {
+			base.DeactivateEntity(entity);
+			var e = entity as IIdEntity<TEntityId>;
+			this.entityReferences.Remove(e.id);
+		}
+	}
 
     /// A context manages the lifecycle of entities and groups.
     /// You can create and destroy entities and get groups of entities.
@@ -148,6 +184,32 @@ namespace Entitas {
             return new ContextInfo("Unnamed Context", componentNames, null);
         }
 
+		protected virtual void ActivateEntity(TEntity entity) {
+            entity.Reactivate(_creationIndex++);
+            _entities.Add(entity);
+            entity.Retain(this);
+            entity.OnComponentAdded += _cachedEntityChanged;
+            entity.OnComponentRemoved += _cachedEntityChanged;
+            entity.OnComponentReplaced += _cachedComponentReplaced;
+            entity.OnEntityReleased += _cachedEntityReleased;
+            entity.OnDestroyEntity += _cachedDestroyEntity;
+		}
+
+		protected virtual void DeactivateEntity(TEntity entity) {
+            entity.InternalDestroy();
+			if (entity.retainCount == 1) {
+                // Can be released immediately without
+                // adding to _retainedEntities
+                entity.OnEntityReleased -= _cachedEntityReleased;
+                _reusableEntities.Push(entity);
+                entity.Release(this);
+                entity.RemoveAllOnEntityReleasedHandlers();
+            } else {
+                _retainedEntities.Add(entity);
+                entity.Release(this);
+            }
+		}
+
         /// Creates a new entity or gets a reusable entity from the
         /// internal ObjectPool for entities.
         public TEntity CreateEntity() {
@@ -155,20 +217,13 @@ namespace Entitas {
 
             if (_reusableEntities.Count > 0) {
                 entity = _reusableEntities.Pop();
-                entity.Reactivate(_creationIndex++);
             } else {
                 entity = (TEntity)Activator.CreateInstance(typeof(TEntity));
                 entity.Initialize(_creationIndex++, _totalComponents, _componentPools, _contextInfo, _aercFactory(entity));
             }
+			ActivateEntity(entity);
 
-            _entities.Add(entity);
-            entity.Retain(this);
             _entitiesCache = null;
-            entity.OnComponentAdded += _cachedEntityChanged;
-            entity.OnComponentRemoved += _cachedEntityChanged;
-            entity.OnComponentReplaced += _cachedComponentReplaced;
-            entity.OnEntityReleased += _cachedEntityReleased;
-            entity.OnDestroyEntity += _cachedDestroyEntity;
 
             if (OnEntityCreated != null) {
                 OnEntityCreated(this, entity);
@@ -195,22 +250,10 @@ namespace Entitas {
                 OnEntityWillBeDestroyed(this, entity);
             }
 
-            entity.InternalDestroy();
+			DeactivateEntity(entity);
 
             if (OnEntityDestroyed != null) {
                 OnEntityDestroyed(this, entity);
-            }
-
-            if (entity.retainCount == 1) {
-                // Can be released immediately without
-                // adding to _retainedEntities
-                entity.OnEntityReleased -= _cachedEntityReleased;
-                _reusableEntities.Push(entity);
-                entity.Release(this);
-                entity.RemoveAllOnEntityReleasedHandlers();
-            } else {
-                _retainedEntities.Add(entity);
-                entity.Release(this);
             }
         }
 
