@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Entitas {
@@ -78,8 +77,9 @@ namespace Entitas {
 			}
 		}
 
-		/// This is called by context.Reset() to remove all event handlers.
-		/// This is useful when you want to soft-restart your application.
+        /// Removes all event handlers from this group.
+        /// Keep in mind that this will break reactive systems and
+        /// entity indices which rely on this group.
 		public void RemoveAllEventHandlers() {
 			OnEntityAdded = null;
 			OnEntityRemoved = null;
@@ -163,6 +163,11 @@ namespace Entitas {
 
 		public HashSet<TEntity>.Enumerator GetEnumerator() {
 			return _entities.GetEnumerator();
+		}
+        public List<TEntity> GetEntities(List<TEntity> buffer) {
+            buffer.Clear();
+            buffer.AddRange(_entities);
+            return buffer;
 		}
 
 		/// Returns the only entity in this group. It will return null

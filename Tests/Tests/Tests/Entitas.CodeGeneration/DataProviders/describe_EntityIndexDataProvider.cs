@@ -1,28 +1,28 @@
 using System;
+using DesperateDevs.Serialization;
 using Entitas.CodeGeneration.Plugins;
-using Entitas.Utils;
 using My.Namespace;
 using MyNamespace;
 using NSpec;
 
 class describe_EntityIndexDataProvider : nspec {
 
-    EntityIndexData[] getData<T1, T2>(Properties properties = null) {
+    EntityIndexData[] getData<T1, T2>(Preferences preferences= null) {
         var provider = new EntityIndexDataProvider(new Type[] { typeof(T1), typeof(T2) });
-        if (properties == null) {
-            properties = new Properties(
+        if (preferences == null) {
+            preferences = new TestPreferences(
                 "Entitas.CodeGeneration.Plugins.Contexts = Game, GameState" + "\n" +
                 "Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false"
             );
         }
-        provider.Configure(properties);
+        provider.Configure(preferences);
 
         return (EntityIndexData[])provider.GetData();
     }
 
     void when_providing() {
 
-        it["creates data for each entity index"] = () => {
+        it["creates data for single entity index"] = () => {
             var data = getData<EntityIndexComponent, StandardComponent>();
             data.Length.should_be(1);
 
@@ -50,9 +50,23 @@ class describe_EntityIndexDataProvider : nspec {
 
             d.GetMemberName().GetType().should_be(typeof(string));
             d.GetMemberName().should_be("value");
+
+            d.GetHasMultiple().GetType().should_be(typeof(bool));
+            d.GetHasMultiple().should_be_false();
         };
 
-        it["creates data for each primary entity index"] = () => {
+        it["creates data for multiple entity index"] = () => {
+            var data = getData<MultipleEntityIndicesComponent, StandardComponent>();
+            data.Length.should_be(2);
+
+            data[0].GetEntityIndexName().should_be("MyNamespaceMultipleEntityIndices");
+            data[0].GetHasMultiple().should_be_true();
+
+            data[1].GetEntityIndexName().should_be("MyNamespaceMultipleEntityIndices");
+            data[1].GetHasMultiple().should_be_true();
+        };
+
+        it["creates data for single primary entity index"] = () => {
             var data = getData<PrimaryEntityIndexComponent, StandardComponent>();
 
             data.Length.should_be(1);
@@ -66,6 +80,19 @@ class describe_EntityIndexDataProvider : nspec {
             d.GetKeyType().should_be("string");
             d.GetComponentType().should_be("PrimaryEntityIndexComponent");
             d.GetMemberName().should_be("value");
+            d.GetHasMultiple().should_be_false();
+        };
+
+        it["creates data for multiple primary entity index"] = () => {
+            var data = getData<MultiplePrimaryEntityIndicesComponent, StandardComponent>();
+
+            data.Length.should_be(2);
+
+            data[0].GetEntityIndexName().should_be("MultiplePrimaryEntityIndices");
+            data[0].GetHasMultiple().should_be_true();
+
+            data[1].GetEntityIndexName().should_be("MultiplePrimaryEntityIndices");
+            data[1].GetHasMultiple().should_be_true();
         };
 
         it["ignores abstract components"] = () => {
@@ -95,19 +122,19 @@ class describe_EntityIndexDataProvider : nspec {
             data.Length.should_be(0);
         };
 
-        it["configure"] = () => {
+        context["configure"] = () => {
 
-            Properties properties = null;
+            Preferences preferences= null;
 
             before = () => {
-                properties = new Properties(
+                preferences = new TestPreferences(
                     "Entitas.CodeGeneration.Plugins.Contexts = ConfiguredContext" + "\n" +
                     "Entitas.CodeGeneration.Plugins.IgnoreNamespaces = true"
                 );
             };
 
             it["ignores namespaces"] = () => {
-                var data = getData<EntityIndexComponent, StandardComponent>(properties);
+                var data = getData<EntityIndexComponent, StandardComponent>(preferences);
                 data.Length.should_be(1);
                 var d = data[0];
 
@@ -116,7 +143,7 @@ class describe_EntityIndexDataProvider : nspec {
             };
 
             it["gets default context"] = () => {
-                var data = getData<EntityIndexNoContextComponent, StandardComponent>(properties);
+                var data = getData<EntityIndexNoContextComponent, StandardComponent>(preferences);
 
                 data.Length.should_be(1);
                 var d = data[0];

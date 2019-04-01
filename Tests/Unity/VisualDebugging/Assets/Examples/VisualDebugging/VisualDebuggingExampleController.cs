@@ -37,6 +37,7 @@ public class VisualDebuggingExampleController : MonoBehaviour {
             e.AddMyDouble(4.2f);
             e.AddMyFloat(4.2f);
             e.AddMyInt(42);
+            e.AddMyHiddenInt(42);
             e.AddRect(new Rect(1f, 2f, 3f, 4f));
             e.AddMyString("Hello, world!");
             e.AddVector2(new Vector2(1f, 2f));
@@ -45,12 +46,14 @@ public class VisualDebuggingExampleController : MonoBehaviour {
             e.AddMyBool(true);
             e.AddUnityObject(new UnityEngine.Object());
             var go = new GameObject("Player");
-            go.Link(e, context);
+            go.Link(e);
             e.AddGameObject(go);
-            e.AddTexture(new Texture());
+            e.AddTexture(new CustomRenderTexture(32, 32));
             e.AddTexture2D(new Texture2D(2, 2));
 
             // Custom
+            e.isFlag = true;
+            e.myCustomFlag = true;
             e.AddMonoBehaviourSubClass(new GameObject().AddComponent<MonoBehaviourSubClass>());
             e.AddCustomObject(new CustomObject("Custom Object"));
             e.AddSystemObject(new object());

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Entitas.Utils;
 
 namespace Entitas {
 
@@ -72,6 +71,9 @@ namespace Entitas {
 		/// release it manually at some point.
 		public IAERC aerc { get { return _aerc; } }
 
+        readonly List<IComponent> _componentBuffer;
+        readonly List<int> _indexBuffer;
+
 		int _creationIndex;
 		bool _isEnabled;
 
@@ -85,6 +87,11 @@ namespace Entitas {
 		int[] _componentIndicesCache;
 		string _toStringCache;
 		StringBuilder _toStringBuilder;
+
+        public Entity() {
+            _componentBuffer = new List<IComponent>();
+            _indexBuffer = new List<int>();
+        }
 
 		public void Initialize(int creationIndex, int totalComponents, Stack<IComponent>[] componentPools, ContextInfo contextInfo = null, IAERC aerc = null) {
 
@@ -130,7 +137,7 @@ namespace Entitas {
 			if (HasComponent(index)) {
 				throw new EntityAlreadyHasComponentException(
 					index, "Cannot add component '" +
-					_contextInfo.componentNames[index] + "' to " + this + "!",
+                           _contextInfo.componentNames[index] + "' to " + this + "!",
 					"You should check if an entity already has the component " +
 					"before adding it or use entity.ReplaceComponent()."
 				);
@@ -189,7 +196,9 @@ namespace Entitas {
 		}
 
 		void replaceComponent(int index, IComponent replacement) {
-			_toStringCache = null;
+            // TODO VD PERFORMANCE
+            // _toStringCache = null;
+
 			var previousComponent = _components[index];
 			if (replacement != previousComponent) {
 				_components[index] = replacement;
@@ -202,6 +211,10 @@ namespace Entitas {
 					}
 				} else {
 					_componentIndicesCache = null;
+
+                    // TODO VD PERFORMANCE
+                    _toStringCache = null;
+
 					if (OnComponentRemoved != null) {
 						OnComponentRemoved(this, index, previousComponent);
 					}
@@ -238,18 +251,15 @@ namespace Entitas {
 		/// Returns all added components.
 		public IComponent[] GetComponents() {
 			if (_componentsCache == null) {
-				var components = EntitasCache.GetIComponentList();
+                for (int i = 0; i < _components.Length; i++) {
+                    var component = _components[i];
+                    if (component != null) {
+                        _componentBuffer.Add(component);
+                    }
+                }
 
-				for (int i = 0; i < _components.Length; i++) {
-					var component = _components[i];
-					if (component != null) {
-						components.Add(component);
-					}
-				}
-
-				_componentsCache = components.ToArray();
-
-				EntitasCache.PushIComponentList(components);
+                _componentsCache = _componentBuffer.ToArray();
+                _componentBuffer.Clear();
 			}
 
 			return _componentsCache;
@@ -258,17 +268,14 @@ namespace Entitas {
 		/// Returns all indices of added components.
 		public int[] GetComponentIndices() {
 			if (_componentIndicesCache == null) {
-				var indices = EntitasCache.GetIntList();
+                for (int i = 0; i < _components.Length; i++) {
+                    if (_components[i] != null) {
+                        _indexBuffer.Add(i);
+                    }
+                }
 
-				for (int i = 0; i < _components.Length; i++) {
-					if (_components[i] != null) {
-						indices.Add(i);
-					}
-				}
-
-				_componentIndicesCache = indices.ToArray();
-
-				EntitasCache.PushIntList(indices);
+                _componentIndicesCache = _indexBuffer.ToArray();
+                _indexBuffer.Clear();
 			}
 
 			return _componentIndicesCache;
@@ -345,8 +352,8 @@ namespace Entitas {
 		public IComponent CreateComponent(int index, Type type) {
 			var componentPool = GetComponentPool(index);
 			return componentPool.Count > 0
-						? componentPool.Pop()
-						: (IComponent)Activator.CreateInstance(type);
+                ? componentPool.Pop()
+                : (IComponent)Activator.CreateInstance(type);
 		}
 
 		/// Returns a new or reusable component from the componentPool
@@ -366,7 +373,9 @@ namespace Entitas {
 		/// release it manually at some point.
 		public void Retain(object owner) {
 			_aerc.Retain(owner);
-			_toStringCache = null;
+
+            // TODO VD PERFORMANCE
+            // _toStringCache = null;
 		}
 
 		/// Releases the entity. An owner can only release an entity
@@ -377,7 +386,9 @@ namespace Entitas {
 		/// release it manually at some point.
 		public void Release(object owner) {
 			_aerc.Release(owner);
-			_toStringCache = null;
+
+            // TODO VD PERFORMANCE
+            // _toStringCache = null;
 
 			if (_aerc.retainCount == 0) {
 				if (OnEntityReleased != null) {
@@ -427,9 +438,12 @@ namespace Entitas {
 				_toStringBuilder
 					.Append("Entity_")
 					.Append(_creationIndex)
-					.Append("(*")
-					.Append(retainCount)
-					.Append(")")
+
+                    // TODO VD PERFORMANCE
+//                    .Append("(*")
+//                    .Append(retainCount)
+//                    .Append(")")
+
 					.Append("(");
 
 				const string separator = ", ";
@@ -438,13 +452,19 @@ namespace Entitas {
 				for (int i = 0; i < components.Length; i++) {
 					var component = components[i];
 					var type = component.GetType();
-					var implementsToString = type.GetMethod("ToString")
-												 .DeclaringType.ImplementsInterface<IComponent>();
-					_toStringBuilder.Append(
-						implementsToString
-							? component.ToString()
-							: type.ToCompilableString().RemoveComponentSuffix().ShortTypeName()
-					);
+
+                    // TODO VD PERFORMANCE
+                    _toStringCache = null;
+
+//                    var implementsToString = type.GetMethod("ToString")
+//                        .DeclaringType.ImplementsInterface<IComponent>();
+//                    _toStringBuilder.Append(
+//                        implementsToString
+//                            ? component.ToString()
+//                            : type.ToCompilableString().RemoveComponentSuffix()
+//                    );
+
+                    _toStringBuilder.Append(component.ToString());
 
 					if (i < lastSeparator) {
 						_toStringBuilder.Append(separator);

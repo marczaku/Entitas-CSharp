@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Entitas {
@@ -78,7 +77,6 @@ namespace Entitas {
 
         void HandleEntitySilently(TEntity entity);
         void HandleEntity(TEntity entity, int index, IComponent component);
-
         GroupChanged<TEntity> HandleEntity(TEntity entity);
 
         void UpdateEntity(TEntity entity, int index, IComponent previousComponent, IComponent newComponent);
@@ -86,10 +84,14 @@ namespace Entitas {
         bool ContainsEntity(TEntity entity);
 
         TEntity[] GetEntities();
+        List<TEntity> GetEntities(List<TEntity> buffer);
         TEntity GetSingleEntity();
 		TEntity GetFirstEntity();
 
         HashSet<TEntity>.Enumerator GetEnumerator ();
+
+        IEnumerable<TEntity> AsEnumerable();
+        HashSet<TEntity>.Enumerator GetEnumerator();
 
 		GetEntitiesResult<TEntity> GetEntitiesCached();
     }

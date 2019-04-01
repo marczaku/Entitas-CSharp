@@ -1,4 +1,6 @@
-﻿using Entitas;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Entitas;
 using NSpec;
 
 class describe_Group : nspec {
@@ -40,6 +42,14 @@ class describe_Group : nspec {
                 _groupA.GetEntities().should_be_empty();
             };
 
+            it["doesn't add entities to buffer"] = () => {
+                var buffer = new List<TestEntity>();
+                buffer.Add(this.CreateEntity());
+                var retBuffer = _groupA.GetEntities(buffer);
+                buffer.should_be_empty();
+                retBuffer.should_be_same(buffer);
+            };
+
             it["is empty"] = () => {
                 _groupA.count.should_be(0);
             };
@@ -59,6 +69,22 @@ class describe_Group : nspec {
                 assertContains(eA1);
             };
 
+            it["fills buffer with entities"] = () => {
+                var buffer = new List<TestEntity>();
+                _groupA.GetEntities(buffer);
+                buffer.Count.should_be(1);
+                buffer[0].should_be_same(eA1);
+            };
+
+            it["clears buffer before filling"] = () => {
+                var buffer = new List<TestEntity>();
+                buffer.Add(this.CreateEntity());
+                buffer.Add(this.CreateEntity());
+                _groupA.GetEntities(buffer);
+                buffer.Count.should_be(1);
+                buffer[0].should_be_same(eA1);
+            };
+
             it["doesn't add same entity twice"] = () => {
                 handleSilently(eA1);
                 assertContains(eA1);
@@ -74,6 +100,10 @@ class describe_Group : nspec {
 
                 i.should_be(1);
                 e.should_be_same(eA1);
+            };
+
+            it["returns enumerable"] = () => {
+                _groupA.AsEnumerable().Single().should_be_same(eA1);
             };
 
             context["when entity doesn't match anymore"] = () => {

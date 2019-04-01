@@ -10,6 +10,7 @@
     <ReleaseVersion>1.0.0</ReleaseVersion>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
+    <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,6 +33,8 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entitas.Migration\Migrations\M0450.cs" />
+    <Compile Include="Entitas.Migration\Migrations\M0472.cs" />
     <Compile Include="Entitas.Migration\Migration\IMigration.cs" />
     <Compile Include="Entitas.Migration\Migration\MigrationFile.cs" />
     <Compile Include="Entitas.Migration\Migration\MigrationUtils.cs" />

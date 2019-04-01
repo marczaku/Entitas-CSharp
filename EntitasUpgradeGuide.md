@@ -2,35 +2,108 @@ Entitas Upgrade Guide
 =====================
 
 Entitas provides automated migration tools to help upgrading to new versions.
-Either use the command line tool `MigrationAssistant.exe` or the Migration menu
-item in Unity.
+You can apply automatic migrations in Unity by opening the Entitas Migration Window
+`Tools > Entitas > Migrate...`
 
 This document contains checklists for every release with breaking changes.
 
+Entitas 0.47.2 upgrade guide
+============================
 
-Example
+#### Breaking changes
+
+Apply Migration 0.47.2 to automatically rename the changed keys your properties files.
+
+The following keys changed from:
+
+- CodeGenerator.SearchPaths
+- CodeGenerator.Plugins
+- CodeGenerator.PreProcessors
+- CodeGenerator.DataProviders
+- CodeGenerator.CodeGenerators
+- CodeGenerator.PostProcessors
+- CodeGenerator.CLI.Ignore.UnusedKeys or Ignore.Keys
+
+to:
+
+- Jenny.SearchPaths
+- Jenny.Plugins
+- Jenny.PreProcessors
+- Jenny.DataProviders
+- Jenny.CodeGenerators
+- Jenny.PostProcessors
+- Jenny.Ignore.Keys
+
+---
+
+Entitas 0.46.0 upgrade guide
+============================
+
+#### Breaking changes
+
+Removed methods marked obsolete in 0.42.0 from April 2017
+- `context.CreateCollector<TEntity>(IMatcher<TEntity> matcher, GroupEvent groupEvent)`
+- `new Context(int totalComponents, int startCreationIndex, ContextInfo contextInfo)`
+- `context.DestroyEntity(TEnity entity)`
+
+#### After you installed
+
+First, edit the file `Generated/Feature.cs` and comment or delete the lines with compiler errors.
+
+Then, run auto-import to use the new DesperateDevs.CodeGeneration.Plugins and generate.
+
+Entitas.properties can be named differently now. By default it will be called
+Preferences.properties. Additionally, you can delete User.properties or rename it
+to Xyz.userproperties. If this file doesn't exist, it will automatically be generated for you.
+You can have multiple properties and userproperties files now, e.g.
+Preferences.properties and Roslyn.properties. In Unity it will automatically find and use
+the first file. When using the Code Generator CLI (called Jenny now) you can explicitly
+specify files like this
+
 ```
-$ mono MigrationAssistant.exe
-usage:
-[-l]             - print all available versions
-[version] [path] - apply migration of version [version] to source files located at [path]
+// will find and use the first file
+$ jenny gen
 
+// specify a file
+$ jenny gen Roslyn.properties
 
-$ mono MigrationAssistant.exe -l
-========================================
-0.18.0
-  - Migrates IReactiveSystem GetXyz methods to getters
-  - Use on folder, where all systems are located
-========================================
-0.19.0
-  - Migrates IReactiveSystem.Execute to accept List<Entity>
-  - Use on folder, where all systems are located
-========================================
-etc...
-
-
-$ mono MigrationAssistant.exe 0.26.0 /Path/To/Project/RequestedFolder
+// optionally specify an other userproperties
+jenny gen Roslyn.properties My.userproperties
 ```
+
+---
+
+Entitas 0.45.0 upgrade guide
+============================
+
+#### Breaking changes
+
+Use the command line tool `MigrationAssistant.exe` and apply Migration 0.45.0 to
+automatically rename the changed keys in Entitas.properties
+
+`MigrationAssistant.exe 0.45.0 path/to/project`
+
+The following keys in Entitas.properties changed from:
+
+- Entitas.CodeGeneration.CodeGenerator.SearchPaths
+- Entitas.CodeGeneration.CodeGenerator.Plugins
+- Entitas.CodeGeneration.CodeGenerator.DataProviders
+- Entitas.CodeGeneration.CodeGenerator.CodeGenerators
+- Entitas.CodeGeneration.CodeGenerator.PostProcessors
+- Entitas.CodeGeneration.CodeGenerator.CLI.Ignore.UnusedKeys
+
+to:
+
+- CodeGenerator.SearchPaths
+- CodeGenerator.Plugins
+- CodeGenerator.DataProviders
+- CodeGenerator.CodeGenerators
+- CodeGenerator.PostProcessors
+- CodeGenerator.CLI.Ignore.UnusedKeys
+
+The default plugins are now in folder called `Entitas` instead of `Default`. Please update
+the searchPaths in Entitas.properties.
+`Entitas.exe` is now uppercase with capital E
 
 ---
 

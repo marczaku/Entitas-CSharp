@@ -2,44 +2,35 @@
 ├── Addons
 │   ├── Entitas.Blueprints
 │   │   └── Entitas.Blueprints
-│   │       └── Blueprints
 │   ├── Entitas.Blueprints.CodeGeneration.Plugins
 │   │   └── Entitas.Blueprints.CodeGeneration.Plugins
-│   │       └── Plugins
+│   ├── Entitas.Blueprints.CodeGeneration.Unity.Plugins
+│   │   └── Entitas.Blueprints.CodeGeneration.Unity.Plugins
 │   ├── Entitas.Blueprints.Unity
 │   │   └── Entitas.Blueprints.Unity
-│   │       └── Unity
 │   ├── Entitas.Blueprints.Unity.Editor
 │   │   └── Entitas.Blueprints.Unity.Editor
-│   │       └── Editor
-│   ├── Entitas.CodeGeneration
-│   │   └── Entitas.CodeGeneration
-│   │       └── CodeGeneration
-│   │           └── Interfaces
 │   ├── Entitas.CodeGeneration.Attributes
 │   │   └── Entitas.CodeGeneration.Attributes
-│   │       └── Attributes
-│   │           └── EntityIndex
-│   ├── Entitas.CodeGeneration.CodeGenerator
-│   │   └── Entitas.CodeGeneration.CodeGenerator
-│   │       └── CodeGenerator
-│   ├── Entitas.CodeGeneration.CodeGenerator.CLI
-│   │   └── Commands
+│   │       └── EntityIndex
 │   ├── Entitas.CodeGeneration.Plugins
 │   │   └── Entitas.CodeGeneration.Plugins
-│   │       └── Plugins
-│   │           ├── CodeGenerators
-│   │           ├── Configs
-│   │           ├── Data
-│   │           ├── DataProviders
-│   │           │   ├── Components
-│   │           │   │   └── Providers
-│   │           │   ├── Contexts
-│   │           │   └── EntityIndex
-│   │           └── PostProcessors
-│   ├── Entitas.CodeGeneration.Unity.Editor
-│   │   └── Entitas.CodeGeneration.Unity.Editor
-│   │       └── Editor
+│   │       ├── Component
+│   │       │   ├── CodeGenerators
+│   │       │   └── DataProviders
+│   │       │       └── ComponentDataProviders
+│   │       ├── Configs
+│   │       ├── Context
+│   │       │   ├── CodeGenerators
+│   │       │   └── DataProviders
+│   │       ├── Data
+│   │       ├── Entity
+│   │       │   └── CodeGenerators
+│   │       ├── EntityIndex
+│   │       │   ├── CodeGenerators
+│   │       │   └── DataProviders
+│   │       └── Events
+│   │           └── CodeGenerators
 │   ├── Entitas.Migration
 │   │   └── Entitas.Migration
 │   │       ├── Migration
@@ -47,200 +38,148 @@
 │   ├── Entitas.Migration.CLI
 │   ├── Entitas.Migration.Unity.Editor
 │   │   └── Entitas.Migration.Unity.Editor
-│   │       └── Editor
 │   ├── Entitas.Unity
 │   │   └── Entitas.Unity
-│   │       └── Unity
 │   ├── Entitas.Unity.Editor
 │   │   └── Entitas.Unity.Editor
-│   │       └── Editor
-│   │           ├── GUI
-│   │           │   └── Layout
-│   │           ├── Images
-│   │           └── Menu
+│   │       ├── Images
+│   │       └── Menu
 │   ├── Entitas.VisualDebugging.CodeGeneration.Plugins
 │   │   └── Entitas.VisualDebugging.CodeGeneration.Plugins
-│   │       └── Plugins
 │   ├── Entitas.VisualDebugging.Unity
 │   │   └── Entitas.VisualDebugging.Unity
-│   │       └── Unity
-│   │           ├── ContextObserver
-│   │           ├── DebugSystems
-│   │           └── Entity
+│   │       ├── ContextObserver
+│   │       ├── DebugSystems
+│   │       └── Entity
 │   └── Entitas.VisualDebugging.Unity.Editor
 │       └── Entitas.VisualDebugging.Unity.Editor
-│           └── Editor
-│               ├── ContextObserver
-│               ├── DebugSystems
-│               ├── Entity
-│               │   ├── DefaultInstanceCreator
-│               │   ├── Entity
-│               │   └── TypeDrawer
-│               └── Images
-├── Entitas
-│   └── Entitas
-│       ├── Collector
-│       ├── Context
-│       │   └── Exceptions
-│       ├── Entity
-│       │   └── Exceptions
-│       ├── EntityIndex
-│       ├── Extensions
-│       ├── Group
-│       ├── Matcher
-│       │   └── Interfaces
-│       └── Systems
-│           └── Interfaces
-├── Entitas.Utils
-│   └── Entitas.Utils
-│       └── Utils
-│           ├── Caching
-│           ├── Configuration
-│           ├── Extensions
-│           └── PublicMemberInfo
-├── Scripts
-│   └── docs_resources
-└── Snippets
-    ├── VisualStudio
-    └── Xamarin
+│           ├── ContextObserver
+│           ├── DebugSystems
+│           ├── Entity
+│           │   ├── DefaultInstanceCreator
+│           │   ├── Entity
+│           │   └── TypeDrawer
+│           └── Images
+└── Entitas
+    └── Entitas
+        ├── Collector
+        ├── Context
+        │   └── Exceptions
+        ├── Entity
+        │   └── Exceptions
+        ├── EntityIndex
+        ├── Extensions
+        ├── Group
+        ├── Matcher
+        │   └── Interfaces
+        └── Systems
+            └── Interfaces
 .
 ├── Addons
 │   ├── Entitas.Blueprints
 │   │   └── Entitas.Blueprints
-│   │       └── Blueprints
-│   │           ├── Blueprint.cs
-│   │           ├── BlueprintEntityExtension.cs
-│   │           ├── ComponentBlueprint.cs
-│   │           ├── ComponentBlueprintException.cs
-│   │           └── SerializableMember.cs
+│   │       ├── Blueprint.cs
+│   │       ├── BlueprintEntityExtension.cs
+│   │       ├── ComponentBlueprint.cs
+│   │       ├── ComponentBlueprintException.cs
+│   │       └── SerializableMember.cs
 │   ├── Entitas.Blueprints.CodeGeneration.Plugins
 │   │   └── Entitas.Blueprints.CodeGeneration.Plugins
-│   │       └── Plugins
-│   │           ├── BlueprintData.cs
-│   │           ├── BlueprintDataProvider.cs
-│   │           └── BlueprintsGenerator.cs
+│   │       ├── BlueprintData.cs
+│   │       └── BlueprintsGenerator.cs
+│   ├── Entitas.Blueprints.CodeGeneration.Unity.Plugins
+│   │   └── Entitas.Blueprints.CodeGeneration.Unity.Plugins
+│   │       └── BlueprintDataProvider.cs
 │   ├── Entitas.Blueprints.Unity
 │   │   └── Entitas.Blueprints.Unity
-│   │       └── Unity
-│   │           ├── BinaryBlueprint.cs
-│   │           ├── Blueprints.cs
-│   │           └── BlueprintsNotFoundException.cs
+│   │       ├── BinaryBlueprint.cs
+│   │       ├── Blueprints.cs
+│   │       └── BlueprintsNotFoundException.cs
 │   ├── Entitas.Blueprints.Unity.Editor
 │   │   └── Entitas.Blueprints.Unity.Editor
-│   │       └── Editor
-│   │           ├── BinaryBlueprintInspector.cs
-│   │           ├── BinaryBlueprintPostprocessor.cs
-│   │           └── BlueprintsInspector.cs
-│   ├── Entitas.CodeGeneration
-│   │   └── Entitas.CodeGeneration
-│   │       └── CodeGeneration
-│   │           ├── Interfaces
-│   │           │   ├── ICodeGenFilePostProcessor.cs
-│   │           │   ├── ICodeGenerator.cs
-│   │           │   ├── ICodeGeneratorDataProvider.cs
-│   │           │   └── ICodeGeneratorInterface.cs
-│   │           ├── CodeGenFile.cs
-│   │           └── CodeGeneratorData.cs
+│   │       ├── BinaryBlueprintInspector.cs
+│   │       ├── BinaryBlueprintPostprocessor.cs
+│   │       └── BlueprintsInspector.cs
 │   ├── Entitas.CodeGeneration.Attributes
 │   │   └── Entitas.CodeGeneration.Attributes
-│   │       └── Attributes
-│   │           ├── EntityIndex
-│   │           │   ├── AbstractEntityIndexAttribute.cs
-│   │           │   ├── EntityIndexAttribute.cs
-│   │           │   ├── EntityIndexGetMethodAttribute.cs
-│   │           │   ├── EntityIndexType.cs
-│   │           │   └── PrimaryEntityIndexAttribute.cs
-│   │           ├── ContextAttribute.cs
-│   │           ├── CustomComponentNameAttribute.cs
-│   │           ├── CustomEntityIndexAttribute.cs
-│   │           ├── CustomPrefixAttribute.cs
-│   │           ├── DontGenerateAttribute.cs
-│   │           ├── PostConstructorAttribute.cs
-│   │           └── UniqueAttribute.cs
-│   ├── Entitas.CodeGeneration.CodeGenerator
-│   │   └── Entitas.CodeGeneration.CodeGenerator
-│   │       └── CodeGenerator
-│   │           ├── AssemblyResolver.cs
-│   │           ├── CodeGenerator.cs
-│   │           ├── CodeGeneratorConfig.cs
-│   │           └── CodeGeneratorUtil.cs
-│   ├── Entitas.CodeGeneration.CodeGenerator.CLI
-│   │   ├── Commands
-│   │   │   ├── AbstractCommand.cs
-│   │   │   ├── Doctor.cs
-│   │   │   ├── DryRun.cs
-│   │   │   ├── EditConfig.cs
-│   │   │   ├── FixConfig.cs
-│   │   │   ├── Generate.cs
-│   │   │   ├── Helper.cs
-│   │   │   ├── ICommand.cs
-│   │   │   ├── NewConfig.cs
-│   │   │   ├── ScanDlls.cs
-│   │   │   └── Status.cs
-│   │   ├── ArgsExtension.cs
-│   │   └── Program.cs
+│   │       ├── EntityIndex
+│   │       │   ├── AbstractEntityIndexAttribute.cs
+│   │       │   ├── EntityIndexAttribute.cs
+│   │       │   ├── EntityIndexGetMethodAttribute.cs
+│   │       │   ├── EntityIndexType.cs
+│   │       │   └── PrimaryEntityIndexAttribute.cs
+│   │       ├── CleanupAttribute.cs
+│   │       ├── ComponentNameAttribute.cs
+│   │       ├── ContextAttribute.cs
+│   │       ├── CustomEntityIndexAttribute.cs
+│   │       ├── DontGenerateAttribute.cs
+│   │       ├── EventAttribute.cs
+│   │       ├── FlagPrefixAttribute.cs
+│   │       ├── PostConstructorAttribute.cs
+│   │       └── UniqueAttribute.cs
 │   ├── Entitas.CodeGeneration.Plugins
 │   │   └── Entitas.CodeGeneration.Plugins
-│   │       └── Plugins
-│   │           ├── CodeGenerators
-│   │           │   ├── ComponentContextGenerator.cs
-│   │           │   ├── ComponentEntityGenerator.cs
-│   │           │   ├── ComponentEntityInterfaceGenerator.cs
-│   │           │   ├── ComponentGenerator.cs
-│   │           │   ├── ComponentMatcherGenerator.cs
-│   │           │   ├── ComponentsLookupGenerator.cs
-│   │           │   ├── ContextAttributeGenerator.cs
-│   │           │   ├── ContextGenerator.cs
-│   │           │   ├── ContextMatcherGenerator.cs
-│   │           │   ├── ContextsGenerator.cs
-│   │           │   ├── EntityGenerator.cs
-│   │           │   └── EntityIndexGenerator.cs
-│   │           ├── Configs
-│   │           │   ├── AssembliesConfig.cs
-│   │           │   ├── ContextNamesConfig.cs
-│   │           │   ├── IgnoreNamespacesConfig.cs
-│   │           │   ├── ProjectPathConfig.cs
-│   │           │   └── TargetDirectoryConfig.cs
-│   │           ├── Data
-│   │           │   ├── MemberData.cs
-│   │           │   └── MethodData.cs
-│   │           ├── DataProviders
-│   │           │   ├── Components
-│   │           │   │   ├── Providers
-│   │           │   │   │   ├── ComponentTypeComponentDataProvider.cs
-│   │           │   │   │   ├── ContextsComponentDataProvider.cs
-│   │           │   │   │   ├── CustomPrefixComponentDataProvider.cs
-│   │           │   │   │   ├── IComponentDataProvider.cs
-│   │           │   │   │   ├── IsUniqueComponentDataProvider.cs
-│   │           │   │   │   ├── MemberDataComponentDataProvider.cs
-│   │           │   │   │   ├── ShouldGenerateComponentComponentDataProvider.cs
-│   │           │   │   │   ├── ShouldGenerateComponentIndexComponentDataProvider.cs
-│   │           │   │   │   └── ShouldGenerateMethodsComponentDataProvider.cs
-│   │           │   │   ├── ComponentData.cs
-│   │           │   │   └── ComponentDataProvider.cs
-│   │           │   ├── Contexts
-│   │           │   │   ├── ContextData.cs
-│   │           │   │   └── ContextDataProvider.cs
-│   │           │   └── EntityIndex
-│   │           │       ├── EntityIndexData.cs
-│   │           │       └── EntityIndexDataProvider.cs
-│   │           ├── PostProcessors
-│   │           │   ├── AddFileHeaderPostProcessor.cs
-│   │           │   ├── CleanTargetDirectoryPostProcessor.cs
-│   │           │   ├── ConsoleWriteLinePostProcessor.cs
-│   │           │   ├── MergeFilesPostProcessor.cs
-│   │           │   ├── NewLinePostProcessor.cs
-│   │           │   ├── TargetDirectoryStringExtension.cs
-│   │           │   ├── UpdateCSProjPostProcessor.cs
-│   │           │   └── WriteToDiskPostProcessor.cs
-│   │           └── PluginUtil.cs
-│   ├── Entitas.CodeGeneration.Unity.Editor
-│   │   ├── Entitas.CodeGeneration.Unity.Editor
-│   │   │   └── Editor
-│   │   │       ├── CodeGeneratorPreferencesDrawer.cs
-│   │   │       ├── DebugLogPostProcessor.cs
-│   │   │       └── UnityCodeGenerator.cs
-│   │   └── Compile.cs
+│   │       ├── Component
+│   │       │   ├── CodeGenerators
+│   │       │   │   ├── ComponentContextApiGenerator.cs
+│   │       │   │   ├── ComponentEntityApiGenerator.cs
+│   │       │   │   ├── ComponentEntityApiInterfaceGenerator.cs
+│   │       │   │   ├── ComponentGenerator.cs
+│   │       │   │   ├── ComponentLookupGenerator.cs
+│   │       │   │   └── ComponentMatcherApiGenerator.cs
+│   │       │   ├── DataProviders
+│   │       │   │   ├── ComponentDataProviders
+│   │       │   │   │   ├── ComponentTypeComponentDataProvider.cs
+│   │       │   │   │   ├── ContextsComponentDataProvider.cs
+│   │       │   │   │   ├── EventComponentDataProvider.cs
+│   │       │   │   │   ├── FlagPrefixComponentDataProvider.cs
+│   │       │   │   │   ├── IComponentDataProvider.cs
+│   │       │   │   │   ├── IsUniqueComponentDataProvider.cs
+│   │       │   │   │   ├── MemberDataComponentDataProvider.cs
+│   │       │   │   │   ├── ShouldGenerateComponentComponentDataProvider.cs
+│   │       │   │   │   ├── ShouldGenerateComponentIndexComponentDataProvider.cs
+│   │       │   │   │   └── ShouldGenerateMethodsComponentDataProvider.cs
+│   │       │   │   └── ComponentDataProvider.cs
+│   │       │   └── ComponentData.cs
+│   │       ├── Configs
+│   │       │   ├── AssembliesConfig.cs
+│   │       │   ├── ContextNamesConfig.cs
+│   │       │   ├── IgnoreNamespacesConfig.cs
+│   │       │   ├── TemplateConfigExtension.cs
+│   │       │   └── TemplatesConfig.cs
+│   │       ├── Context
+│   │       │   ├── CodeGenerators
+│   │       │   │   ├── ContextAttributeGenerator.cs
+│   │       │   │   ├── ContextGenerator.cs
+│   │       │   │   ├── ContextMatcherGenerator.cs
+│   │       │   │   └── ContextsGenerator.cs
+│   │       │   ├── DataProviders
+│   │       │   │   └── ContextDataProvider.cs
+│   │       │   └── ContextData.cs
+│   │       ├── Data
+│   │       │   ├── MemberData.cs
+│   │       │   └── MethodData.cs
+│   │       ├── Entity
+│   │       │   └── CodeGenerators
+│   │       │       └── EntityGenerator.cs
+│   │       ├── EntityIndex
+│   │       │   ├── CodeGenerators
+│   │       │   │   └── EntityIndexGenerator.cs
+│   │       │   ├── DataProviders
+│   │       │   │   └── EntityIndexDataProvider.cs
+│   │       │   └── EntityIndexData.cs
+│   │       ├── Events
+│   │       │   ├── CodeGenerators
+│   │       │   │   ├── EventEntityApiGenerator.cs
+│   │       │   │   ├── EventListenerComponentGenerator.cs
+│   │       │   │   ├── EventListenertInterfaceGenerator.cs
+│   │       │   │   ├── EventSystemGenerator.cs
+│   │       │   │   └── EventSystemsGenerator.cs
+│   │       │   └── EventData.cs
+│   │       ├── AbstractGenerator.cs
+│   │       ├── CodeGeneratorExtentions.cs
+│   │       ├── EntitasHook.cs
+│   │       └── PluginUtil.cs
 │   ├── Entitas.Migration
 │   │   └── Entitas.Migration
 │   │       ├── Migration
@@ -258,110 +197,97 @@
 │   │           ├── M0360_2.cs
 │   │           ├── M0410_1.cs
 │   │           ├── M0410_2.cs
-│   │           └── M0410_3.cs
+│   │           ├── M0410_3.cs
+│   │           ├── M0450.cs
+│   │           └── M0472.cs
 │   ├── Entitas.Migration.CLI
 │   │   └── Program.cs
 │   ├── Entitas.Migration.Unity.Editor
 │   │   └── Entitas.Migration.Unity.Editor
-│   │       └── Editor
-│   │           └── MigrationWindow.cs
+│   │       └── MigrationWindow.cs
 │   ├── Entitas.Unity
-│   │   ├── Entitas.Unity
-│   │   │   └── Unity
-│   │   │       └── EntityLink.cs
-│   │   └── Entitas.Unity.csproj.user
+│   │   └── Entitas.Unity
+│   │       └── EntityLink.cs
 │   ├── Entitas.Unity.Editor
 │   │   └── Entitas.Unity.Editor
-│   │       └── Editor
-│   │           ├── GUI
-│   │           │   ├── Layout
-│   │           │   │   ├── EditorWindow.cs
-│   │           │   │   ├── GUI.cs
-│   │           │   │   └── Layout.cs
-│   │           │   ├── AbstractPreferencesDrawer.cs
-│   │           │   ├── EntitasStyles.cs
-│   │           │   ├── IEntitasPreferencesDrawer.cs
-│   │           │   └── PreferencesWindow.cs
-│   │           ├── Images
-│   │           │   └── EntitasHeader.png
-│   │           ├── Menu
-│   │           │   ├── CheckForUpdates.cs
-│   │           │   └── EntitasMenuItems.cs
-│   │           ├── EntitasPreferencesDrawer.cs
-│   │           └── ScriptingDefineSymbols.cs
+│   │       ├── Images
+│   │       │   └── EntitasHeader.png
+│   │       ├── Menu
+│   │       │   ├── CheckForUpdates.cs
+│   │       │   └── EntitasMenuItems.cs
+│   │       ├── EntitasPreferencesDrawer.cs
+│   │       └── EntitasPreferencesWindow.cs
 │   ├── Entitas.VisualDebugging.CodeGeneration.Plugins
 │   │   └── Entitas.VisualDebugging.CodeGeneration.Plugins
-│   │       └── Plugins
-│   │           ├── ContextObserverGenerator.cs
-│   │           └── FeatureClassGenerator.cs
+│   │       ├── ContextObserverGenerator.cs
+│   │       └── FeatureClassGenerator.cs
 │   ├── Entitas.VisualDebugging.Unity
 │   │   └── Entitas.VisualDebugging.Unity
-│   │       └── Unity
-│   │           ├── ContextObserver
-│   │           │   ├── ContextObserver.cs
-│   │           │   ├── ContextObserverBehaviour.cs
-│   │           │   └── ContextObserverExtension.cs
-│   │           ├── DebugSystems
-│   │           │   ├── DebugSystems.cs
-│   │           │   ├── DebugSystemsBehaviour.cs
-│   │           │   └── SystemInfo.cs
-│   │           ├── Entity
-│   │           │   ├── DontDrawComponentAttribute.cs
-│   │           │   └── EntityBehaviour.cs
-│   │           └── GameObjectDestroyExtension.cs
+│   │       ├── ContextObserver
+│   │       │   ├── ContextObserver.cs
+│   │       │   ├── ContextObserverBehaviour.cs
+│   │       │   └── ContextObserverExtension.cs
+│   │       ├── DebugSystems
+│   │       │   ├── DebugSystems.cs
+│   │       │   ├── DebugSystemsBehaviour.cs
+│   │       │   └── SystemInfo.cs
+│   │       ├── Entity
+│   │       │   ├── DontDrawComponentAttribute.cs
+│   │       │   └── EntityBehaviour.cs
+│   │       └── GameObjectDestroyExtension.cs
 │   └── Entitas.VisualDebugging.Unity.Editor
 │       └── Entitas.VisualDebugging.Unity.Editor
-│           └── Editor
-│               ├── ContextObserver
-│               │   └── ContextObserverInspector.cs
-│               ├── DebugSystems
-│               │   ├── DebugSystemsInspector.cs
-│               │   └── SystemsMonitor.cs
-│               ├── Entity
-│               │   ├── DefaultInstanceCreator
-│               │   │   ├── DefaultArrayCreator.cs
-│               │   │   ├── DefaultStringCreator.cs
-│               │   │   └── IDefaultInstanceCreator.cs
-│               │   ├── Entity
-│               │   │   ├── EntityDrawer.cs
-│               │   │   ├── EntityDrawerState.cs
-│               │   │   └── EntityInspector.cs
-│               │   ├── TypeDrawer
-│               │   │   ├── AnimationCurveTypeDrawer.cs
-│               │   │   ├── ArrayTypeDrawer.cs
-│               │   │   ├── BoolTypeDrawer.cs
-│               │   │   ├── BoundsTypeDrawer.cs
-│               │   │   ├── CharTypeDrawer.cs
-│               │   │   ├── ColorTypeDrawer.cs
-│               │   │   ├── DateTimeTypeDrawer.cs
-│               │   │   ├── DictionaryTypeDrawer.cs
-│               │   │   ├── DoubleTypeDrawer.cs
-│               │   │   ├── EnumTypeDrawer.cs
-│               │   │   ├── FloatTypeDrawer.cs
-│               │   │   ├── HashSetTypeDrawer.cs
-│               │   │   ├── ITypeDrawer.cs
-│               │   │   ├── IntTypeDrawer.cs
-│               │   │   ├── ListTypeDrawer.cs
-│               │   │   ├── RectTypeDrawer.cs
-│               │   │   ├── StringTypeDrawer.cs
-│               │   │   ├── UnityObjectTypeDrawer.cs
-│               │   │   ├── Vector2TypeDrawer.cs
-│               │   │   ├── Vector3TypeDrawer.cs
-│               │   │   └── Vector4TypeDrawer.cs
-│               │   └── IComponentDrawer.cs
-│               ├── Images
-│               │   ├── EntitasContextErrorHierarchyIcon.png
-│               │   ├── EntitasContextHierarchyIcon.png
-│               │   ├── EntitasEntityErrorHierarchyIcon.png
-│               │   ├── EntitasEntityHierarchyIcon.png
-│               │   ├── EntitasSystemsErrorHierarchyIcon.png
-│               │   └── EntitasSystemsHierarchyIcon.png
-│               ├── EntitasHierarchyIcon.cs
-│               ├── EntitasStats.cs
-│               ├── EntityLinkInspector.cs
-│               ├── VisualDebuggingConfig.cs
-│               ├── VisualDebuggingEntitasExtension.cs
-│               └── VisualDebuggingPreferencesDrawer.cs
+│           ├── ContextObserver
+│           │   └── ContextObserverInspector.cs
+│           ├── DebugSystems
+│           │   └── DebugSystemsInspector.cs
+│           ├── Entity
+│           │   ├── DefaultInstanceCreator
+│           │   │   ├── DefaultArrayCreator.cs
+│           │   │   ├── DefaultStringCreator.cs
+│           │   │   └── IDefaultInstanceCreator.cs
+│           │   ├── Entity
+│           │   │   ├── EntityDrawer.cs
+│           │   │   ├── EntityDrawerState.cs
+│           │   │   └── EntityInspector.cs
+│           │   ├── TypeDrawer
+│           │   │   ├── AnimationCurveTypeDrawer.cs
+│           │   │   ├── ArrayTypeDrawer.cs
+│           │   │   ├── BoolTypeDrawer.cs
+│           │   │   ├── BoundsTypeDrawer.cs
+│           │   │   ├── CharTypeDrawer.cs
+│           │   │   ├── ColorTypeDrawer.cs
+│           │   │   ├── DateTimeTypeDrawer.cs
+│           │   │   ├── DictionaryTypeDrawer.cs
+│           │   │   ├── DoubleTypeDrawer.cs
+│           │   │   ├── EnumTypeDrawer.cs
+│           │   │   ├── FloatTypeDrawer.cs
+│           │   │   ├── HashSetTypeDrawer.cs
+│           │   │   ├── ITypeDrawer.cs
+│           │   │   ├── IntTypeDrawer.cs
+│           │   │   ├── ListTypeDrawer.cs
+│           │   │   ├── RectTypeDrawer.cs
+│           │   │   ├── StringTypeDrawer.cs
+│           │   │   ├── UnityObjectTypeDrawer.cs
+│           │   │   ├── Vector2TypeDrawer.cs
+│           │   │   ├── Vector3TypeDrawer.cs
+│           │   │   └── Vector4TypeDrawer.cs
+│           │   └── IComponentDrawer.cs
+│           ├── Images
+│           │   ├── EntitasContextErrorHierarchyIcon.png
+│           │   ├── EntitasContextHierarchyIcon.png
+│           │   ├── EntitasEntityErrorHierarchyIcon.png
+│           │   ├── EntitasEntityHierarchyIcon.png
+│           │   ├── EntitasEntityLinkHierarchyIcon.png
+│           │   ├── EntitasEntityLinkWarnHierarchyIcon.png
+│           │   ├── EntitasSystemsHierarchyIcon.png
+│           │   └── EntitasSystemsWarnHierarchyIcon.png
+│           ├── EntitasHierarchyIcon.cs
+│           ├── EntitasStats.cs
+│           ├── EntityLinkInspector.cs
+│           ├── VisualDebuggingConfig.cs
+│           ├── VisualDebuggingEntitasExtension.cs
+│           └── VisualDebuggingPreferencesDrawer.cs
 ├── Entitas
 │   └── Entitas
 │       ├── Collector
@@ -404,10 +330,8 @@
 │       │   └── PrimaryEntityIndex.cs
 │       ├── Extensions
 │       │   ├── CollectionExtension.cs
-│       │   ├── ComponentStringExtension.cs
-│       │   ├── ContextStringExtension.cs
-│       │   ├── PublicMemberInfoEntityExtension.cs
-│       │   └── SystemStringExtension.cs
+│       │   ├── EntitasStringExtension.cs
+│       │   └── PublicMemberInfoEntityExtension.cs
 │       ├── Group
 │       │   ├── Group.cs
 │       │   ├── GroupEvent.cs
@@ -434,82 +358,21 @@
 │       │   │   ├── IReactiveSystem.cs
 │       │   │   ├── ISystem.cs
 │       │   │   └── ITearDownSystem.cs
+│       │   ├── JobSystem.cs
 │       │   ├── MultiReactiveSystem.cs
 │       │   ├── ReactiveSystem.cs
 │       │   └── Systems.cs
 │       ├── ContextInfo.cs
-│       ├── EntitasCache.cs
 │       ├── EntitasException.cs
 │       ├── EntitasResources.cs
 │       ├── IComponent.cs
-│       └── version
-├── Entitas.Utils
-│   └── Entitas.Utils
-│       └── Utils
-│           ├── Caching
-│           │   ├── ObjectCache.cs
-│           │   └── ObjectPool.cs
-│           ├── Configuration
-│           │   ├── AbstractConfigurableConfig.cs
-│           │   ├── IConfigurable.cs
-│           │   ├── Preferences.cs
-│           │   └── Properties.cs
-│           ├── Extensions
-│           │   ├── AppDomainExtension.cs
-│           │   ├── DictionaryExtension.cs
-│           │   ├── InterfaceTypeExtension.cs
-│           │   ├── StringExtension.cs
-│           │   └── TypeSerializationExtension.cs
-│           └── PublicMemberInfo
-│               ├── AttributeInfo.cs
-│               ├── PublicMemberInfo.cs
-│               └── PublicMemberInfoExtension.cs
-├── Scripts
-│   ├── docs_resources
-│   │   ├── docs-logo.png
-│   │   ├── docset.doxyfile
-│   │   ├── html.doxyfile
-│   │   ├── icon.png
-│   │   └── icon@2x.png
-│   ├── build
-│   ├── consts
-│   ├── pack
-│   ├── rsync_exclude.txt
-│   ├── rsync_include.txt
-│   ├── test
-│   └── update
-├── Snippets
-│   ├── VisualStudio
-│   │   ├── e_cleanup.snippet
-│   │   ├── e_component.snippet
-│   │   ├── e_ensure.snippet
-│   │   ├── e_exclude.snippet
-│   │   ├── e_execute.snippet
-│   │   ├── e_initialize.snippet
-│   │   ├── e_rexecute.snippet
-│   │   ├── e_setContext.snippet
-│   │   ├── e_setContexts.snippet
-│   │   ├── e_system.snippet
-│   │   ├── e_teardown.snippet
-│   │   └── e_trigger.snippet
-│   └── Xamarin
-│       ├── e_cleanup.template.xml
-│       ├── e_component.template.xml
-│       ├── e_ensure.template.xml
-│       ├── e_exclude.template.xml
-│       ├── e_execute.template.xml
-│       ├── e_initialize.template.xml
-│       ├── e_rexecute.template.xml
-│       ├── e_setContext.template.xml
-│       ├── e_setContexts.template.xml
-│       ├── e_system.template.xml
-│       ├── e_teardown.template.xml
-│       └── e_trigger.template.xml
+│       └── version.txt
+├── CHANGELOG.md
+├── CHANGES.md
 ├── CONTRIBUTING.md
 ├── EntitasUpgradeGuide.md
+├── ISSUE_TEMPLATE.md
 ├── LICENSE.txt
 ├── README.md
-├── RELEASE_NOTES.md
-├── icon.png
-├── policy.mdpolicy
-└── tree.txt
+├── bee.sh
+└── icon.png
