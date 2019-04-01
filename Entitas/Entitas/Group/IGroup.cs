@@ -32,7 +32,7 @@ namespace Entitas {
 				this.array = array;
 			}
 
-			TEntity IEnumerator<TEntity>.Current {
+			public TEntity Current {
 				get {
 					return array[currentIndex];
 				}
@@ -44,17 +44,17 @@ namespace Entitas {
 				}
 			}
 
-			void IDisposable.Dispose() {
+			public void Dispose() {
 				array = null;
 				currentIndex = 0;
 			}
 
-			bool IEnumerator.MoveNext() {
+			public bool MoveNext() {
 				currentIndex++;
 				return currentIndex < limit;
 			}
 
-			void IEnumerator.Reset() {
+		    public void Reset() {
 				currentIndex = -1;
 			}
 		}
@@ -63,7 +63,7 @@ namespace Entitas {
 			public TEntity[] entities;
 			public int count;
 
-            LimitedEnumerator<TEntity> GetEnumerator() {
+            public LimitedEnumerator<TEntity> GetEnumerator() {
 				return new LimitedEnumerator<TEntity>(count, entities);
 			}
 		}
