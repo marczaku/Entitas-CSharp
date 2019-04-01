@@ -89,6 +89,8 @@ namespace Entitas {
         TEntity GetSingleEntity();
 		TEntity GetFirstEntity();
 
+        HashSet<TEntity>.Enumerator GetEnumerator ();
+
 		GetEntitiesResult<TEntity> GetEntitiesCached();
     }
 }
