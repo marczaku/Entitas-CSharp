@@ -173,7 +173,11 @@ namespace Entitas {
 		/// if the group is empty. It will throw an exception if the group
 		/// has more than one entity.
 		public TEntity GetFirstEntity() {
-			return _entities.GetEnumerator().Current;
+			var enumerator = _entities.GetEnumerator();
+			if (!enumerator.MoveNext()) {
+				throw new GroupSingleEntityException<TEntity>(this);
+			}
+			return enumerator.Current;
 		}
 
 		/// Returns the only entity in this group. It will return null
