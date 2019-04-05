@@ -45,15 +45,15 @@ ${getIndices}
             @"        ${contextName}.AddEntityIndex(new ${IndexType}(${contextName}));";
 
         const string GET_INDEX_TEMPLATE =
-            @"    public static System.Collections.Generic.HashSet<${ContextName}Entity> GetEntitiesWith${IndexName}(this ${ContextName}Context context, ${KeyType} ${MemberName}) {
+            @"    public System.Collections.Generic.HashSet<${ContextName}Entity> GetEntitiesWith${ComponentName}(${KeyType} ${MemberName}) {
         return ((${IndexType}<${ContextName}Entity, ${KeyType}>)GetEntityIndex(Contexts.${IndexName})).GetEntities(${MemberName});
     }";
 
         const string GET_PRIMARY_INDEX_TEMPLATE =
-            @"    public ${ContextName}Entity TryGetEntityWith${IndexName}(${KeyType} ${MemberName}) {
+            @"    public ${ContextName}Entity TryGetEntityWith${ComponentName}(${KeyType} ${MemberName}) {
         return ((${IndexType}<${ContextName}Entity, ${KeyType}>)GetEntityIndex(Contexts.${IndexName})).GetEntity(${MemberName});
     }
-    public ${ContextName}Entity GetEntityWith${IndexName}(${KeyType} ${MemberName}) {
+    public ${ContextName}Entity GetEntityWith${ComponentName}(${KeyType} ${MemberName}) {
         var entity = ((${IndexType}<${ContextName}Entity, ${KeyType}>)GetEntityIndex(Contexts.${IndexName})).GetEntity(${MemberName});
         if(entity == null){
 			throw new Entitas.MissingPrimaryEntityException<${KeyType}>(${MemberName}, Contexts.${IndexName});
@@ -152,7 +152,7 @@ ${getIndices}
                 .Replace("${IndexName}", data.GetHasMultiple()
                     ? data.GetEntityIndexName() + data.GetMemberName().UppercaseFirst()
                     : data.GetEntityIndexName())
-                .Replace("${Matcher}", data.GetEntityIndexName())
+                .Replace("${Matcher}", data.GetComponentName())
 				.Replace("${IndexType}", data.GetEntityIndexType())
                 .Replace("${KeyType}", data.GetKeyType())
                 .Replace("${ComponentType}", data.GetComponentType())
@@ -189,6 +189,7 @@ ${getIndices}
                     : data.GetEntityIndexName())
 				.Replace("${IndexType}", data.GetEntityIndexType())
                 .Replace("${KeyType}", data.GetKeyType())
+                .Replace("${ComponentName}", data.GetComponentName())
                 .Replace("${MemberName}", data.GetMemberName());
         }
 

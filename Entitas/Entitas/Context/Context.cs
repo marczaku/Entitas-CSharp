@@ -415,22 +415,10 @@ namespace Entitas {
                 OnEntityWillBeDestroyed(this, tEntity);
             }
 
-            tEntity.InternalDestroy();
+            DeactivateEntity(tEntity);
 
             if (OnEntityDestroyed != null) {
                 OnEntityDestroyed(this, tEntity);
-            }
-
-            if (tEntity.retainCount == 1) {
-                // Can be released immediately without
-                // adding to _retainedEntities
-                tEntity.OnEntityReleased -= _cachedEntityReleased;
-                _reusableEntities.Push(tEntity);
-                tEntity.Release(this);
-                tEntity.RemoveAllOnEntityReleasedHandlers();
-            } else {
-                _retainedEntities.Add(tEntity);
-                tEntity.Release(this);
             }
         }
     }

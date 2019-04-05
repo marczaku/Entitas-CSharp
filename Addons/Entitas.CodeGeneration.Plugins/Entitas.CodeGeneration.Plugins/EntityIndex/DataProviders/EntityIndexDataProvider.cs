@@ -79,14 +79,17 @@ namespace Entitas.CodeGeneration.Plugins {
                     var data = new EntityIndexData();
                     var attribute = (AbstractEntityIndexAttribute)info.attributes.Single(attr => attr.attribute is AbstractEntityIndexAttribute).attribute;
 
+                    var contextNames = _contextsComponentDataProvider.GetContextNamesOrDefault(type);
+                    var componentName = type.ToCompilableString().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
                     data.SetEntityIndexType(getEntityIndexType(attribute));
                     data.IsCustom(false);
-                    data.SetEntityIndexName(type.ToCompilableString().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces));
+                    data.SetEntityIndexName(string.Join("", contextNames)+componentName);
                     data.SetKeyType(info.type.ToCompilableString());
                     data.SetComponentType(type.ToCompilableString());
+                    data.SetComponentName(componentName);
                     data.SetMemberName(info.name);
                     data.SetHasMultiple(hasMultiple);
-                    data.SetContextNames(_contextsComponentDataProvider.GetContextNamesOrDefault(type));
+                    data.SetContextNames(contextNames);
 
                     return data;
                 }).ToArray();
@@ -97,11 +100,14 @@ namespace Entitas.CodeGeneration.Plugins {
 
             var attribute = (CustomEntityIndexAttribute)type.GetCustomAttributes(typeof(CustomEntityIndexAttribute), false)[0];
 
+            var contextNames = new[] {attribute.contextType.ToCompilableString().ShortTypeName().RemoveContextSuffix()};
+            var componentName = type.ToCompilableString().RemoveDots();
             data.SetEntityIndexType(type.ToCompilableString());
             data.IsCustom(true);
-            data.SetEntityIndexName(type.ToCompilableString().RemoveDots());
+            data.SetEntityIndexName(string.Join("",contextNames)+componentName);
+            data.SetComponentName(componentName);
             data.SetHasMultiple(false);
-            data.SetContextNames(new[] { attribute.contextType.ToCompilableString().ShortTypeName().RemoveContextSuffix() });
+            data.SetContextNames(contextNames);
 
             var getMethods = type
                 .GetMethods(BindingFlags.Public | BindingFlags.Instance)
@@ -168,6 +174,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public const string ENTITY_INDEX_COMPONENT_TYPE = "EntityIndex.ComponentType";
         public const string ENTITY_INDEX_MEMBER_NAME = "EntityIndex.MemberName";
         public const string ENTITY_INDEX_HAS_MULTIPLE = "EntityIndex.HasMultiple";
+        public const string ENTITY_INDEX_COMPONENT_NAME = "EntityIndex.ComponentName";
 
         public static string GetEntityIndexType(this EntityIndexData data) {
             return (string)data[ENTITY_INDEX_TYPE];
@@ -223,6 +230,14 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public static void SetComponentType(this EntityIndexData data, string type) {
             data[ENTITY_INDEX_COMPONENT_TYPE] = type;
+        }
+
+        public static string GetComponentName(this EntityIndexData data) {
+            return (string)data[ENTITY_INDEX_COMPONENT_NAME];
+        }
+
+        public static void SetComponentName(this EntityIndexData data, string name) {
+            data[ENTITY_INDEX_COMPONENT_NAME] = name;
         }
 
         public static string GetMemberName(this EntityIndexData data) {

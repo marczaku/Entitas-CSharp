@@ -10,7 +10,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public override string name { get { return "Component (Lookup)"; } }
 
         const string TEMPLATE =
-            @"public static class ${Lookup} {
+            @"public static partial class ${Lookup} {
 
 ${componentConstantsList}
 
