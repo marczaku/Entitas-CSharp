@@ -16,7 +16,7 @@ namespace Entitas.CodeGeneration.Plugins {
     public ${ContextType}()
         : base(
             ${Lookup}.TotalComponents,
-            0,
+            1,
             new Entitas.ContextInfo(
                 ""${ContextName}"",
                 ${Lookup}.componentNames,

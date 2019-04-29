@@ -104,6 +104,7 @@ namespace Entitas {
         readonly Dictionary<string, IEntityIndex> _entityIndices;
 
         int _creationIndex;
+        int _startCreationIndex;
 
         TEntity[] _entitiesCache;
 
@@ -138,7 +139,8 @@ namespace Entitas {
         /// from the code generator, e.g. var context = new GameContext();
         public Context(int totalComponents, int startCreationIndex, ContextInfo contextInfo, Func<IEntity, IAERC> aercFactory, Func<TEntity> entityFactory) {
             _totalComponents = totalComponents;
-            _creationIndex = startCreationIndex;
+            _startCreationIndex = startCreationIndex;
+            ResetCreationIndex();
 
             if (contextInfo != null) {
                 _contextInfo = contextInfo;
@@ -309,7 +311,7 @@ namespace Entitas {
 
         /// Resets the creationIndex back to 0.
         public void ResetCreationIndex() {
-            _creationIndex = 0;
+            _creationIndex = _startCreationIndex;
         }
 
         /// Clears the componentPool at the specified index.
