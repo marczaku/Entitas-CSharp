@@ -84,7 +84,7 @@ public sealed class PlayerComponent : IComponent {
 public sealed class GameOverComponent : IComponent {
 }
 
-[Unique]
+[ContextComponent]
 public sealed class HighscoreComponent : IComponent {
     public int value;
 }

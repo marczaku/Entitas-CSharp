@@ -1,7 +1,7 @@
 ﻿using Entitas;
 using Entitas.CodeGeneration.Attributes;
 
-[Game, Unique]
+[Game, ContextComponent]
 public sealed class UserComponent : IComponent {
 
     public string name;

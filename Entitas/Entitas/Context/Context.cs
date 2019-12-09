@@ -86,6 +86,8 @@ namespace Entitas {
         /// other objects (e.g. Group, Collector, ReactiveSystem).
         public int retainedEntitiesCount { get { return _retainedEntities.Count; } }
 
+		public TEntity contextEntity { get { return _contextEntity; } }
+
         readonly int _totalComponents;
 
         readonly Stack<IComponent>[] _componentPools;
@@ -107,6 +109,8 @@ namespace Entitas {
         int _startCreationIndex;
 
         TEntity[] _entitiesCache;
+
+        TEntity _contextEntity;
 
         // Cache delegates to avoid gc allocations
         readonly EntityComponentChanged _cachedEntityChanged;
@@ -167,6 +171,7 @@ namespace Entitas {
             _cachedComponentReplaced = updateGroupsComponentReplaced;
             _cachedEntityReleased = onEntityReleased;
             _cachedDestroyEntity = onDestroyEntity;
+            _contextEntity = CreateEntity();
         }
 
         ContextInfo createDefaultContextInfo() {
@@ -237,8 +242,9 @@ namespace Entitas {
             }
 
             _entities.Clear();
+            _contextEntity = CreateEntity();
 
-            if (_retainedEntities.Count != 0) {
+            if (_retainedEntities.Count != 1) {
                 throw new ContextStillHasRetainedEntitiesException(this, _retainedEntities.ToArray());
             }
         }

@@ -8,15 +8,15 @@
 //------------------------------------------------------------------------------
 public partial class TestContext {
 
-    public TestEntity myNamespaceUniqueMyNamespaceFlagEntity { get { return GetGroup(TestMatcher.MyNamespaceUniqueMyNamespaceFlag).GetSingleEntity(); } }
+    public TestEntity uniqueFlagEntity { get { return GetGroup(TestMatcher.ContextComponentFlag).GetSingleEntity(); } }
 
-    public bool isMyNamespaceUniqueMyNamespaceFlag {
-        get { return myNamespaceUniqueMyNamespaceFlagEntity != null; }
+    public bool isContextComponentFlag {
+        get { return uniqueFlagEntity != null; }
         set {
-            var entity = myNamespaceUniqueMyNamespaceFlagEntity;
+            var entity = uniqueFlagEntity;
             if (value != (entity != null)) {
                 if (value) {
-                    CreateEntity().isMyNamespaceUniqueMyNamespaceFlag = true;
+                    CreateEntity().isContextComponentFlag = true;
                 } else {
                     entity.Destroy();
                 }
@@ -35,18 +35,18 @@ public partial class TestContext {
 //------------------------------------------------------------------------------
 public partial class TestEntity {
 
-    static readonly My.Namespace.UniqueMyNamespaceFlagComponent myNamespaceUniqueMyNamespaceFlagComponent = new My.Namespace.UniqueMyNamespaceFlagComponent();
+    static readonly ContextComponentFlagComponent uniqueFlagComponent = new ContextComponentFlagComponent();
 
-    public bool isMyNamespaceUniqueMyNamespaceFlag {
-        get { return HasComponent(TestComponentsLookup.MyNamespaceUniqueMyNamespaceFlag); }
+    public bool isContextComponentFlag {
+        get { return HasComponent(TestComponentsLookup.ContextComponentFlag); }
         set {
-            if (value != isMyNamespaceUniqueMyNamespaceFlag) {
-                var index = TestComponentsLookup.MyNamespaceUniqueMyNamespaceFlag;
+            if (value != isContextComponentFlag) {
+                var index = TestComponentsLookup.ContextComponentFlag;
                 if (value) {
                     var componentPool = GetComponentPool(index);
                     var component = componentPool.Count > 0
                             ? componentPool.Pop()
-                            : myNamespaceUniqueMyNamespaceFlagComponent;
+                            : uniqueFlagComponent;
 
                     AddComponent(index, component);
                 } else {
@@ -67,17 +67,17 @@ public partial class TestEntity {
 //------------------------------------------------------------------------------
 public sealed partial class TestMatcher {
 
-    static Entitas.IMatcher<TestEntity> _matcherMyNamespaceUniqueMyNamespaceFlag;
+    static Entitas.IMatcher<TestEntity> _matcherContextComponentFlag;
 
-    public static Entitas.IMatcher<TestEntity> MyNamespaceUniqueMyNamespaceFlag {
+    public static Entitas.IMatcher<TestEntity> ContextComponentFlag {
         get {
-            if (_matcherMyNamespaceUniqueMyNamespaceFlag == null) {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.MyNamespaceUniqueMyNamespaceFlag);
+            if (_matcherContextComponentFlag == null) {
+                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.ContextComponentFlag);
                 matcher.componentNames = TestComponentsLookup.componentNames;
-                _matcherMyNamespaceUniqueMyNamespaceFlag = matcher;
+                _matcherContextComponentFlag = matcher;
             }
 
-            return _matcherMyNamespaceUniqueMyNamespaceFlag;
+            return _matcherContextComponentFlag;
         }
     }
 }

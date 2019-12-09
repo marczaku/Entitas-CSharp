@@ -7,6 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 [Entitas.CodeGeneration.Attributes.DontGenerate(false)]
-public sealed class AnyUniqueEventListenerComponent : Entitas.IComponent {
-    public System.Collections.Generic.List<IAnyUniqueEventListener> value;
+public sealed class AnyContextComponentEventListenerComponent : Entitas.IComponent {
+    public System.Collections.Generic.List<IAnyContextComponentEventListener> value;
 }

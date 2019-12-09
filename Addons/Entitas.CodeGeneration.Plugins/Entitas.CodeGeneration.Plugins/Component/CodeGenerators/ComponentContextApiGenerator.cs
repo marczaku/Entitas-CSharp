@@ -65,7 +65,7 @@ namespace Entitas.CodeGeneration.Plugins {
             return data
                 .OfType<ComponentData>()
                 .Where(d => d.ShouldGenerateMethods())
-                .Where(d => d.IsUnique())
+                .Where(d => d.IsContextComponent())
                 .SelectMany(generate)
                 .ToArray();
         }

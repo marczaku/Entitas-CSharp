@@ -12,7 +12,7 @@ public static class TestComponentsLookup {
     public const int AnyFlagEventRemovedListener = 1;
     public const int AnyMixedEventListener = 2;
     public const int AnyStandardEventListener = 3;
-    public const int AnyUniqueEventListener = 4;
+    public const int AnyContextComponentEventListener = 4;
     public const int Base = 5;
     public const int ClassToGenerate = 6;
     public const int ClassWithEntitIndexAttribute = 7;
@@ -35,8 +35,8 @@ public static class TestComponentsLookup {
     public const int MyNamespaceMultipleEntityIndices = 24;
     public const int MyNamespaceMyNamespace = 25;
     public const int MyNamespaceMyNamespaceFlag = 26;
-    public const int MyNamespaceUniqueMyNamespace = 27;
-    public const int MyNamespaceUniqueMyNamespaceFlag = 28;
+    public const int MyNamespaceContextComponentMyNamespace = 27;
+    public const int MyNamespaceContextComponentMyNamespaceFlag = 28;
     public const int NameAge = 29;
     public const int NewCustomNameComponent1 = 30;
     public const int NewCustomNameComponent2 = 31;
@@ -52,10 +52,10 @@ public static class TestComponentsLookup {
     public const int TestAnyMultipleContextStandardEventListener = 41;
     public const int TestAnyMultipleEventsStandardEventListener = 42;
     public const int TestMultipleEventsStandardEventRemovedListener = 43;
-    public const int UniqueClassToGenerate = 44;
-    public const int UniqueEvent = 45;
-    public const int UniqueFlag = 46;
-    public const int UniqueStandard = 47;
+    public const int ContextComponentClassToGenerate = 44;
+    public const int ContextComponentEvent = 45;
+    public const int ContextComponentFlag = 46;
+    public const int ContextComponentStandard = 47;
 
     public const int TotalComponents = 48;
 
@@ -64,7 +64,7 @@ public static class TestComponentsLookup {
         "AnyFlagEventRemovedListener",
         "AnyMixedEventListener",
         "AnyStandardEventListener",
-        "AnyUniqueEventListener",
+        "AnyContextComponentEventListener",
         "Base",
         "ClassToGenerate",
         "ClassWithEntitIndexAttribute",
@@ -87,8 +87,8 @@ public static class TestComponentsLookup {
         "MyNamespaceMultipleEntityIndices",
         "MyNamespaceMyNamespace",
         "MyNamespaceMyNamespaceFlag",
-        "MyNamespaceUniqueMyNamespace",
-        "MyNamespaceUniqueMyNamespaceFlag",
+        "MyNamespaceContextComponentMyNamespace",
+        "MyNamespaceContextComponentMyNamespaceFlag",
         "NameAge",
         "NewCustomNameComponent1",
         "NewCustomNameComponent2",
@@ -104,10 +104,10 @@ public static class TestComponentsLookup {
         "TestAnyMultipleContextStandardEventListener",
         "TestAnyMultipleEventsStandardEventListener",
         "TestMultipleEventsStandardEventRemovedListener",
-        "UniqueClassToGenerate",
-        "UniqueEvent",
-        "UniqueFlag",
-        "UniqueStandard"
+        "ContextComponentClassToGenerate",
+        "ContextComponentEvent",
+        "ContextComponentFlag",
+        "ContextComponentStandard"
     };
 
     public static readonly System.Type[] componentTypes = {
@@ -115,7 +115,7 @@ public static class TestComponentsLookup {
         typeof(AnyFlagEventRemovedListenerComponent),
         typeof(AnyMixedEventListenerComponent),
         typeof(AnyStandardEventListenerComponent),
-        typeof(AnyUniqueEventListenerComponent),
+        typeof(AnyContextComponentEventListenerComponent),
         typeof(BaseComponent),
         typeof(ClassToGenerateComponent),
         typeof(ClassWithEntitIndexAttributeComponent),
@@ -138,8 +138,8 @@ public static class TestComponentsLookup {
         typeof(My.Namespace.MultipleEntityIndicesComponent),
         typeof(My.Namespace.MyNamespaceComponent),
         typeof(My.Namespace.MyNamespaceFlagComponent),
-        typeof(My.Namespace.UniqueMyNamespaceComponent),
-        typeof(My.Namespace.UniqueMyNamespaceFlagComponent),
+        typeof(My.Namespace.ContextComponentMyNamespaceComponent),
+        typeof(My.Namespace.ContextComponentMyNamespaceFlagComponent),
         typeof(NameAgeComponent),
         typeof(NewCustomNameComponent1Component),
         typeof(NewCustomNameComponent2Component),
@@ -155,9 +155,9 @@ public static class TestComponentsLookup {
         typeof(TestAnyMultipleContextStandardEventListenerComponent),
         typeof(TestAnyMultipleEventsStandardEventListenerComponent),
         typeof(TestMultipleEventsStandardEventRemovedListenerComponent),
-        typeof(UniqueClassToGenerateComponent),
-        typeof(UniqueEventComponent),
-        typeof(UniqueFlagComponent),
-        typeof(UniqueStandardComponent)
+        typeof(ContextComponentClassToGenerateComponent),
+        typeof(ContextComponentEventComponent),
+        typeof(ContextComponentFlagComponent),
+        typeof(ContextComponentStandardComponent)
     };
 }

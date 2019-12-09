@@ -59,10 +59,10 @@ Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
             };
 
             it["gets unique"] = () => {
-                data.IsUnique().GetType().should_be(typeof(bool));
-                data.IsUnique().should_be_false();
+                data.IsContextComponent().GetType().should_be(typeof(bool));
+                data.IsContextComponent().should_be_false();
 
-                getData<UniqueStandardComponent>().IsUnique().should_be_true();
+                getData<ContextComponentStandardComponent>().IsContextComponent().should_be_true();
             };
 
             it["gets member data"] = () => {
@@ -148,10 +148,10 @@ Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
             };
 
             it["creates data for unique event listeners"] = () => {
-                var d = getMultipleData<UniqueEventComponent>();
+                var d = getMultipleData<ContextComponentEventComponent>();
                 d.Length.should_be(2);
                 d[1].IsEvent().should_be_false();
-                d[1].IsUnique().should_be_false();
+                d[1].IsContextComponent().should_be_false();
             };
 
             it["creates data for event listeners with multiple contexts"] = () => {
@@ -196,7 +196,7 @@ Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
                 contextNames[1].should_be("Test2");
             };
 
-            it["gets unique"] = () => { data.IsUnique().should_be_false(); };
+            it["gets unique"] = () => { data.IsContextComponent().should_be_false(); };
 
             it["gets member data"] = () => {
                 data.GetMemberData().Length.should_be(1);

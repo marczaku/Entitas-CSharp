@@ -30,14 +30,14 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Generated\Test\Components\TestUniqueEventComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestContextComponentEventComponent.cs" />
     <Compile Include="Generated\Test\Components\TestCustomPrefixFlagComponent.cs" />
-    <Compile Include="Generated\Test\Components\TestUniqueFlagComponent.cs" />
-    <Compile Include="Generated\Test\Components\TestUniqueStandardComponent.cs" />
-    <Compile Include="Generated\Test\Components\TestMyNamespaceUniqueMyNamespaceComponent.cs" />
-    <Compile Include="Generated\Test\Components\TestMyNamespaceUniqueMyNamespaceFlagComponent.cs" />
-    <Compile Include="Generated\Test\Components\TestUniqueClassToGenerateComponent.cs" />
-    <Compile Include="Generated\Test2\Components\Test2UniqueClassToGenerateComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestContextComponentFlagComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestContextComponentStandardComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestMyNamespaceContextComponentMyNamespaceComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestMyNamespaceContextComponentMyNamespaceFlagComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestContextComponentClassToGenerateComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2ContextComponentClassToGenerateComponent.cs" />
     <Compile Include="Generated\Test\Components\TestMixedEventComponent.cs" />
     <Compile Include="Generated\Test\Components\TestBaseComponent.cs" />
     <Compile Include="Generated\Game\Components\GameCleanupDestroyComponent.cs" />
@@ -88,7 +88,7 @@
     <Compile Include="Generated\Test\Components\TestAnyMixedEventListenerComponent.cs" />
     <Compile Include="Generated\Test\Components\TestMixedEventListenerComponent.cs" />
     <Compile Include="Generated\Test\Components\TestAnyBaseListenerComponent.cs" />
-    <Compile Include="Generated\Test\Components\TestAnyUniqueEventListenerComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestAnyContextComponentEventListenerComponent.cs" />
     <Compile Include="Generated\Test\Components\TestTestAnyMultipleEventsStandardEventListenerComponent.cs" />
     <Compile Include="Generated\Test\Components\TestTestMultipleEventsStandardEventRemovedListenerComponent.cs" />
     <Compile Include="Generated\Test2\Components\Test2Test2AnyMultipleEventsStandardEventListenerComponent.cs" />
@@ -108,13 +108,13 @@
     <Compile Include="Generated\Components\Interfaces\IMyNamespaceMultipleEntityIndicesEntity.cs" />
     <Compile Include="Generated\Components\Interfaces\IMyNamespaceMyNamespaceEntity.cs" />
     <Compile Include="Generated\Components\Interfaces\IMyNamespaceEntityIndexEntity.cs" />
-    <Compile Include="Generated\Components\Interfaces\IUniqueClassToGenerateEntity.cs" />
+    <Compile Include="Generated\Components\Interfaces\IContextComponentClassToGenerateEntity.cs" />
     <Compile Include="Generated\Components\Interfaces\IEventToGenerateEntity.cs" />
     <Compile Include="Generated\Components\Interfaces\IClassToGenerateEntity.cs" />
     <Compile Include="Generated\Components\NewCustomNameComponent1Component.cs" />
     <Compile Include="Generated\Components\NewCustomNameComponent2Component.cs" />
     <Compile Include="Generated\Components\ClassWithEntitIndexAttributeComponent.cs" />
-    <Compile Include="Generated\Components\UniqueClassToGenerateComponent.cs" />
+    <Compile Include="Generated\Components\ContextComponentClassToGenerateComponent.cs" />
     <Compile Include="Generated\Components\EventToGenerateComponent.cs" />
     <Compile Include="Generated\Components\ClassToGenerateComponent.cs" />
     <Compile Include="Generated\Components\InterfaceToGenerateComponent.cs" />
@@ -139,7 +139,7 @@
     <Compile Include="Generated\Events\Components\AnyMixedEventListenerComponent.cs" />
     <Compile Include="Generated\Events\Components\MixedEventListenerComponent.cs" />
     <Compile Include="Generated\Events\Components\AnyBaseListenerComponent.cs" />
-    <Compile Include="Generated\Events\Components\AnyUniqueEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\AnyContextComponentEventListenerComponent.cs" />
     <Compile Include="Generated\Events\Components\TestAnyMultipleEventsStandardEventListenerComponent.cs" />
     <Compile Include="Generated\Events\Components\TestMultipleEventsStandardEventRemovedListenerComponent.cs" />
     <Compile Include="Generated\Events\Components\Test2AnyMultipleEventsStandardEventListenerComponent.cs" />
@@ -155,7 +155,7 @@
     <Compile Include="Generated\Events\Interfaces\IAnyMixedEventListener.cs" />
     <Compile Include="Generated\Events\Interfaces\IMixedEventListener.cs" />
     <Compile Include="Generated\Events\Interfaces\IAnyBaseListener.cs" />
-    <Compile Include="Generated\Events\Interfaces\IAnyUniqueEventListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\IAnyContextComponentEventListener.cs" />
     <Compile Include="Generated\Events\Interfaces\ITestAnyMultipleEventsStandardEventListener.cs" />
     <Compile Include="Generated\Events\Interfaces\ITestMultipleEventsStandardEventRemovedListener.cs" />
     <Compile Include="Generated\Events\Interfaces\ITest2AnyMultipleEventsStandardEventListener.cs" />
@@ -171,7 +171,7 @@
     <Compile Include="Generated\Events\Systems\AnyMixedEventEventSystem.cs" />
     <Compile Include="Generated\Events\Systems\MixedEventEventSystem.cs" />
     <Compile Include="Generated\Events\Systems\AnyBaseEventSystem.cs" />
-    <Compile Include="Generated\Events\Systems\AnyUniqueEventEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\AnyContextComponentEventEventSystem.cs" />
     <Compile Include="Generated\Events\Systems\TestAnyMultipleEventsStandardEventEventSystem.cs" />
     <Compile Include="Generated\Events\Systems\TestMultipleEventsStandardEventRemovedEventSystem.cs" />
     <Compile Include="Generated\Events\Systems\Test2AnyMultipleEventsStandardEventEventSystem.cs" />
@@ -195,7 +195,7 @@
     <Compile Include="Fixtures\Components\BaseComponent.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fixtures\Components\UniqueEventComponent.cs" />
+    <Compile Include="Fixtures\Components\ContextComponentEventComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fixtures\Components\CleanupDestroyComponent.cs" />
@@ -208,7 +208,7 @@
     <Compile Include="Fixtures\Components\MultipleContextStandardEventComponent.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fixtures\ObjectsToGenerate\UniqueClassToGenerate.cs" />
+    <Compile Include="Fixtures\ObjectsToGenerate\ContextComponentClassToGenerate.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fixtures\ObjectsToGenerate\EventToGenerate.cs" />
@@ -245,10 +245,10 @@
     <Compile Include="Fixtures\Components\MyNamespaceFlagComponent.cs" />
     <Compile Include="Fixtures\Components\StandardComponent.cs" />
     <Compile Include="Fixtures\Components\Test2ContextComponent.cs" />
-    <Compile Include="Fixtures\Components\UniqueFlagComponent.cs" />
-    <Compile Include="Fixtures\Components\UniqueMyNamespaceComponent.cs" />
-    <Compile Include="Fixtures\Components\UniqueMyNamespaceFlagComponent.cs" />
-    <Compile Include="Fixtures\Components\UniqueStandardComponent.cs" />
+    <Compile Include="Fixtures\Components\ContextComponentFlagComponent.cs" />
+    <Compile Include="Fixtures\Components\ContextComponentMyNamespaceComponent.cs" />
+    <Compile Include="Fixtures\Components\ContextComponentMyNamespaceFlagComponent.cs" />
+    <Compile Include="Fixtures\Components\ContextComponentStandardComponent.cs" />
     <Compile Include="Fixtures\ObjectsToGenerate\ClassToGenerate.cs" />
     <Compile Include="Fixtures\ObjectsToGenerate\InterfaceToGenerate.cs" />
     <Compile Include="Fixtures\ObjectsToGenerate\StructToGenerate.cs" />

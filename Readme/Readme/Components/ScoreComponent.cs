@@ -1,7 +1,7 @@
 ﻿using Entitas;
 using Entitas.CodeGeneration.Attributes;
 
-[GameState, Unique]
+[GameState, ContextComponent]
 public sealed class ScoreComponent : IComponent {
 
     public int value;

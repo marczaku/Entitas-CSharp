@@ -41,7 +41,7 @@ namespace Entitas.CodeGeneration.Plugins {
                 new ComponentTypeComponentDataProvider(),
                 new MemberDataComponentDataProvider(),
                 new ContextsComponentDataProvider(),
-                new IsUniqueComponentDataProvider(),
+                new IsContextComponentComponentDataProvider(),
                 new FlagPrefixComponentDataProvider(),
                 new ShouldGenerateComponentComponentDataProvider(),
                 new ShouldGenerateMethodsComponentDataProvider(),
@@ -139,7 +139,7 @@ namespace Entitas.CodeGeneration.Plugins {
                     data.GetEventData().Select(eventData => {
                         var dataForEvent = new ComponentData(data);
                         dataForEvent.IsEvent(false);
-                        dataForEvent.IsUnique(false);
+                        dataForEvent.IsContextComponent(false);
                         dataForEvent.ShouldGenerateComponent(false);
                         var eventComponentName = data.EventComponentName(eventData);
                         var eventTypeSuffix = eventData.GetEventTypeSuffix();

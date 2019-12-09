@@ -6,26 +6,26 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public sealed class AnyUniqueEventEventSystem : Entitas.ReactiveSystem<TestEntity> {
+public sealed class AnyContextComponentEventEventSystem : Entitas.ReactiveSystem<TestEntity> {
 
     readonly Entitas.IGroup<TestEntity> _listeners;
     readonly System.Collections.Generic.List<TestEntity> _entityBuffer;
-    readonly System.Collections.Generic.List<IAnyUniqueEventListener> _listenerBuffer;
+    readonly System.Collections.Generic.List<IAnyContextComponentEventListener> _listenerBuffer;
 
-    public AnyUniqueEventEventSystem(Contexts contexts) : base(contexts.test) {
-        _listeners = contexts.test.GetGroup(TestMatcher.AnyUniqueEventListener);
+    public AnyContextComponentEventEventSystem(Contexts contexts) : base(contexts.test) {
+        _listeners = contexts.test.GetGroup(TestMatcher.AnyContextComponentEventListener);
         _entityBuffer = new System.Collections.Generic.List<TestEntity>();
-        _listenerBuffer = new System.Collections.Generic.List<IAnyUniqueEventListener>();
+        _listenerBuffer = new System.Collections.Generic.List<IAnyContextComponentEventListener>();
     }
 
     protected override Entitas.ICollector<TestEntity> GetTrigger(Entitas.IContext<TestEntity> context) {
         return Entitas.CollectorContextExtension.CreateCollector(
-            context, Entitas.TriggerOnEventMatcherExtension.Added(TestMatcher.UniqueEvent)
+            context, Entitas.TriggerOnEventMatcherExtension.Added(TestMatcher.ContextComponentEvent)
         );
     }
 
     protected override bool Filter(TestEntity entity) {
-        return entity.hasUniqueEvent;
+        return entity.hasContextComponentEvent;
     }
 
     protected override void Execute(System.Collections.Generic.List<TestEntity> entities) {
@@ -33,9 +33,9 @@ public sealed class AnyUniqueEventEventSystem : Entitas.ReactiveSystem<TestEntit
             var component = e.uniqueEvent;
             foreach (var listenerEntity in _listeners.GetEntities(_entityBuffer)) {
                 _listenerBuffer.Clear();
-                _listenerBuffer.AddRange(listenerEntity.anyUniqueEventListener.value);
+                _listenerBuffer.AddRange(listenerEntity.anyContextComponentEventListener.value);
                 foreach (var listener in _listenerBuffer) {
-                    listener.OnAnyUniqueEvent(e, component.value);
+                    listener.OnAnyContextComponentEvent(e, component.value);
                 }
             }
         }

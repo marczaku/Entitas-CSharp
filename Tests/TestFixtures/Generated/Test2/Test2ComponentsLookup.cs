@@ -21,7 +21,7 @@ public static class Test2ComponentsLookup {
     public const int Test2AnyMultipleEventsStandardEventListener = 10;
     public const int Test2Context = 11;
     public const int Test2MultipleEventsStandardEventRemovedListener = 12;
-    public const int UniqueClassToGenerate = 13;
+    public const int ContextComponentClassToGenerate = 13;
 
     public const int TotalComponents = 14;
 
@@ -39,7 +39,7 @@ public static class Test2ComponentsLookup {
         "Test2AnyMultipleEventsStandardEventListener",
         "Test2Context",
         "Test2MultipleEventsStandardEventRemovedListener",
-        "UniqueClassToGenerate"
+        "ContextComponentClassToGenerate"
     };
 
     public static readonly System.Type[] componentTypes = {
@@ -56,6 +56,6 @@ public static class Test2ComponentsLookup {
         typeof(Test2AnyMultipleEventsStandardEventListenerComponent),
         typeof(Test2ContextComponent),
         typeof(Test2MultipleEventsStandardEventRemovedListenerComponent),
-        typeof(UniqueClassToGenerateComponent)
+        typeof(ContextComponentClassToGenerateComponent)
     };
 }
