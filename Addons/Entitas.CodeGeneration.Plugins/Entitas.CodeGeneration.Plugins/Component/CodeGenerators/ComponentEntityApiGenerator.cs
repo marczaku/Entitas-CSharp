@@ -65,6 +65,7 @@ ${memberAssignmentList}
             return data
                 .OfType<ComponentData>()
                 .Where(d => d.ShouldGenerateMethods())
+                .Where(d => !d.IsUnique())
                 .SelectMany(generate)
                 .ToArray();
         }

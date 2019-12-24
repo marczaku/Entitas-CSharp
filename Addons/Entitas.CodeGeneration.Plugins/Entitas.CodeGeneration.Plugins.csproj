@@ -54,6 +54,8 @@
     <Compile Include="Entitas.CodeGeneration.Plugins\Component\CodeGenerators\ComponentGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Component\CodeGenerators\ComponentLookupGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Component\CodeGenerators\ComponentMatcherApiGenerator.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\Component\CodeGenerators\ComponentUniqueContextApiGenerator.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\Component\CodeGenerators\ComponentUniqueEntityApiGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Component\ComponentData.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Component\DataProviders\ComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Component\DataProviders\ComponentDataProviders\ComponentTypeComponentDataProvider.cs" />
@@ -61,6 +63,7 @@
     <Compile Include="Entitas.CodeGeneration.Plugins\Component\DataProviders\ComponentDataProviders\EventComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Component\DataProviders\ComponentDataProviders\IComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Component\DataProviders\ComponentDataProviders\IsContextComponentComponentDataProvider.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\Component\DataProviders\ComponentDataProviders\IsUniqueComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Component\DataProviders\ComponentDataProviders\MemberDataComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Component\DataProviders\ComponentDataProviders\ShouldGenerateComponentComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Component\DataProviders\ComponentDataProviders\ShouldGenerateComponentIndexComponentDataProvider.cs" />

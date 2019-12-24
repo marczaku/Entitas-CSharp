@@ -9,7 +9,7 @@ namespace Entitas {
                    "although all entities got destroyed!",
                 "Did you release all entities? Try calling systems.DeactivateReactiveSystems()" +
                 "before calling context.DestroyAllEntities() to avoid memory leaks." +
-                "Do not forget to activate them back when needed.\n" +
+                "Do not forget to activate them back when needed.\n Entities ("+entities.Length+"):" +
                 string.Join("\n", entities
                     .Select(e => {
                         var safeAerc = e.aerc as SafeAERC;

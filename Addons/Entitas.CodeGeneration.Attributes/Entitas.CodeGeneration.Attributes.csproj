@@ -45,6 +45,7 @@
     <Compile Include="Entitas.CodeGeneration.Attributes\PostConstructorAttribute.cs" />
     <Compile Include="Entitas.CodeGeneration.Attributes\ContextComponentAttribute.cs" />
     <Compile Include="Entitas.CodeGeneration.Attributes\FlagPrefixAttribute.cs" />
+    <Compile Include="Entitas.CodeGeneration.Attributes\UniqueAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.CodeGeneration.Attributes\" />

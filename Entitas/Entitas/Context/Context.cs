@@ -244,7 +244,7 @@ namespace Entitas {
             _entities.Clear();
             _contextEntity = CreateEntity();
 
-            if (_retainedEntities.Count != 1) {
+            if (_retainedEntities.Count != 0) {
                 throw new ContextStillHasRetainedEntitiesException(this, _retainedEntities.ToArray());
             }
         }
@@ -338,8 +338,8 @@ namespace Entitas {
         /// Resets the context (destroys all entities and
         /// resets creationIndex back to 0).
         public void Reset() {
-            DestroyAllEntities();
             ResetCreationIndex();
+            DestroyAllEntities();
         }
 
         /// Removes all event handlers
