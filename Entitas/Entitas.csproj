@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="Entitas\EntityIndex\HashSetPool.cs" />
     <Compile Include="Entitas\EntityIndex\MissingPrimaryEntityException.cs" />
+    <Compile Include="Entitas\Entity\Exceptions\EntityDoesNotExistException.cs" />
     <Compile Include="Entitas\Matcher\Matcher.cs" />
     <Compile Include="Entitas\Matcher\MatcherToString.cs" />
     <Compile Include="Entitas\Matcher\MatcherEquals.cs" />

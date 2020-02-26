@@ -17,6 +17,8 @@ namespace Entitas {
 		public TEntity GetEntityWithId(TEntityId id) {
 			TEntity result;
 			this.entityReferences.TryGetValue(id, out result);
+            if (result == null)
+                throw new EntityDoesNotExistException(id.ToString());
 			return result;
 		}
 
@@ -24,9 +26,11 @@ namespace Entitas {
 			return this.entityReferences.ContainsKey(id);
 		}
 
-		public bool TryGetEntityWithId(TEntityId id, out TEntity entity) {
-			return this.entityReferences.TryGetValue(id, out entity);
-		}
+		public TEntity TryGetEntityWithId(TEntityId id) {
+            TEntity entity;
+            this.entityReferences.TryGetValue(id, out entity);
+            return entity;
+        }
 
 		protected override void ActivateEntity(TEntity entity) {
 			base.ActivateEntity(entity);

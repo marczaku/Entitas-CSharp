@@ -37,7 +37,7 @@ namespace Entitas {
 	public interface IIdContext<TEntity, TEntityId> : IContext<TEntity> where TEntity : class, IEntity {
 		TEntity GetEntityWithId(TEntityId id);
 		bool HasEntityWithId(TEntityId id);
-		bool TryGetEntityWithId(TEntityId id, out TEntity entity);
+		TEntity TryGetEntityWithId(TEntityId id);
 	}
 
     public interface IContext<TEntity> : IContext where TEntity : class, IEntity {
