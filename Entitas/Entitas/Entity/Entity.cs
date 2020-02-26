@@ -439,11 +439,6 @@ namespace Entitas {
 					.Append("Entity_")
 					.Append(_creationIndex)
 
-                    // TODO VD PERFORMANCE
-//                    .Append("(*")
-//                    .Append(retainCount)
-//                    .Append(")")
-
 					.Append("(");
 
 				const string separator = ", ";
@@ -451,20 +446,11 @@ namespace Entitas {
 				var lastSeparator = components.Length - 1;
 				for (int i = 0; i < components.Length; i++) {
 					var component = components[i];
-					var type = component.GetType();
 
                     // TODO VD PERFORMANCE
                     _toStringCache = null;
 
-//                    var implementsToString = type.GetMethod("ToString")
-//                        .DeclaringType.ImplementsInterface<IComponent>();
-//                    _toStringBuilder.Append(
-//                        implementsToString
-//                            ? component.ToString()
-//                            : type.ToCompilableString().RemoveComponentSuffix()
-//                    );
-
-                    _toStringBuilder.Append(component.ToString());
+                    _toStringBuilder.Append(component.GetType().Name);
 
 					if (i < lastSeparator) {
 						_toStringBuilder.Append(separator);
