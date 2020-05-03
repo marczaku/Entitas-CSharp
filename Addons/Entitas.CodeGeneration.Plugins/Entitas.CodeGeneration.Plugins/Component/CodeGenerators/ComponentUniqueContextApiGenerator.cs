@@ -1,6 +1,7 @@
 using System.IO;
 using System.Linq;
 using DesperateDevs.CodeGeneration;
+using DesperateDevs.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
 
@@ -32,7 +33,7 @@ ${memberAssignmentList}
                 ""You should check if the context already has a ${componentName}Entity before creating it or use context.Replace${ComponentName}()."");
         }
 		var entity = CreateEntity();
-		Set${ComponentName}(entity, ${methodArgs});
+		Set${ComponentName}(entity, ${newMethodArgs});
 		return entity;
 	}
 
@@ -41,16 +42,16 @@ ${memberAssignmentList}
         if (oldEntity != null) {
             Unset${ComponentName}();
         }
-        Set${ComponentName}(entity, ${methodArgs});
+        Set${ComponentName}(entity, ${newMethodArgs});
     }
 
     public ${ContextName}Entity CreateOrReplace${ComponentName}(${newMethodParameters}) {
         var oldEntity = ${componentName}Entity;
         if (oldEntity != null) {
-            Replace${ComponentName}(oldEntity, ${methodArgs});
+            Replace${ComponentName}(oldEntity, ${newMethodArgs});
 			return oldEntity;
         } else {
-			return Create${ComponentName}(${methodArgs});
+			return Create${ComponentName}(${newMethodArgs});
 		}
     }
 
@@ -163,8 +164,16 @@ ${memberAssignmentList}
                 contextName + Path.DirectorySeparatorChar +
                 "Components" + Path.DirectorySeparatorChar +
                 data.ComponentNameWithContext(contextName).AddComponentSuffix() + ".cs",
-                template.Replace(data, contextName),
+                template.Replace(data, contextName)
+                    .Replace("${memberAssignmentList}", getMemberAssignmentList(data.GetMemberData())),
                 GetType().FullName
+            );
+        }
+        
+        string getMemberAssignmentList(MemberData[] memberData) {
+            return string.Join("\n", memberData
+                .Select(info => "        component." + info.name + " = new" + info.name.UppercaseFirst() + ";")
+                .ToArray()
             );
         }
     }
