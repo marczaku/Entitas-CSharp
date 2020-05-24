@@ -1,28 +1,23 @@
-﻿using System.IO;
+using System.IO;
 using System.Linq;
 using DesperateDevs.CodeGeneration;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class ComponentEntityApiInterfaceGenerator : AbstractGenerator {
+    public class ComponentUniqueEntityApiInterfaceGenerator : AbstractGenerator {
 
         public override string name { get { return "Component (Entity API Interface)"; } }
 
         const string STANDARD_TEMPLATE =
             @"public partial interface I${ComponentName}Entity {
-
     ${ComponentType} ${validComponentName} { get; }
     bool has${ComponentName} { get; }
-
-    void Add${ComponentName}(${newMethodParameters});
-    void Replace${ComponentName}(${newMethodParameters});
-    void Remove${ComponentName}();
 }
 ";
 
         const string FLAG_TEMPLATE =
             @"public partial interface I${ComponentName}Entity {
-    bool ${prefixedComponentName} { get; set; }
+    bool ${prefixedComponentName} { get; }
 }
 ";
 
@@ -33,7 +28,7 @@ namespace Entitas.CodeGeneration.Plugins {
                 .OfType<ComponentData>()
                 .Where(d => d.ShouldGenerateMethods())
                 .Where(d => d.GetContextNames().Length > 1)
-                .Where(d => !d.IsUnique())
+                .Where(d => d.IsUnique())
                 .SelectMany(generate)
                 .ToArray();
         }

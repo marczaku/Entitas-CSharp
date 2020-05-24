@@ -56,6 +56,7 @@
     <Compile Include="Entitas.CodeGeneration.Plugins\Component\CodeGenerators\ComponentMatcherApiGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Component\CodeGenerators\ComponentUniqueContextApiGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Component\CodeGenerators\ComponentUniqueEntityApiGenerator.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\Component\CodeGenerators\ComponentUniqueEntityApiInterfaceGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Component\ComponentData.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Component\DataProviders\ComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Component\DataProviders\ComponentDataProviders\ComponentTypeComponentDataProvider.cs" />

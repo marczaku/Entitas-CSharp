@@ -11,11 +11,131 @@ namespace Entitas.CodeGeneration.Plugins {
         public bool runInDryMode { get { return true; } }
 
         const string TEMPLATE =
-            @"public sealed partial class ${EntityType} : Entitas.IdEntity<${EntityType}Id> {
+            @"public sealed partial class ${EntityType} : Entitas.IdEntity<${EntityType}Id>, I${EntityType} {
     protected override void SetCreationIndex(int creationIndex) {
         base.SetCreationIndex(creationIndex);
         this.id = new ${ContextName}EntityId(creationIndex);
     }
+
+}
+
+public partial interface I${EntityType} : Entitas.IIdEntity<${EntityType}Id> { }
+
+public partial class CreateCollector${EntityType} : I${EntityType} {
+	readonly System.Collections.Generic.HashSet<Entitas.IMatcher<${EntityType}>> matchers = new System.Collections.Generic.HashSet<Entitas.IMatcher<${EntityType}>>();
+
+	public Entitas.IMatcher<${EntityType}> CreateMatcher() {
+		return ${ContextName}Matcher.AllOf(System.Linq.Enumerable.ToArray(this.matchers));
+	}
+
+    public void Retain(object owner) {
+        throw new System.NotImplementedException();
+    }
+
+    public void Release(object owner) {
+        throw new System.NotImplementedException();
+    }
+
+    public int retainCount { get; }
+    public void Initialize(int creationIndex, int totalComponents, System.Collections.Generic.Stack<Entitas.IComponent>[] componentPools, Entitas.ContextInfo contextInfo = null, Entitas.IAERC aerc = null) {
+        throw new System.NotImplementedException();
+    }
+
+    public void Reactivate(int creationIndex) {
+        throw new System.NotImplementedException();
+    }
+
+    public void AddComponent(int index, Entitas.IComponent component) {
+        throw new System.NotImplementedException();
+    }
+
+    public void RemoveComponent(int index) {
+        throw new System.NotImplementedException();
+    }
+
+    public void ReplaceComponent(int index, Entitas.IComponent component) {
+        throw new System.NotImplementedException();
+    }
+
+    public Entitas.IComponent GetComponent(int index) {
+        throw new System.NotImplementedException();
+    }
+
+    public Entitas.IComponent[] GetComponents() {
+        throw new System.NotImplementedException();
+    }
+
+    public int[] GetComponentIndices() {
+        throw new System.NotImplementedException();
+    }
+
+    public bool HasComponent(int index) {
+        throw new System.NotImplementedException();
+    }
+
+    public bool HasComponents(int[] indices) {
+        throw new System.NotImplementedException();
+    }
+
+    public bool HasAnyComponent(int[] indices) {
+        throw new System.NotImplementedException();
+    }
+
+    public void RemoveAllComponents() {
+        throw new System.NotImplementedException();
+    }
+
+    public System.Collections.Generic.Stack<Entitas.IComponent> GetComponentPool(int index) {
+        throw new System.NotImplementedException();
+    }
+
+    public Entitas.IComponent CreateComponent(int index, System.Type type) {
+        throw new System.NotImplementedException();
+    }
+
+    public T CreateComponent<T>(int index) where T : new() {
+        throw new System.NotImplementedException();
+    }
+
+    public void Destroy() {
+        throw new System.NotImplementedException();
+    }
+
+    public void InternalDestroy() {
+        throw new System.NotImplementedException();
+    }
+
+    public void RemoveAllOnEntityReleasedHandlers() {
+        throw new System.NotImplementedException();
+    }
+
+    public int totalComponents { get; }
+    public int creationIndex { get; }
+    public bool isEnabled { get; }
+    public System.Collections.Generic.Stack<Entitas.IComponent>[] componentPools { get; }
+    public Entitas.ContextInfo contextInfo { get; }
+    public Entitas.IAERC aerc { get; }
+    public event Entitas.EntityComponentChanged OnComponentAdded {
+        add {throw new System.NotImplementedException();}
+        remove {throw new System.NotImplementedException();}
+    }
+    public event Entitas.EntityComponentChanged OnComponentRemoved {
+        add {throw new System.NotImplementedException();}
+        remove {throw new System.NotImplementedException();}
+    }
+    public event Entitas.EntityComponentReplaced OnComponentReplaced {
+        add {throw new System.NotImplementedException();}
+        remove {throw new System.NotImplementedException();}
+    }
+    public event Entitas.EntityEvent OnEntityReleased {
+        add {throw new System.NotImplementedException();}
+        remove {throw new System.NotImplementedException();}
+    }
+    public event Entitas.EntityEvent OnDestroyEntity {
+        add {throw new System.NotImplementedException();}
+        remove {throw new System.NotImplementedException();}
+    }
+    public ${EntityType}Id id { get; }
 }
 
 [System.Serializable]

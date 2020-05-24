@@ -14,6 +14,14 @@ namespace Entitas {
             return matcher;
         }
 
+        public static IMatcher<TEntity> CombineAll(params IMatcher<TEntity>[] matchers) {
+           return new CombineAllMatcher<TEntity>(matchers);
+        }
+
+        public static IMatcher<TEntity> CombineAny(params IMatcher<TEntity>[] matchers) {
+            return new CombineAnyMatcher<TEntity>(matchers);
+        }
+
         public static IAllOfMatcher<TEntity> AllOf(params IMatcher<TEntity>[] matchers) {
             var allOfMatcher = (Matcher<TEntity>)Matcher<TEntity>.AllOf(mergeIndices(matchers));
             setComponentNames(allOfMatcher, matchers);

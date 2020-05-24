@@ -33,6 +33,26 @@ ${memberAssignmentList}
         RemoveComponent(${Index});
     }
 }
+public partial interface I${EntityType} {
+
+    ${ComponentType} ${validComponentName} { get; }
+    bool has${ComponentName} { get; }
+
+    void Add${ComponentName}(${newMethodParameters});
+    void Replace${ComponentName}(${newMethodParameters});
+    void Remove${ComponentName}();
+}
+
+public partial class CreateCollector${EntityType} {
+    public ${ComponentType} ${validComponentName} { get { this.matchers.Add(${ContextName}Matcher.${ComponentName}); return new ${ComponentType}(); } }
+    public bool has${ComponentName} { get { this.matchers.Add(${ContextName}Matcher.${ComponentName}); return true; } }
+
+    public void Add${ComponentName}(${newMethodParameters}) { }
+
+    public void Replace${ComponentName}(${newMethodParameters}) { }
+
+    public void Remove${ComponentName}() { }
+}
 ";
 
         const string FLAG_TEMPLATE =
@@ -58,6 +78,17 @@ ${memberAssignmentList}
             }
         }
     }
+}
+
+public partial class CreateCollector${EntityType} {
+    public bool ${prefixedComponentName} {
+        get { this.matchers.Add(${ContextName}Matcher.${ComponentName}); return true; }
+        set { }
+    }
+}
+
+public partial interface I${EntityType} {
+    bool ${prefixedComponentName} { get; set; }
 }
 ";
 

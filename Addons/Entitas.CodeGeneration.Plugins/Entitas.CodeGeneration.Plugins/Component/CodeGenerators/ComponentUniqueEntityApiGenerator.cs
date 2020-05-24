@@ -23,6 +23,16 @@ namespace Entitas.CodeGeneration.Plugins {
 			RemoveComponent(${Index});
     }
 }
+
+public partial interface I${ComponentName}Entity {
+    ${ComponentType} ${validComponentName} { get; }
+    bool has${ComponentName} { get; }
+}
+
+public partial class CreateCollector${EntityType} {
+    public ${ComponentType} ${validComponentName} { get { this.matchers.Add(${ContextName}Matcher.${ComponentName}); return new ${ComponentType}(); } }
+    public bool has${ComponentName} { get { this.matchers.Add(${ContextName}Matcher.${ComponentName}); return true; } }
+}
 ";
         
         const string FLAG_TEMPLATE =
@@ -32,6 +42,16 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public bool ${prefixedComponentName} {
         get { return HasComponent(${Index}); }
+    }
+}
+
+public partial interface I${ComponentName}Entity {
+    bool ${prefixedComponentName} { get; }
+}
+
+public partial class CreateCollector${EntityType} {
+    public bool ${prefixedComponentName} {
+        get { this.matchers.Add(${ContextName}Matcher.${ComponentName}); return true; }
     }
 }
 ";
