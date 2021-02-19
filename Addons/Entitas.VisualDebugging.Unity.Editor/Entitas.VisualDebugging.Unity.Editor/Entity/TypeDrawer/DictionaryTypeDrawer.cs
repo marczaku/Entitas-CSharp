@@ -15,7 +15,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Dictionary<,>);
         }
 
-        public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target) {
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target, IEntity entity) {
             var dictionary = (IDictionary)value;
             var keyType = memberType.GetGenericArguments()[0];
             var valueType = memberType.GetGenericArguments()[1];
@@ -64,7 +64,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                     var key = keys[i];
                     if (EditorLayout.MatchesSearchString(key.ToString().ToLower(), _keySearchTexts[targetType].ToLower())) {
                         EntityDrawer.DrawObjectMember(keyType, "key", key,
-                            target, (newComponent, newValue) => {
+                            target, entity, (newComponent, newValue) => {
                                 var tmpValue = dictionary[key];
                                 dictionary.Remove(key);
                                 if (newValue != null) {
@@ -73,7 +73,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                             });
 
                         EntityDrawer.DrawObjectMember(valueType, "value", dictionary[key],
-                            target, (newComponent, newValue) => dictionary[key] = newValue);
+                            target, entity, (newComponent, newValue) => dictionary[key] = newValue);
 
                         EditorGUILayout.Space();
                     }

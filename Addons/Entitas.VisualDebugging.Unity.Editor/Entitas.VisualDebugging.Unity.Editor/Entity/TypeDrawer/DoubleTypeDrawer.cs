@@ -9,7 +9,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             return type == typeof(double);
         }
 
-        public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target) {
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target, IEntity entity) {
             return EditorGUILayout.DoubleField(memberName, (double)value);
         }
     }

@@ -7,7 +7,7 @@ using DesperateDevs.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class EntityIndexGenerator : ICodeGenerator, IConfigurable {
+    public class DynamicEntityIndexGenerator : ICodeGenerator, IConfigurable {
 
         public string name { get { return "Entity Index"; } }
         public int priority { get { return 0; } }
@@ -59,11 +59,6 @@ ${getIndices}
 			throw new Entitas.MissingPrimaryEntityException<${KeyType}>(${MemberName}, Contexts.${IndexName});
 		}
 		return entity;
-    }";
-
-        const string GET_SORTED_INDEX_TEMPLATE =
-            @"    public System.Collections.Generic.IEnumerable<${ContextName}Entity> GetEntitiesSortedBy${ComponentName}() {
-        return ((${IndexType}<${ContextName}Entity, ${KeyType}>)GetEntityIndex(Contexts.${IndexName})).GetEntities();
     }";
 
         const string CUSTOM_METHOD_TEMPLATE =
@@ -183,8 +178,6 @@ ${getIndices}
                 template = GET_INDEX_TEMPLATE;
             } else if (data.GetEntityIndexType() == "Entitas.PrimaryEntityIndex") {
                 template = GET_PRIMARY_INDEX_TEMPLATE;
-            } else if (data.GetEntityIndexType() == "Entitas.SortedEntityIndex") {
-                template = GET_SORTED_INDEX_TEMPLATE;
             } else {
                 return getCustomMethods(data);
             }

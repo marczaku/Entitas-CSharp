@@ -10,7 +10,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             return type == typeof(Vector4);
         }
 
-        public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target) {
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target, IEntity entity) {
             return EditorGUILayout.Vector4Field(memberName, (Vector4)value);
         }
     }

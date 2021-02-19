@@ -13,7 +13,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(HashSet<>);
         }
 
-        public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target) {
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target, IEntity entity) {
             var elementType = memberType.GetGenericArguments()[0];
             var itemsToRemove = new ArrayList();
             var itemsToAdd = new ArrayList();
@@ -44,7 +44,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                     EditorGUILayout.BeginHorizontal();
                     {
                         EntityDrawer.DrawObjectMember(elementType, string.Empty, item,
-                            target, (newComponent, newValue) => {
+                            target, entity, (newComponent, newValue) => {
                                 itemsToRemove.Add(item);
                                 itemsToAdd.Add(newValue);
                             });

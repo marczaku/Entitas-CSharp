@@ -13,10 +13,6 @@ namespace Entitas {
 
     public delegate void EntityEvent(IEntity entity);
 
-	public interface IIdEntity<TEntityId> : IEntity {
-		TEntityId id{get;}
-	}
-
     public interface IEntity : IAERC {
 
         event EntityComponentChanged OnComponentAdded;
@@ -38,6 +34,8 @@ namespace Entitas {
             Stack<IComponent>[] componentPools,
             ContextInfo contextInfo = null,
             IAERC aerc = null);
+
+        void Resize(int newTotalComponents);
 
         void Reactivate(int creationIndex);
 

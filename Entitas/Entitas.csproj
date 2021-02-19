@@ -35,9 +35,20 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entitas\ComponentIndexer\ComponentIndexer.cs" />
+    <Compile Include="Entitas\ComponentIndexer\IComponentIndexer.cs" />
+    <Compile Include="Entitas\Context\DynamicIdContext.cs" />
+    <Compile Include="Entitas\Context\IdContext.cs" />
+    <Compile Include="Entitas\Context\IDynamicContext.cs" />
+    <Compile Include="Entitas\Context\IIdContext.cs" />
     <Compile Include="Entitas\EntityIndex\HashSetPool.cs" />
     <Compile Include="Entitas\EntityIndex\MissingPrimaryEntityException.cs" />
+    <Compile Include="Entitas\EntityIndex\SortedEntityIndex.cs" />
+    <Compile Include="Entitas\Entity\DynamicIdEntity.cs" />
     <Compile Include="Entitas\Entity\Exceptions\EntityDoesNotExistException.cs" />
+    <Compile Include="Entitas\Entity\IdEntity.cs" />
+    <Compile Include="Entitas\Entity\IDynamicEntity.cs" />
+    <Compile Include="Entitas\Entity\IIdEntity.cs" />
     <Compile Include="Entitas\Matcher\CombineMatcher.cs" />
     <Compile Include="Entitas\Matcher\Matcher.cs" />
     <Compile Include="Entitas\Matcher\MatcherToString.cs" />
@@ -105,7 +116,6 @@
     <Compile Include="Entitas\Systems\MultiReactiveSystem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Entitas\version.txt">
       <LogicalName>version.txt</LogicalName>

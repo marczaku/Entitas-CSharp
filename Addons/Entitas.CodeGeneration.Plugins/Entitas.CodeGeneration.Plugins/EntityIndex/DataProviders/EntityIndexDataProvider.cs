@@ -131,6 +131,8 @@ namespace Entitas.CodeGeneration.Plugins {
                     return "Entitas.EntityIndex";
                 case EntityIndexType.PrimaryEntityIndex:
                     return "Entitas.PrimaryEntityIndex";
+                case EntityIndexType.SortedEntityIndex:
+                    return "Entitas.SortedEntityIndex";
                 default:
                     throw new Exception("Unhandled EntityIndexType: " + attribute.entityIndexType);
             }

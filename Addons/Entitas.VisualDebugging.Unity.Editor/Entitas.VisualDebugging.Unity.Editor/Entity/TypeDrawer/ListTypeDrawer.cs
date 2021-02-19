@@ -13,7 +13,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             return type.GetInterfaces().Contains(typeof(IList));
         }
 
-        public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target) {
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target, IEntity entity) {
             var list = (IList)value;
             var elementType = memberType.GetGenericArguments()[0];
             if (list.Count == 0) {
@@ -30,7 +30,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 EditorGUILayout.BeginHorizontal();
                 {
                     EntityDrawer.DrawObjectMember(elementType, memberName + "[" + localIndex + "]", list[localIndex],
-                        target, (newComponent, newValue) => list[localIndex] = newValue);
+                        target, entity, (newComponent, newValue) => list[localIndex] = newValue);
 
                     var action = drawEditActions(list, elementType, localIndex);
                     if (action != null) {

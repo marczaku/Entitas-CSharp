@@ -45,6 +45,10 @@ public partial class CreateCollector${EntityType} : I${EntityType} {
         throw new System.NotImplementedException();
     }
 
+    public void Resize(int newTotalComponents) {
+        throw new System.NotImplementedException();
+    }
+
     public void AddComponent(int index, Entitas.IComponent component) {
         throw new System.NotImplementedException();
     }

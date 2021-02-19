@@ -4,47 +4,6 @@ using System.Linq;
 using DesperateDevs.Utils;
 
 namespace Entitas {
-	
-	public class IdContext<TEntity, TEntityId> : Context<TEntity>, IIdContext<TEntity, TEntityId> where TEntity : class, IEntity {
-		readonly Dictionary<TEntityId, TEntity> entityReferences = new Dictionary<TEntityId, TEntity>();
-
-		public IdContext(int totalComponents, Func<TEntity> entityFactory) : base(totalComponents, entityFactory) {
-		}
-
-		public IdContext(int totalComponents, int startCreationIndex, ContextInfo contextInfo, Func<IEntity, IAERC> aercFactory, Func<TEntity> entityFactory) : base(totalComponents, startCreationIndex, contextInfo, aercFactory, entityFactory) {
-		}
-
-		public TEntity GetEntityWithId(TEntityId id) {
-			TEntity result;
-			this.entityReferences.TryGetValue(id, out result);
-            if (result == null)
-                throw new EntityDoesNotExistException(id.ToString());
-			return result;
-		}
-
-		public bool HasEntityWithId(TEntityId id) {
-			return this.entityReferences.ContainsKey(id);
-		}
-
-		public TEntity TryGetEntityWithId(TEntityId id) {
-            TEntity entity;
-            this.entityReferences.TryGetValue(id, out entity);
-            return entity;
-        }
-
-		protected override void ActivateEntity(TEntity entity) {
-			base.ActivateEntity(entity);
-			var e = entity as IIdEntity<TEntityId>;
-			this.entityReferences[e.id] = entity;
-		}
-
-		protected override void DeactivateEntity(TEntity entity) {
-			base.DeactivateEntity(entity);
-			var e = entity as IIdEntity<TEntityId>;
-			this.entityReferences.Remove(e.id);
-		}
-	}
-
     /// A context manages the lifecycle of entities and groups.
     /// You can create and destroy entities and get groups of entities.
     /// The prefered way to create a context is to use the generated methods
@@ -92,7 +51,7 @@ namespace Entitas {
 
 		public TEntity contextEntity { get { return _contextEntity; } }
 
-        readonly int _totalComponents;
+        int _totalComponents;
 
         readonly Stack<IComponent>[] _componentPools;
         readonly ContextInfo _contextInfo;
@@ -122,6 +81,16 @@ namespace Entitas {
         readonly EntityEvent _cachedEntityReleased;
         readonly EntityEvent _cachedDestroyEntity;
 
+        protected void UpdateTotalComponents(int newTotalComponents) {
+            this._totalComponents = newTotalComponents;
+            foreach (var entity in this._retainedEntities) {
+                entity.Resize(newTotalComponents);
+            }
+            foreach (var entity in this._reusableEntities) {
+                entity.Resize(newTotalComponents);
+            }
+        }
+        
 		/// Returns all entities matching the specified matcher.
         public TEntity[] GetEntities(IMatcher<TEntity> matcher){
             return GetGroup(matcher).GetEntities();
@@ -317,6 +286,10 @@ namespace Entitas {
             }
 
             return entityIndex;
+        }
+
+        public bool TryGetEntityIndex(string name, out IEntityIndex entityIndex) {
+            return this._entityIndices.TryGetValue(name, out entityIndex);
         }
 
         /// Resets the creationIndex back to 0.

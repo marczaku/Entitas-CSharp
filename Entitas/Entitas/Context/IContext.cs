@@ -26,6 +26,7 @@ namespace Entitas {
 
         void AddEntityIndex(IEntityIndex entityIndex);
         IEntityIndex GetEntityIndex(string name);
+        bool TryGetEntityIndex(string name, out IEntityIndex entityIndex);
 
         void ResetCreationIndex();
         void ClearComponentPool(int index);
@@ -33,12 +34,6 @@ namespace Entitas {
         void RemoveAllEventHandlers();
         void Reset();
     }
-
-	public interface IIdContext<TEntity, TEntityId> : IContext<TEntity> where TEntity : class, IEntity {
-		TEntity GetEntityWithId(TEntityId id);
-		bool HasEntityWithId(TEntityId id);
-		TEntity TryGetEntityWithId(TEntityId id);
-	}
 
     public interface IContext<TEntity> : IContext where TEntity : class, IEntity {
 

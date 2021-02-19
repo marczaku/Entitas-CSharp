@@ -3,13 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Entitas {
-
-	public abstract class IdEntity<TEntityId> : Entity, IIdEntity<TEntityId> {
-		public TEntityId id {
-			get; protected set;
-		}
-	}
-
 	/// Use context.CreateEntity() to create a new entity and
 	/// entity.Destroy() to destroy it.
 	/// You can add, replace and remove IComponent to an entity.
@@ -101,6 +94,10 @@ namespace Entitas {
 
 			_contextInfo = contextInfo ?? createDefaultContextInfo();
 			_aerc = aerc ?? new SafeAERC(this);
+		}
+
+		public void Resize(int newTotalComponents) {
+			Array.Resize(ref this._components, newTotalComponents);
 		}
 
 		ContextInfo createDefaultContextInfo() {

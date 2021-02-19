@@ -23,7 +23,7 @@ class describe_M0360_2 : nspec {
 
         xit["migrates to new api"] = () => {
             //var updatedFiles = m.Migrate(dir);
-            //var systemFile = updatedFiles.Single(file => file.fileName == Path.Combine(dir, "AddViewFromObjectPoolSystem.cs"));
+            //var systemFile = updatedFiles.Single(file => file.fileName == Path.CombineAll(dir, "AddViewFromObjectPoolSystem.cs"));
 
             //if (systemFile.fileContent != expected) {
             //System.Console.WriteLine(systemFile.fileContent);

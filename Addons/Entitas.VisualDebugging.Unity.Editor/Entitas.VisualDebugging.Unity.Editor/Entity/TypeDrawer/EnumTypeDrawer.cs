@@ -9,7 +9,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             return type.IsEnum;
         }
 
-        public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target) {
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target, IEntity entity) {
             if (memberType.IsDefined(typeof(FlagsAttribute), false)) {
                 return EditorGUILayout.EnumMaskField(memberName, (Enum)value);
             }
